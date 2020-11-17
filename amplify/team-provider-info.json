@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-gratiphi-dev-114704-authRole",
+      "UnauthRoleArn": "arn:aws:iam::094087858004:role/amplify-gratiphi-dev-114704-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::094087858004:role/amplify-gratiphi-dev-114704-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
+      "UnauthRoleName": "amplify-gratiphi-dev-114704-unauthRole",
+      "StackName": "amplify-gratiphi-dev-114704",
+      "StackId": "arn:aws:cloudformation:us-east-1:094087858004:stack/amplify-gratiphi-dev-114704/87a52350-28f4-11eb-9edc-0a2de5ab949d",
+      "AmplifyAppId": "d1ov7nbazkkiod"
+    },
+    "categories": {
+      "auth": {
+        "gratiphi02ff5042": {}
+      }
+    }
+  }
+}
