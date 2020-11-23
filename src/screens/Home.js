@@ -5,6 +5,7 @@ import { Auth } from 'aws-amplify';
 export default function Home({ updateAuthState }) {
     async function signOut() {
         try {
+            console.log(Auth.currentUserInfo);
             await Auth.signOut();
             updateAuthState('loggedOut');
         } catch (error) {

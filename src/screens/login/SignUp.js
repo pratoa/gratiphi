@@ -7,22 +7,26 @@ import AppButton from '../../components/AppButton';
 
 export default function SignUp({ navigation }) {
     const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
 
     async function signUp() {
-        // if (password !== confirmPassword) {
-        //     setError("Passwords don't match!")
-        //     return null;
-        // }
-        
         try  {
-            await Auth.signUp({ email, password, attributes: { email } });
+
+            if (password !== confirmPassword) {
+                setError("Passwords don't match!");
+                error.message = "Passwords don't match!";
+                throw error;
+            }
+            const { user } = await Auth.signUp({ username, password, attributes: { email } });
+            console.log(user);
             console.log("Sign-up Confirmed");
-            navigation.navigate("ConfirmationSignUp");
-        } catch (error) {
-            console.log("Error signing up...", error);
+            navigation.navigate("ConfirmationSignUp", { email: email });
+        } catch (err) {
+            setError(err);
+            console.log("Error signing up...", err.message);
         }
     };
 
@@ -31,30 +35,30 @@ export default function SignUp({ navigation }) {
             <View style={styles.container}>
                 <Text style={styles.title}>Create a new account</Text>
                 <AppTextInput value={email}
-                    onChangeText={text => setEmail(text)}
+                    onChangeText={text => { setEmail(text); setUsername(text) }}
                     leftIcon="account"
                     placeholder="Enter email address"
-                    autoCapotalize="none"
+                    autoCapitalize="none"
                     keyboardType="email-address"
                     textContentType="emailAddress"/>
                 <AppTextInput value={password}
                     onChangeText={text => setPassword(text)}
                     leftIcon="lock"
                     placeholder="Enter password"
-                    autoCapotalize="none"
+                    autoCapitalize="none"
                     autoCorrect={false}
                     secureTextEntry
                     textContentType="password"/>
                 <AppTextInput value={confirmPassword}
                     onChangeText={text => setConfirmPassword(text)}
                     leftIcon="lock"
-                    placeholder="Enter password"
-                    autoCapotalize="none"
+                    placeholder="Confirm password"
+                    autoCapitalize="none"
                     autoCorrect={false}
                     secureTextEntry
                     textContentType="password"/>
                 <AppButton title="Sign Up" onPress={signUp} />
-                {error !== '' && <TextError title={error} textStyle={{ alignSelf: 'center' }} />}
+                {error !== '' && <Text title={error.message} style={styles.errorText}>{ error.message }</Text>}
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
                         <Text style={styles.forgotPasswordButtonText}>
@@ -91,5 +95,9 @@ const styles = StyleSheet.create({
         color: 'tomato',
         fontSize: 18,
         fontWeight: '600'
+    },
+    errorText: {
+        color: 'red',
+        alignSelf: 'center'
     }
 });

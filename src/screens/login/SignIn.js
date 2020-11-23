@@ -8,6 +8,7 @@ import AppButton from '../../components/AppButton';
 export default function SignIn({ navigation, updateAuthState }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     
     async function signIn() {
         try {
@@ -15,7 +16,8 @@ export default function SignIn({ navigation, updateAuthState }) {
             console.log("Login Success!");
             updateAuthState("loggedIn");
         } catch (error) {
-            console.log("Error login in...", error);
+            setError(error);
+            console.log("Error login in...", error.message);
         }
     }
 
@@ -39,6 +41,7 @@ export default function SignIn({ navigation, updateAuthState }) {
                     secureTextEntry
                     textContentType="password"/>
                 <AppButton title="Login" onPress={signIn} />
+                {error !== '' && <Text title={error.message} style={styles.errorText}>{ error.message }</Text>}
                 <View style={styles.footerButtonContainer}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
                         <Text style={styles.forgotPasswordButtonText}>
@@ -80,5 +83,9 @@ const styles = StyleSheet.create({
         color: 'tomato',
         fontSize: 18,
         fontWeight: '600'
+    },
+    errorText: {
+        color: 'red',
+        alignSelf: 'center'
     }
 });

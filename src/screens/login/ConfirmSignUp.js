@@ -6,7 +6,12 @@ import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 
 export default function ConfirmSignUp({ route, navigation }) {
+    const email = route.params.email;
     const [authCode, setAuthCode] = useState('');
+    const [error, setError] = useState('');
+
+    console.log(route);
+    console.log(navigation);
 
     async function confirmSignUp() {
         try {
@@ -14,6 +19,7 @@ export default function ConfirmSignUp({ route, navigation }) {
             console.log("Code Confirmed");
             navigation.navigate('SignIn');
         } catch (error) {
+            setError(error);
             console.log("Verification code does not match.", error.code);
         }
     }
@@ -28,6 +34,7 @@ export default function ConfirmSignUp({ route, navigation }) {
                     placeholder="Enter verification code"
                     keyboardType="numeric"/>
                 <AppButton title="Confirm Sign Up" onPress={confirmSignUp} />
+                {error !== '' && <Text title={error.message} style={styles.errorText}>{ error.message }</Text>}
             </View>
         </SafeAreaView>
     )

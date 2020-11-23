@@ -5,6 +5,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import awsconfig from './aws-exports'
+import Welcome from './src/screens/login/Welcome'
+import BottomTabNavigator from './src/screens/BottomTabNavigator'
 import SignIn from './src/screens/login/SignIn'
 import SignUp from './src/screens/login/SignUp'
 import ConfirmSignUp from './src/screens/login/ConfirmSignUp'
@@ -24,6 +26,7 @@ function App() {
   const AuthenticationNavigator = props => {
     return (
       <AuthenticationStack.Navigator headerMode="none">
+        <AuthenticationStack.Screen name="Welcome" component={Welcome}/>
         <AuthenticationStack.Screen name="SignIn">
           {screenProps => (
             <SignIn {...screenProps} updateAuthState={props.updateAuthState} />
@@ -81,7 +84,7 @@ function App() {
     <NavigationContainer>
       {isUserLoggedIn === 'initializing' && <Initializing />}
       {isUserLoggedIn === 'loggedIn' && (
-        <AppNavigator updateAuthState={updateAuthState} />
+        <BottomTabNavigator updateAuthState={updateAuthState} />
       )}
       {isUserLoggedIn === 'loggedOut' && (
         <AuthenticationNavigator updateAuthState={updateAuthState} />
