@@ -34,7 +34,7 @@ export default function BottomTabs({ updateAuthState }) {
                     options={{
                         tabBarLabel: "History",
                         tabBarIcon: ({ color }) => (
-                            <FontAwesome5 name={'cog'} size={25} color={color}/>
+                            <FontAwesome5 name={'book-open'} size={25} color={color}/>
                         ),
                     }}
                 />

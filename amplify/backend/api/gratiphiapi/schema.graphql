@@ -1,0 +1,23 @@
+type Sponsor @model {
+  id: ID!
+  name: String!
+  logo: String
+  users: [User] @connection(keyName: "bySponsorID", fields: ["id"])
+}
+
+type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
+  id: ID!
+  name: String!
+  lastName: String!
+  email: String!
+  sponsorID: ID!
+  sponsor: Sponsor @connection(fields: ["sponsorID"])
+  comments: [Comment] @connection(keyName: "byUserID", fields: ["id"])
+}
+
+type Comment @model @key(name: "byUserID", fields: ["userID", "content"]) {
+  id: ID!
+  userID: ID!
+  user: User @connection(fields: ["userID"])
+  content: String!
+}
