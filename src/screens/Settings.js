@@ -1,10 +1,22 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
+import { Auth } from 'aws-amplify';
 
-export default function Settings() {
+export default function Settings({ updateAuthState }) {
+
+    async function signOut() {
+        try {
+            console.log(Auth.currentUserInfo);
+            await Auth.signOut();
+            updateAuthState('loggedOut');
+        } catch (error) {
+            console.log('Error signing out: ', error);
+        }
+    }
+
     return (
         <View style={styles.container}>
-            <Text> Settings </Text>
+            <Button title="Sign Out" color="tomato" onPress={signOut} />
         </View>
     );
 }

@@ -1,36 +1,98 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import { FontAwesome5 } from '@expo/vector-icons';
 import Home from './Home';
 import Donate from './Donate';
 import HistoryDonations from './HistoryDonations';
 import Settings from './Settings';
 
-const Tab = createBottomTabNavigator();
+const BottomNavigator = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
+const DonateStack = createStackNavigator();
+const HistoryStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 
-export default function BottomTabs({ updateAuthState }) {
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator initialRouteName="Home">
+      <HomeStack.Screen name="Home" component={Home}
+        options= {{
+            headerTitle: "Alimenta la Solidaridad",
+            headerStyle: {
+                backgroundColor: '#325e9d',
+            },
+        }}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
+function DonateStackScreen() {
     return (
-        <Tab.Navigator initialRouteName="Home" 
+      <DonateStack.Navigator initialRouteName="Donate">
+        <DonateStack.Screen name="Donate" component={Donate}
+          options= {{
+            headerTitle: "Donate",
+            headerStyle: {
+                backgroundColor: '#325e9d',
+            },
+          }}
+        />
+      </DonateStack.Navigator>
+    );
+}
+
+function HistoryStackScreen() {
+    return (
+      <HistoryStack.Navigator initialRouteName="History">
+        <HistoryStack.Screen name="History" component={HistoryDonations}
+          options= {{
+            headerTitle: "History",
+            headerStyle: {
+                backgroundColor: '#325e9d',
+            },
+          }}
+        />
+      </HistoryStack.Navigator>
+    );
+}
+
+function SettingsStackScreen({updateAuthState}) {
+    return (
+      <SettingsStack.Navigator initialRouteName="Settings">
+        <SettingsStack.Screen name="Settings" children={() => <Settings updateAuthState={updateAuthState}/>}
+          options= {{
+            headerTitle: "Settings",
+            headerStyle: {
+                backgroundColor: '#325e9d',
+            },
+          }}
+        />
+      </SettingsStack.Navigator>
+    );
+}
+
+export default function BottomTabNavigator({ updateAuthState }) {
+    return (
+        <BottomNavigator.Navigator initialRouteName="Home" 
             tabBarOptions={{showLabel: true, activeTintColor: '#e91e63', inactiveTintColor: 'grey'}}>
-                <Tab.Screen name="Home"
+                <BottomNavigator.Screen name="Home" component={HomeStackScreen}
                     options={{
                         tabBarIcon: ({ color }) => (
                             <FontAwesome5 name={'home'} size={25} color={color}/>
-                        ),
+                        )
                     }}
-                    children={() => <Home updateAuthState={updateAuthState}/>}
                 />
-                <Tab.Screen name="Donate"
-                    component={Donate}
+                <BottomNavigator.Screen name="Donate" component={DonateStackScreen}
                     options={{
                         tabBarLabel: "Donate",
                         tabBarIcon: ({ color }) => (
                             <FontAwesome5 name="gratipay" size={25} color={color}/>
-                        ),
+                        )
                     }}
                 />
-                <Tab.Screen name="HistoryDonations"
-                    component={HistoryDonations}
+                <BottomNavigator.Screen name="History" component={HistoryStackScreen}
                     options={{
                         tabBarLabel: "History",
                         tabBarIcon: ({ color }) => (
@@ -38,8 +100,7 @@ export default function BottomTabs({ updateAuthState }) {
                         ),
                     }}
                 />
-                <Tab.Screen name="Settings"
-                    component={Settings}
+                <BottomNavigator.Screen name="Settings" children={() => <SettingsStackScreen updateAuthState={updateAuthState}/>}
                     options={{
                         tabBarLabel: "Settings",
                         tabBarIcon: ({ color }) => (
@@ -47,6 +108,6 @@ export default function BottomTabs({ updateAuthState }) {
                         ),
                     }}
                 />
-        </Tab.Navigator>
+        </BottomNavigator.Navigator>
     )
 }

@@ -25,15 +25,32 @@ function App() {
   
   const AuthenticationNavigator = props => {
     return (
-      <AuthenticationStack.Navigator headerMode="none">
-        <AuthenticationStack.Screen name="Welcome" component={Welcome}/>
-        <AuthenticationStack.Screen name="SignIn">
+      <AuthenticationStack.Navigator>
+        <AuthenticationStack.Screen name="Welcome" component={Welcome} options={{headerShown: false}}/>
+        <AuthenticationStack.Screen name="SignIn" 
+            options={{
+              headerShown:  true,
+              headerTitle: "Sign In",
+              headerBackTitle: "Back"
+            }}>
           {screenProps => (
             <SignIn {...screenProps} updateAuthState={props.updateAuthState} />
           )}
         </AuthenticationStack.Screen>
-        <AuthenticationStack.Screen name="SignUp" component={SignUp} />
-        <AuthenticationStack.Screen name="ConfirmationSignUp" component={ConfirmSignUp} />
+        <AuthenticationStack.Screen name="SignUp" component={SignUp} 
+            options={{
+              headerShown:  true,
+              headerTitle: "Sign Up",
+              headerBackTitle: "Back"
+            }}>
+        </AuthenticationStack.Screen>
+        <AuthenticationStack.Screen name="ConfirmationSignUp" component={ConfirmSignUp} 
+            options={{
+              headerShown:  true,
+              headerTitle: "Sign In",
+              headerBackTitle: "Back"
+            }}>
+        </AuthenticationStack.Screen>
       </AuthenticationStack.Navigator>
     );
   };

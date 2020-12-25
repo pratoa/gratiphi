@@ -1,5 +1,6 @@
 import React, { useEffect, useState, ReactElement } from 'react'
-import { View, Text, StyleSheet, Button, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image } from 'react-native';
+import AppButton from '../../components/AppButton';
 
 export default function Welcome({ navigation }) {
 
@@ -8,20 +9,19 @@ export default function Welcome({ navigation }) {
 
     return (
       <View style={styles.backgroundContainer}>
-        <ImageBackground source={require(backgroundImage)} style={styles.backgroundImage}>
+        {/* <ImageBackground source={require(backgroundImage)} style={styles.backgroundImage}> */}
             <View style={styles.container}>
                 <Image source={require(logo)} style={styles.logo}/>
-                <View style={styles.buttonContainer}>
-                    <Button title="Sign In"
+                <View style={styles.bottomContainer}>
+                    <AppButton title="Sign In"
                         onPress={() => navigation.navigate('SignIn')} 
                         style={styles.button}/>
-                    <Text>Or</Text>
-                    <Button title="Sign Up" 
+                    <AppButton title="Sign Up" 
                         onPress={() => navigation.navigate('SignUp')}
                         style={styles.button}/>
                 </View>
             </View>
-        </ImageBackground>
+        {/* </ImageBackground> */}
       </View>
     );
 };
@@ -35,25 +35,23 @@ const styles = StyleSheet.create({
         flex: 1
     },
     container: {
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
     },
-    buttonContainer: {
-        // flex: 1,
+    bottomContainer: {
+        flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        width: '100%',
+        justifyContent: 'flex-end',
+        marginBottom: 35
     },
     backgroundImage: {
         flex: 1,
         resizeMode: 'cover'
     },
     logo: {
-        marginTop: 50,
+        marginTop: 55,
         width: 100,
         height: 100
-    },
-    button: {
-        alignSelf: 'center',
-        justifyContent: 'center'
     }
 });
