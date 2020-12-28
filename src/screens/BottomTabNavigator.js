@@ -20,7 +20,8 @@ function HomeStackScreen() {
         options= {{
             headerTitle: "Alimenta la Solidaridad",
             headerStyle: {
-                backgroundColor: '#325e9d',
+				backgroundColor: '#325e9d',
+				shadowOpacity: 0,
             },
         }}
       />
@@ -48,10 +49,7 @@ function HistoryStackScreen() {
       <HistoryStack.Navigator initialRouteName="History">
         <HistoryStack.Screen name="History" component={HistoryDonations}
           options= {{
-            headerTitle: "History",
-            headerStyle: {
-                backgroundColor: '#325e9d',
-            },
+            headerTitle: "History"
           }}
         />
       </HistoryStack.Navigator>
@@ -62,7 +60,7 @@ function SettingsStackScreen({updateAuthState}) {
     return (
       <SettingsStack.Navigator initialRouteName="Settings">
         <SettingsStack.Screen name="Settings" children={() => <Settings updateAuthState={updateAuthState}/>}
-          options= {{
+          options ={{
             headerTitle: "Settings",
             headerStyle: {
                 backgroundColor: '#325e9d',
