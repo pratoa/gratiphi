@@ -15,7 +15,7 @@ type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
   comments: [Comment] @connection(keyName: "byUserID", fields: ["id"])
 }
 
-type Comment @model @key(name: "byUserID", fields: ["userID", "content"]) {
+type Donee @model @key(name: "byUserID", fields: ["userID", "content"]) {
   id: ID!
   userID: ID!
   user: User @connection(fields: ["userID"])

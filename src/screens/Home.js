@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { Auth } from 'aws-amplify';
-import Carousel from 'react-native-snap-carousel';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 
 const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7);
-const ITEM_HEIGHT = Math.round(ITEM_WIDTH * 3 / 4);
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
 const DATA = [];
 
 class InformationItem {
@@ -22,11 +21,21 @@ var item2 = {
 	'title': '+ 907',
 	'message': 'Volunteer mothers'
 }
+var item3 = {
+	'title': '+ 907',
+	'message': 'Volunteer mothers'
+}
+var item4 = {
+	'title': '+ 907',
+	'message': 'Volunteer mothers'
+}
 DATA.push(item1)
 DATA.push(item2)
+DATA.push(item3)
+DATA.push(item4)
 
 export default function Home() {
-
+	let [index, setIndex] = useState(0);
     
     function renderItem({ item, index }) {
 		if (item.image) {
@@ -44,20 +53,40 @@ export default function Home() {
 			<Text style={styles.itemLabel}>{item.message}</Text>
           </View>
         );
-    }
+	}
 
     return (
 		<View style={styles.mainContainer}>
 			<View style={styles.container}>
 				<Carousel
-				
 					data={DATA}
 					renderItem={renderItem}
 					sliderWidth={SLIDER_WIDTH}
 					itemWidth={ITEM_WIDTH}
 					layout={'default'}
 					contentContainerCustomStyle={styles.carouselContainer}
+					onSnapToItem={(index) => setIndex(index) }
+					loop={true}
+					autoplay={true}
+					// enableMomentum={false}
+					// lockScrollWhileSnapping={true}
+					autoplayDelay={1000}
+					autoplayInterval={3000}
 				/>
+				{/* <Pagination 
+					dotsLength={DATA.length}
+					activeDotIndex={index}
+					containerStyle={{  }}
+              		dotStyle={{
+						width: 4,
+						height: 4,
+						borderRadius: 5,
+						marginHorizontal: 8,
+						backgroundColor: 'rgba(255, 255, 255, 0.92)'
+					  }}
+					inactiveDotOpacity={0.4}
+					inactiveDotScale={0.6}
+					/>	 */}
 			</View>
 			<View style={styles.secondContainer}>
 			</View>	
@@ -81,7 +110,7 @@ const styles = StyleSheet.create({
 	},
 	carouselContainer: {
 		alignItems: 'center',
-		justifyContent: 'center'
+		justifyContent: 'center',
 	},
     itemContainer: {
         width: ITEM_WIDTH,

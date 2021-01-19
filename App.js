@@ -82,19 +82,19 @@ function App() {
 
   async function checkAuthState() {
     try {
-      await Auth.currentAuthenticatedUser();
-      console.log('✅ User is signed in');
-      setUserLoggedIn('loggedIn');
+		await Auth.currentAuthenticatedUser();
+		console.log('✅ User is signed in');
+		setUserLoggedIn('loggedIn');
     } catch (err) {
-      console.log(err);
-      console.log('❌ User is not signed in');
-      setUserLoggedIn('loggedOut');
-      return null;
+		console.log(err);
+		console.log('❌ User is not signed in');
+		setUserLoggedIn('loggedOut');
+		return null;
     }
   }
 
   function updateAuthState(isUserLoggedIn) {
-    setUserLoggedIn(isUserLoggedIn);
+	  setUserLoggedIn(isUserLoggedIn);
   }
 
   return (
