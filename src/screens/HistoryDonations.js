@@ -1,17 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 
 export default function HistoryDonations() {
-    return (
-        <View style={styles.container}>
-        </View>
-    );
+  return <View style={styles.container}></View>;
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        marginTop: 20
-    }
+  container: {
+    flex: 1,
+    alignItems: "center",
+    marginTop: 20,
+  },
 });
