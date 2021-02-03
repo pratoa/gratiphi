@@ -31,12 +31,12 @@ function HomeStackScreen() {
   );
 }
 
-function DonateStackScreen() {
+function DonateStackScreen({ props }) {
   return (
     <DonateStack.Navigator initialRouteName="Donate">
       <DonateStack.Screen
         name="Donate"
-        component={Donate}
+        children={() => <Donate props={props} />}
         options={{
           headerTitle: "Donate",
           headerTintColor: "#ADADB2",
@@ -81,7 +81,7 @@ function SettingsStackScreen({ updateAuthState }) {
   );
 }
 
-export default function BottomTabNavigator({ updateAuthState }) {
+const BottomTabNavigator = (props) => {
   return (
     <BottomNavigator.Navigator
       initialRouteName="Home"
@@ -102,7 +102,7 @@ export default function BottomTabNavigator({ updateAuthState }) {
       />
       <BottomNavigator.Screen
         name="Donate"
-        component={DonateStackScreen}
+        children={() => <DonateStackScreen props={props} />}
         options={{
           tabBarLabel: "Donate",
           tabBarIcon: ({ color }) => (
@@ -123,7 +123,7 @@ export default function BottomTabNavigator({ updateAuthState }) {
       <BottomNavigator.Screen
         name="Settings"
         children={() => (
-          <SettingsStackScreen updateAuthState={updateAuthState} />
+          <SettingsStackScreen updateAuthState={props.updateAuthState} />
         )}
         options={{
           tabBarLabel: "Settings",
@@ -134,4 +134,6 @@ export default function BottomTabNavigator({ updateAuthState }) {
       />
     </BottomNavigator.Navigator>
   );
-}
+};
+
+export default BottomTabNavigator;

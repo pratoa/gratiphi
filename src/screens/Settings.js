@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Button,
+  unstable_batchedUpdates,
+} from "react-native";
 import { Auth } from "aws-amplify";
 
 export default function Settings({ updateAuthState }) {

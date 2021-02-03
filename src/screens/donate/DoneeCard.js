@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import {
   View,
   TouchableWithoutFeedback,
@@ -8,36 +8,35 @@ import {
   Dimensions,
 } from "react-native";
 
-const SLIDER_WIDTH = Dimensions.get("window").width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
+const WINDOW_WIDTH = Dimensions.get("window").width;
+const ITEM_WIDTH = Math.round(WINDOW_WIDTH * 0.8);
 
-export default class DoneeCard extends Component {
-  constructor() {
-    super();
-    this.container = null;
+export default function DoneeCard({ navigation, item }) {
+  const [container, setContainer] = useState(null);
+
+  function openExpandedCard() {
+    navigation.navigate("ExpandedCard", { item: item });
   }
 
-  render() {
-    return (
-      <View ref={(container) => (this.container = container)}>
-        <TouchableWithoutFeedback
-          onPress={() =>
-            this.container.measure((fx, fy, width, height, px, py) => {
-              this.props.selectCard(px, py, this.props.index);
-            })
-          }
-        >
-          <View style={styles.itemContainer}>
-            <Image source={this.props.item.image} style={styles.doneeImage} />
-            <View style={styles.textContainer}>
-              <Text style={styles.doneeText}>{this.props.item.name}</Text>
-              <Text style={styles.doneeText}>{this.props.item.biography}</Text>
+  return (
+    <View ref={(container) => setContainer(container)}>
+      <TouchableWithoutFeedback onPress={() => openExpandedCard()}>
+        <View style={styles.itemContainer}>
+          <Image source={item.image} style={styles.doneeImage} />
+          <View style={styles.textContainer}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.doneeName}>{item.name}</Text>
+              <Text style={styles.doneeAge}>{item.age}</Text>
             </View>
+            <Text style={styles.doneeLocation}>{item.location}</Text>
+            <Text style={styles.doneeSmallBiography}>
+              {item.shortBiography}
+            </Text>
           </View>
-        </TouchableWithoutFeedback>
-      </View>
-    );
-  }
+        </View>
+      </TouchableWithoutFeedback>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -50,23 +49,40 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   doneeImage: {
-    flex: 1,
     width: "100%",
     height: "100%",
     borderRadius: 20,
   },
   textContainer: {
-    flex: 1,
     position: "absolute",
+    height: "18%",
     bottom: 0,
     left: 0,
     right: 0,
     padding: 10,
-    backgroundColor: "rgba(0,0,0,.6)",
+    backgroundColor: "rgba(0,0,0,.5)",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
   },
-  doneeText: {
+  doneeName: {
+    color: "white",
+    paddingBottom: 5,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  doneeAge: {
+    color: "white",
+    paddingBottom: 5,
+    paddingLeft: 5,
+    fontSize: 18,
+  },
+  doneeLocation: {
+    color: "white",
+    paddingBottom: 5,
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  doneeSmallBiography: {
     color: "white",
   },
 });

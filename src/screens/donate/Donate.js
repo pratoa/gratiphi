@@ -14,10 +14,13 @@ import DoneeCard from "./DoneeCard";
 import ExpandedDoneeCard from "./ExpandedDoneeCard";
 
 class DoneeItem {
-  constructor(name, biography, image) {
+  constructor(name, shortBiography, longBiograhy, image, age, location) {
     this.name = name;
-    this.biography = biography;
+    this.shortBiography = shortBiography;
+    this.longBiograhy = longBiograhy;
     this.image = image;
+    this.age = age;
+    this.location = location;
   }
 }
 
@@ -28,39 +31,54 @@ DATA.push(
   new DoneeItem(
     "Austin",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    require("../../../assets/images/donees/austin-nicomedez.jpg")
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    require("../../../assets/images/donees/austin-nicomedez.jpg"),
+    8,
+    "La Vega, Caracas"
   )
 );
 DATA.push(
   new DoneeItem(
     "Katie",
     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    require("../../../assets/images/donees/katie-moum.jpg")
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    require("../../../assets/images/donees/katie-moum.jpg"),
+    10,
+    "Portuguesa, Venezuela"
   )
 );
 DATA.push(
   new DoneeItem(
     "Muhammad",
     "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    require("../../../assets/images/donees/muhammad-muzamil.jpg")
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    require("../../../assets/images/donees/muhammad-muzamil.jpg"),
+    7,
+    "Petare, Venezuela"
   )
 );
 DATA.push(
   new DoneeItem(
     "Muhammad",
     "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/muhammad-taha-khan.jpg")
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    require("../../../assets/images/donees/muhammad-taha-khan.jpg"),
+    11,
+    "Coro, Falcon"
   )
 );
 DATA.push(
   new DoneeItem(
     "Nivedita",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    require("../../../assets/images/donees/nivedita-singh.jpg")
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    require("../../../assets/images/donees/nivedita-singh.jpg"),
+    6,
+    "Sucre, Venezuela"
   )
 );
 
-export default function Donate() {
+export default function Donate({ props }) {
   // const [modalVisible, setModalVisible] = useState(false);
   const [index, setIndex] = useState(0);
   const [yOffset, setYoffSet] = useState(null);
@@ -71,6 +89,7 @@ export default function Donate() {
   function renderItem({ item, index }) {
     return (
       <DoneeCard
+        props={props}
         yOffset={yOffset}
         xOffset={xOffset}
         item={item}
@@ -80,6 +99,7 @@ export default function Donate() {
           setXoffSet(xOffset2);
           setYoffSet(yOffset2);
         }}
+        navigation={props.navigation}
       />
     );
   }
@@ -101,14 +121,14 @@ export default function Donate() {
         loop={true}
         enableMomentum={true}
       />
-      {selectedCard && (
+      {/* {selectedCard && (
         <ExpandedDoneeCard
           updateSelectedCard={updateSelectedCard}
           item={DATA[index]}
           yOffset={yOffset}
           xOffset={xOffset}
         />
-      )}
+      )} */}
     </View>
   );
 }

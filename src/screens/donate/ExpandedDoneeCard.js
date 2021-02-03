@@ -1,80 +1,76 @@
-import React, { Component } from "react";
+import React from "react";
+import { FontAwesome5 } from "@expo/vector-icons";
 import {
-  Animated,
-  Dimensions,
-  TouchableWithoutFeedback,
+  View,
+  ScrollView,
   Text,
+  Image,
+  StyleSheet,
+  StatusBar,
 } from "react-native";
-import DoneeCard from "./DoneeCard";
-// import xIcon from "./images/close-x.png";
 
-const ELEMENT_HEIGHT = 200;
+export default function ExpandedCard({ route }) {
+  const item = route.params.item;
 
-export default class ExpandedCard extends Component {
-  state = { animatedValue: new Animated.Value(0) };
-  render() {
-    const { height: windowHeight } = Dimensions.get("window");
-    const topTranslate = this.getTranslate([this.props.yOffset, 0]);
-    const leftTranslate = this.getTranslate([this.props.xOffset, 0]);
-    const rightTranslate = this.getTranslate([this.props.xOffset, 0]);
-    const bottomTranslate = this.getTranslate([
-      windowHeight - this.props.yOffset - ELEMENT_HEIGHT,
-      0,
-    ]);
-
-    return (
-      <Animated.View
-        style={[
-          {
-            position: "absolute",
-            top: topTranslate,
-            left: leftTranslate,
-            right: rightTranslate,
-            bottom: bottomTranslate,
-            backgroundColor: "#5cdb95",
-          },
-        ]}
-      >
-        <TouchableWithoutFeedback onPress={this.unselectCard}>
-          <Text>Hello world</Text>
-        </TouchableWithoutFeedback>
-      </Animated.View>
-    );
-  }
-
-  componentDidMount() {
-    Animated.timing(this.state.animatedValue, {
-      toValue: 1,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-  }
-  unselectCard = () => {
-    Animated.timing(this.state.animatedValue, {
-      toValue: 0,
-      duration: 500,
-      useNativeDriver: false,
-    }).start(() => this.props.updateSelectedCard(null));
-  };
-  getTranslate = (outputRange) => {
-    return this.state.animatedValue.interpolate({
-      inputRange: [0, 1],
-      outputRange,
-    });
-  };
+  return (
+    <View style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" />
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Image source={item.image} style={styles.doneeImage}></Image>
+        <View style={styles.detailsContainer}>
+          <View style={styles.infoConatiner}>
+            <FontAwesome5 name={"birthday-cake"} size={25} />
+            <Text style={styles.infoText}>{item.age}</Text>
+            <FontAwesome5 name={"map-marker-alt"} size={25} />
+            <Text style={styles.infoText}>{item.location}</Text>
+          </View>
+          <Text style={styles.doneeLongBiography}> {item.longBiograhy}</Text>
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
 
-{
-  /* <Animated.Image
-            source={xIcon}
-            style={[
-              {
-                position: "absolute",
-                top: 60,
-                right: 60,
-                zIndex: 100,
-                opacity: this.getTranslate([0, 1]),
-              },
-            ]}
-          /> */
-}
+const styles = StyleSheet.create({
+  scrollContainer: {
+    // flexGrow: 1,
+    width: "100%",
+    minHeight: "100%",
+    alignItems: "center",
+    // bottom: 0,
+    borderRadius: 20,
+  },
+  doneeImage: {
+    width: "100%",
+    height: "60%",
+    // height: "100%",
+    borderRadius: 20,
+  },
+  detailsContainer: {
+    width: "100%",
+    // backgroundColor: "blue",
+    padding: 10,
+  },
+  infoConatiner: {
+    flexDirection: "row",
+    // backgroundColor: "yellow",
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  infoText: {
+    paddingLeft: 5,
+    paddingRight: 10,
+    fontSize: 18,
+    fontWeight: "bold",
+    // backgroundColor: "red",
+    alignSelf: "center",
+  },
+  doneeLongBiography: {
+    // flex: 1,
+    // backgroundColor: "red",
+    paddingTop: 10,
+    paddingBottom: 10,
+    fontSize: 18,
+    textAlign: "justify",
+  },
+});
