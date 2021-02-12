@@ -27,3 +27,10 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
+src/screens/Home.js
+.gitignore
+.gitignore
+.idea/gratiphi.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
