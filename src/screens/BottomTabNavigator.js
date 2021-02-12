@@ -21,6 +21,7 @@ function HomeStackScreen() {
         component={Home}
         options={{
           headerTitle: "Alimenta la Solidaridad",
+          headerTintColor: "white",
           headerStyle: {
             backgroundColor: "#325e9d",
             shadowOpacity: 0,
@@ -39,9 +40,10 @@ function DonateStackScreen({ props }) {
         children={() => <Donate props={props} />}
         options={{
           headerTitle: "Donate",
-          headerTintColor: "#ADADB2",
+          headerTintColor: "white",
+          headerShown: true,
           headerStyle: {
-            backgroundColor: "#325e9d",
+            backgroundColor: "#355C96",
             shadowOpacity: 0,
           },
         }}
@@ -58,6 +60,11 @@ function HistoryStackScreen() {
         component={HistoryDonations}
         options={{
           headerTitle: "History",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "#355C96",
+            shadowOpacity: 0,
+          },
         }}
       />
     </HistoryStack.Navigator>
@@ -72,8 +79,10 @@ function SettingsStackScreen({ updateAuthState }) {
         children={() => <Settings updateAuthState={updateAuthState} />}
         options={{
           headerTitle: "Settings",
+          headerTintColor: "white",
           headerStyle: {
-            backgroundColor: "#325e9d",
+            backgroundColor: "#355C96",
+            shadowOpacity: 0,
           },
         }}
       />

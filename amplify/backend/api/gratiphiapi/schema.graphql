@@ -3,6 +3,7 @@ type Sponsor @model {
   name: String!
   logo: String
   users: [User] @connection(keyName: "bySponsorID", fields: ["id"])
+  donee: [Donee] @conenction(keyName: "bySponsorID", fields: ["id"])
 }
 
 type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
@@ -12,12 +13,21 @@ type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
   email: String!
   sponsorID: ID!
   sponsor: Sponsor @connection(fields: ["sponsorID"])
-  comments: [Comment] @connection(keyName: "byUserID", fields: ["id"])
 }
 
-type Donee @model @key(name: "byUserID", fields: ["userID", "content"]) {
+type Donee @model {
   id: ID!
-  userID: ID!
+  first_name: String!
+  last_name: String!
+  location: String!
+  smallBiography: String!
+  fullBiography: String!
+  sponsor: Sponsor @connection(fields: ["sponsorID"])
+  donations: Donations @connection(fields: ["donationsID"])
+}
+
+type Donations @model {
+  id: ID!
   user: User @connection(fields: ["userID"])
-  content: String!
+  donee: Donee @connection(fields: ["doneeID"])
 }

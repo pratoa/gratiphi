@@ -54,6 +54,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   textContainer: {
+    flex: 1,
+    // flexWrap: "wrap",
     position: "absolute",
     height: "18%",
     bottom: 0,

@@ -1,5 +1,12 @@
 import React, { useEffect, useState, ReactElement } from "react";
-import { View, Text, StyleSheet, ImageBackground, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ImageBackground,
+  Image,
+  StatusBar,
+} from "react-native";
 import AppButton from "../../components/AppButton";
 
 export default function Welcome({
@@ -8,7 +15,7 @@ export default function Welcome({
   isUserLoggedIn,
 }) {
   const backgroundImage = "../../../assets/images/el-tigre.jpg";
-  const logo = "../../../assets/images/alimenta-logo.png";
+  const logo = "../../../assets/logo/gratiphi-blue.png";
 
   useEffect(() => {
     if (isUserLoggedIn === "loggedIn") {
@@ -18,6 +25,7 @@ export default function Welcome({
 
   return (
     <View style={styles.backgroundContainer}>
+      <StatusBar barStyle="light-content" />
       {/* <ImageBackground source={require(backgroundImage)} style={styles.backgroundImage}> */}
       <View style={styles.container}>
         <Image source={require(logo)} style={styles.logo} />
@@ -42,10 +50,10 @@ export default function Welcome({
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "white",
   },
   backgroundContainer: {
     flex: 1,
+    backgroundColor: "white", //#355C96"
   },
   container: {
     flex: 1,
@@ -64,7 +72,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     marginTop: 55,
-    width: 100,
-    height: 100,
+    width: 250,
+    height: 250,
   },
 });
