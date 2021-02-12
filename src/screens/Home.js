@@ -1,11 +1,17 @@
 import React, { useState } from "react";
+import Constants from "expo-constants";
+
 import {
+  Button,
   View,
   Text,
   StyleSheet,
   Image,
   FlatList,
   Dimensions,
+  TouchableWithoutFeedback,
+  Modal,
+  Platform,
 } from "react-native";
 import { Auth } from "aws-amplify";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -50,27 +56,53 @@ const images = [
   {
     id: 1,
     url: require("./../../assets/images/food_security.png"),
+    description:
+      "A team of nutritutionists prepare weekly menus that the volunteer mothers cook, based on calorie requirements to ensure normal growth and development in children. We work to ensure that every child receives 1 meal a day from Monday to Friday.",
+    title: "Food Security",
+    modalImage: require("./../../assets/images/programa-seguridad.jpg"),
   },
   {
     id: 2,
     url: require("./../../assets/images/education.png"),
+    description:
+      "We are committed to the comprehensive growth of children. Through reading and playing, we seek to develop skills that allow us to influence their emotional and social development, so that they can have better school performance.",
+    title: "Education and Recreation",
+    modalImage: require("./../../assets/images/programa-educacion.jpg"),
   },
   {
     id: 3,
     url: require("./../../assets/images/health.png"),
+    description:
+      "We focus on monitoring the height and weight of children, in order to assess their nutritional status and be able to provide supplements to malnutrition cases. We also deworm children twice a year to ensure better absorption of nutrients, avoid diarrhea and anemia.",
+    title: "Health",
+    modalImage: require("./../../assets/images/programa-salud.jpg"),
   },
   {
     id: 4,
     url: require("./../../assets/images/training.png"),
+    description:
+      "Mothers do volunteer work and develop leadership in their communities. We train them in nutrition, breastfeeding, hygiene, food handling, negotiation, conflict resolution, disease prevention, anthropometric measurement and weighing, among others.",
+    title: "Training and Empowerment",
+    modalImage: require("./../../assets/images/programa-formacion.jpg"),
   },
   {
     id: 5,
     url: require("./../../assets/images/family.png"),
+    description:
+      "We work in communities to handle crisis situations and thus prevent abuse, child abuse and depression. We offer psychological support and promote positive education.",
+    title: "Family Development",
+    modalImage: require("./../../assets/images/programa-desarrollo.jpg"),
   },
 ];
 
 export default function Home() {
-  let [index, setIndex] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [index, setIndex] = useState(0);
+  const [modalInfo, setModalInfo] = useState({
+    title: "",
+    description: "",
+    image: "",
+  });
 
   function renderItem({ item, index }) {
     if (item.image) {
@@ -91,24 +123,25 @@ export default function Home() {
   }
 
   return (
-    <View style={styles.mainContainer}>
-      <View style={styles.container}>
-        <Carousel
-          data={DATA}
-          renderItem={renderItem}
-          sliderWidth={SLIDER_WIDTH}
-          itemWidth={ITEM_WIDTH}
-          layout={"default"}
-          contentContainerCustomStyle={styles.carouselContainer}
-          onSnapToItem={(index) => setIndex(index)}
-          loop={true}
-          autoplay={true}
-          // enableMomentum={false}
-          // lockScrollWhileSnapping={true}
-          autoplayDelay={1000}
-          autoplayInterval={3000}
-        />
-        {/* <Pagination 
+    <>
+      <View style={styles.mainContainer}>
+        <View style={styles.container}>
+          <Carousel
+            data={DATA}
+            renderItem={renderItem}
+            sliderWidth={SLIDER_WIDTH}
+            itemWidth={ITEM_WIDTH}
+            layout={"default"}
+            contentContainerCustomStyle={styles.carouselContainer}
+            onSnapToItem={(index) => setIndex(index)}
+            loop={true}
+            autoplay={true}
+            // enableMomentum={false}
+            // lockScrollWhileSnapping={true}
+            autoplayDelay={1000}
+            autoplayInterval={3000}
+          />
+          {/* <Pagination 
 					dotsLength={DATA.length}
 					activeDotIndex={index}
 					containerStyle={{  }}
@@ -122,30 +155,77 @@ export default function Home() {
 					inactiveDotOpacity={0.4}
 					inactiveDotScale={0.6}
 					/>	 */}
-      </View>
+        </View>
 
-      <View style={styles.secondContainer}>
-        <FlatList
-          data={images}
-          numColumns={3}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <Image
-              style={styles.icons}
-              resizeMode="center"
-              source={item.url}
-            ></Image>
-          )}
-        ></FlatList>
+        <View style={styles.secondContainer}>
+          <Text style={styles.modalTitle}>Our Programs</Text>
+          <FlatList
+            data={images}
+            numColumns={3}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <TouchableWithoutFeedback
+                onPress={() => {
+                  setModalVisible(true);
+                  setModalInfo({
+                    title: item.title,
+                    description: item.description,
+                    image: item.modalImage,
+                  });
+                }}
+              >
+                <Image
+                  style={styles.icons}
+                  resizeMode="center"
+                  source={item.url}
+                ></Image>
+              </TouchableWithoutFeedback>
+            )}
+          ></FlatList>
+        </View>
+        <View style={styles.thirdContainer}></View>
       </View>
-      <View style={styles.thirdContainer}></View>
-    </View>
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalView}>
+          <Text style={styles.modalTitle}>{modalInfo.title}</Text>
+          <Image
+            resizeMode="stretch"
+            style={styles.modalImage}
+            source={modalInfo.image}
+          ></Image>
+          <Text style={styles.modalText}>{modalInfo.description}</Text>
+          <Button title="Close" onPress={() => setModalVisible(false)} />
+        </View>
+      </Modal>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
+  },
+  modalView: {
+    flex: 1,
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: "#add8e6",
+    alignItems: "center",
+  },
+  modalImage: {
+    height: "30%",
+    width: "60%",
+  },
+  modalText: {
+    fontSize: 22,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    color: "black",
+    padding: 15,
+  },
+  modalTitle: {
+    fontWeight: "bold",
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    color: "black",
+    fontSize: 25,
   },
   container: {
     flex: 2,
