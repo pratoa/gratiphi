@@ -2,8 +2,7 @@ type Sponsor @model {
   id: ID!
   name: String!
   logo: String
-  users: [User] @connection(keyName: "bySponsorID", fields: ["id"])
-  donee: [Donee] @conenction(keyName: "bySponsorID", fields: ["id"])
+  donee: [Donee] @connection(keyName: "bySponsorID", fields: ["id"])
 }
 
 type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
@@ -15,19 +14,21 @@ type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
   sponsor: Sponsor @connection(fields: ["sponsorID"])
 }
 
-type Donee @model {
+type Donee @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
   id: ID!
-  first_name: String!
-  last_name: String!
+  firstName: String!
+  lastName: String!
   location: String!
   smallBiography: String!
   fullBiography: String!
+  sponsorID: ID!
   sponsor: Sponsor @connection(fields: ["sponsorID"])
-  donations: Donations @connection(fields: ["donationsID"])
+  # donations: Donations @connection(fields: ["donationsID"])
 }
 
 type Donations @model {
   id: ID!
-  user: User @connection(fields: ["userID"])
-  donee: Donee @connection(fields: ["doneeID"])
+  amount: Float
+  # user: User @connection(fields: ["userID"])
+  # donee: Donee @connection(fields: ["doneeID"])
 }

@@ -10,12 +10,14 @@ export const createSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          location
+          smallBiography
+          fullBiography
           sponsorID
           createdAt
           updatedAt
@@ -36,12 +38,14 @@ export const updateSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          location
+          smallBiography
+          fullBiography
           sponsorID
           createdAt
           updatedAt
@@ -62,12 +66,14 @@ export const deleteSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          location
+          smallBiography
+          fullBiography
           sponsorID
           createdAt
           updatedAt
@@ -94,21 +100,11 @@ export const createUser = /* GraphQL */ `
         id
         name
         logo
-        users {
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -130,21 +126,11 @@ export const updateUser = /* GraphQL */ `
         id
         name
         logo
-        users {
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -166,121 +152,135 @@ export const deleteUser = /* GraphQL */ `
         id
         name
         logo
-        users {
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
+export const createDonee = /* GraphQL */ `
+  mutation CreateDonee(
+    $input: CreateDoneeInput!
+    $condition: ModelDoneeConditionInput
   ) {
-    createComment(input: $input, condition: $condition) {
+    createDonee(input: $input, condition: $condition) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location
+      smallBiography
+      fullBiography
+      sponsorID
+      sponsor {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        logo
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
+export const updateDonee = /* GraphQL */ `
+  mutation UpdateDonee(
+    $input: UpdateDoneeInput!
+    $condition: ModelDoneeConditionInput
   ) {
-    updateComment(input: $input, condition: $condition) {
+    updateDonee(input: $input, condition: $condition) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location
+      smallBiography
+      fullBiography
+      sponsorID
+      sponsor {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        logo
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
+export const deleteDonee = /* GraphQL */ `
+  mutation DeleteDonee(
+    $input: DeleteDoneeInput!
+    $condition: ModelDoneeConditionInput
   ) {
-    deleteComment(input: $input, condition: $condition) {
+    deleteDonee(input: $input, condition: $condition) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location
+      smallBiography
+      fullBiography
+      sponsorID
+      sponsor {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        logo
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDonations = /* GraphQL */ `
+  mutation CreateDonations(
+    $input: CreateDonationsInput!
+    $condition: ModelDonationsConditionInput
+  ) {
+    createDonations(input: $input, condition: $condition) {
+      id
+      amount
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDonations = /* GraphQL */ `
+  mutation UpdateDonations(
+    $input: UpdateDonationsInput!
+    $condition: ModelDonationsConditionInput
+  ) {
+    updateDonations(input: $input, condition: $condition) {
+      id
+      amount
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDonations = /* GraphQL */ `
+  mutation DeleteDonations(
+    $input: DeleteDonationsInput!
+    $condition: ModelDonationsConditionInput
+  ) {
+    deleteDonations(input: $input, condition: $condition) {
+      id
+      amount
       createdAt
       updatedAt
     }

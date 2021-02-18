@@ -7,12 +7,14 @@ export const getSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          location
+          smallBiography
+          fullBiography
           sponsorID
           createdAt
           updatedAt
@@ -35,7 +37,7 @@ export const listSponsors = /* GraphQL */ `
         id
         name
         logo
-        users {
+        donee {
           nextToken
         }
         createdAt
@@ -57,21 +59,11 @@ export const getUser = /* GraphQL */ `
         id
         name
         logo
-        users {
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
@@ -98,9 +90,6 @@ export const listUsers = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -108,16 +97,45 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
+export const getDonee = /* GraphQL */ `
+  query GetDonee($id: ID!) {
+    getDonee(id: $id) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location
+      smallBiography
+      fullBiography
+      sponsorID
+      sponsor {
         id
         name
+        logo
+        donee {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDonees = /* GraphQL */ `
+  query ListDonees(
+    $filter: ModelDoneeFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDonees(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        firstName
         lastName
-        email
+        location
+        smallBiography
+        fullBiography
         sponsorID
         sponsor {
           id
@@ -126,38 +144,33 @@ export const getComment = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        comments {
-          nextToken
-        }
         createdAt
         updatedAt
       }
-      content
+      nextToken
+    }
+  }
+`;
+export const getDonations = /* GraphQL */ `
+  query GetDonations($id: ID!) {
+    getDonations(id: $id) {
+      id
+      amount
       createdAt
       updatedAt
     }
   }
 `;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
+export const listDonationss = /* GraphQL */ `
+  query ListDonationss(
+    $filter: ModelDonationsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDonationss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userID
-        user {
-          id
-          name
-          lastName
-          email
-          sponsorID
-          createdAt
-          updatedAt
-        }
-        content
+        amount
         createdAt
         updatedAt
       }
