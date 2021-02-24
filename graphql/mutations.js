@@ -10,14 +10,15 @@ export const createSponsor = /* GraphQL */ `
       id
       name
       logo
+      locations
       donee {
         items {
           id
           firstName
           lastName
-          location
           smallBiography
           fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -38,14 +39,15 @@ export const updateSponsor = /* GraphQL */ `
       id
       name
       logo
+      locations
       donee {
         items {
           id
           firstName
           lastName
-          location
           smallBiography
           fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -66,20 +68,60 @@ export const deleteSponsor = /* GraphQL */ `
       id
       name
       logo
+      locations
       donee {
         items {
           id
           firstName
           lastName
-          location
           smallBiography
           fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLocation = /* GraphQL */ `
+  mutation CreateLocation(
+    $input: CreateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    createLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLocation = /* GraphQL */ `
+  mutation UpdateLocation(
+    $input: UpdateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    updateLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLocation = /* GraphQL */ `
+  mutation DeleteLocation(
+    $input: DeleteLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    deleteLocation(input: $input, condition: $condition) {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -95,17 +137,7 @@ export const createUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        donee {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -121,17 +153,7 @@ export const updateUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        donee {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -147,17 +169,7 @@ export const deleteUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        donee {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -172,14 +184,21 @@ export const createDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       smallBiography
       fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
+        locations
         donee {
           nextToken
         }
@@ -200,14 +219,21 @@ export const updateDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       smallBiography
       fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
+        locations
         donee {
           nextToken
         }
@@ -228,14 +254,21 @@ export const deleteDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       smallBiography
       fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
+        locations
         donee {
           nextToken
         }
@@ -255,6 +288,7 @@ export const createDonations = /* GraphQL */ `
     createDonations(input: $input, condition: $condition) {
       id
       amount
+      gratificationPhoto
       createdAt
       updatedAt
     }
@@ -268,6 +302,7 @@ export const updateDonations = /* GraphQL */ `
     updateDonations(input: $input, condition: $condition) {
       id
       amount
+      gratificationPhoto
       createdAt
       updatedAt
     }
@@ -281,6 +316,7 @@ export const deleteDonations = /* GraphQL */ `
     deleteDonations(input: $input, condition: $condition) {
       id
       amount
+      gratificationPhoto
       createdAt
       updatedAt
     }

@@ -1,20 +1,26 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createPaymentIntent = /* GraphQL */ `
+  query CreatePaymentIntent {
+    createPaymentIntent
+  }
+`;
 export const getSponsor = /* GraphQL */ `
   query GetSponsor($id: ID!) {
     getSponsor(id: $id) {
       id
       name
       logo
+      locations
       donee {
         items {
           id
           firstName
           lastName
-          location
           smallBiography
           fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -37,9 +43,37 @@ export const listSponsors = /* GraphQL */ `
         id
         name
         logo
+        locations
         donee {
           nextToken
         }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getLocation = /* GraphQL */ `
+  query GetLocation($id: ID!) {
+    getLocation(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listLocations = /* GraphQL */ `
+  query ListLocations(
+    $filter: ModelLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listLocations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
         createdAt
         updatedAt
       }
@@ -54,17 +88,7 @@ export const getUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        donee {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -82,14 +106,7 @@ export const listUsers = /* GraphQL */ `
         name
         lastName
         email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
+        stripeID
         createdAt
         updatedAt
       }
@@ -103,14 +120,21 @@ export const getDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       smallBiography
       fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
+        locations
         donee {
           nextToken
         }
@@ -133,14 +157,21 @@ export const listDonees = /* GraphQL */ `
         id
         firstName
         lastName
-        location
+        location {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         smallBiography
         fullBiography
+        profilePhoto
         sponsorID
         sponsor {
           id
           name
           logo
+          locations
           createdAt
           updatedAt
         }
@@ -156,6 +187,7 @@ export const getDonations = /* GraphQL */ `
     getDonations(id: $id) {
       id
       amount
+      gratificationPhoto
       createdAt
       updatedAt
     }
@@ -171,6 +203,7 @@ export const listDonationss = /* GraphQL */ `
       items {
         id
         amount
+        gratificationPhoto
         createdAt
         updatedAt
       }
