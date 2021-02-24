@@ -12,16 +12,6 @@ async function createPaymentIntent() {
 }
 
 exports.handler = async (event) => {
-  // TODO implement
   const paymentIntent = await createPaymentIntent();
-  const response = {
-    statusCode: 200,
-    //  Uncomment below to enable CORS requests
-    //  headers: {
-    //      "Access-Control-Allow-Origin": "*"
-    //  },
-    clientSecret: paymentIntent.client_secret,
-    body: JSON.stringify("Hello from Lambda!"),
-  };
-  return response;
+  return paymentIntent.client_secret;
 };
