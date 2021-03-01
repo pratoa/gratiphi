@@ -110,7 +110,7 @@ export default function Home() {
   const [modalInfo, setModalInfo] = useState({
     title: "",
     description: "",
-    image: "",
+    image: null,
   });
 
   function renderItem({ item, index }) {
@@ -192,14 +192,14 @@ export default function Home() {
               </TouchableWithoutFeedback>
             )}
           ></FlatList>
+          <ScrollView
+            contentContainerStyle={styles.thirdViewContent}
+            style={styles.thirdContainer}
+          >
+            <Text style={styles.modalTitle}>{ourMission.title}</Text>
+            <Text style={styles.modalText}>{ourMission.description}</Text>
+          </ScrollView>
         </View>
-        <ScrollView
-          contentContainerStyle={styles.thirdViewContent}
-          style={styles.thirdContainer}
-        >
-          <Text style={styles.modalTitle}>{ourMission.title}</Text>
-          <Text style={styles.modalText}>{ourMission.description}</Text>
-        </ScrollView>
       </View>
 
       <Modal visible={modalVisible} animationType="slide">
@@ -255,12 +255,13 @@ const styles = StyleSheet.create({
   secondContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 2,
+    flex: 4,
     backgroundColor: "white",
   },
   thirdContainer: {
     backgroundColor: "white",
-    flex: 2,
+    flex: 4,
+    flexGrow: 5,
   },
   thirdViewContent: {
     alignItems: "center",
