@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     height: "99%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f2c300",
+    backgroundColor: "white",
     borderRadius: 20,
   },
   doneeImage: {
