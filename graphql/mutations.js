@@ -10,12 +10,15 @@ export const createSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -36,12 +39,15 @@ export const updateSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -62,18 +68,60 @@ export const deleteSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createLocation = /* GraphQL */ `
+  mutation CreateLocation(
+    $input: CreateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    createLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateLocation = /* GraphQL */ `
+  mutation UpdateLocation(
+    $input: UpdateLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    updateLocation(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteLocation = /* GraphQL */ `
+  mutation DeleteLocation(
+    $input: DeleteLocationInput!
+    $condition: ModelLocationConditionInput
+  ) {
+    deleteLocation(input: $input, condition: $condition) {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -89,27 +137,7 @@ export const createUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -125,27 +153,7 @@ export const updateUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -161,126 +169,154 @@ export const deleteUser = /* GraphQL */ `
       name
       lastName
       email
+      stripeID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createDonee = /* GraphQL */ `
+  mutation CreateDonee(
+    $input: CreateDoneeInput!
+    $condition: ModelDoneeConditionInput
+  ) {
+    createDonee(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
-        users {
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
+export const updateDonee = /* GraphQL */ `
+  mutation UpdateDonee(
+    $input: UpdateDoneeInput!
+    $condition: ModelDoneeConditionInput
   ) {
-    createComment(input: $input, condition: $condition) {
+    updateDonee(input: $input, condition: $condition) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
+      sponsorID
+      sponsor {
+        id
+        name
+        logo
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
+export const deleteDonee = /* GraphQL */ `
+  mutation DeleteDonee(
+    $input: DeleteDoneeInput!
+    $condition: ModelDoneeConditionInput
   ) {
-    updateComment(input: $input, condition: $condition) {
+    deleteDonee(input: $input, condition: $condition) {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
+      sponsorID
+      sponsor {
+        id
+        name
+        logo
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
+export const createDonations = /* GraphQL */ `
+  mutation CreateDonations(
+    $input: CreateDonationsInput!
+    $condition: ModelDonationsConditionInput
   ) {
-    deleteComment(input: $input, condition: $condition) {
+    createDonations(input: $input, condition: $condition) {
       id
-      userID
-      user {
-        id
-        name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
+      amount
+      gratificationPhoto
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDonations = /* GraphQL */ `
+  mutation UpdateDonations(
+    $input: UpdateDonationsInput!
+    $condition: ModelDonationsConditionInput
+  ) {
+    updateDonations(input: $input, condition: $condition) {
+      id
+      amount
+      gratificationPhoto
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDonations = /* GraphQL */ `
+  mutation DeleteDonations(
+    $input: DeleteDonationsInput!
+    $condition: ModelDonationsConditionInput
+  ) {
+    deleteDonations(input: $input, condition: $condition) {
+      id
+      amount
+      gratificationPhoto
       createdAt
       updatedAt
     }

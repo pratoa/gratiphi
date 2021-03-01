@@ -25,7 +25,17 @@ const RootStack = createStackNavigator();
 const AuthenticationStackScreen = (props) => {
   return (
     <AuthenticationStack.Navigator>
-      <AuthenticationStack.Screen name="Welcome">
+      <AuthenticationStack.Screen
+        name="Welcome"
+        options={{
+          headerShown: true,
+          headerTitle: "",
+          headerStyle: {
+            backgroundColor: "white",
+            shadowOpacity: 0,
+          },
+        }}
+      >
         {(screenProps) => (
           <Welcome
             {...screenProps}
@@ -38,8 +48,13 @@ const AuthenticationStackScreen = (props) => {
         name="SignIn"
         options={{
           headerShown: true,
-          headerTitle: "Sign In",
+          headerTitle: "",
           headerBackTitle: "Back",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "#355C96",
+            shadowOpacity: 0,
+          },
         }}
       >
         {(screenProps) => (
@@ -51,8 +66,13 @@ const AuthenticationStackScreen = (props) => {
         component={SignUp}
         options={{
           headerShown: true,
-          headerTitle: "Sign Up",
+          headerTitle: "",
           headerBackTitle: "Back",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "#355C96",
+            shadowOpacity: 0,
+          },
         }}
       ></AuthenticationStack.Screen>
       <AuthenticationStack.Screen
@@ -60,8 +80,13 @@ const AuthenticationStackScreen = (props) => {
         component={ConfirmSignUp}
         options={{
           headerShown: true,
-          headerTitle: "Sign In",
+          headerTitle: "",
           headerBackTitle: "Back",
+          headerTintColor: "white",
+          headerStyle: {
+            backgroundColor: "#355C96",
+            shadowOpacity: 0,
+          },
         }}
       ></AuthenticationStack.Screen>
     </AuthenticationStack.Navigator>
@@ -70,8 +95,15 @@ const AuthenticationStackScreen = (props) => {
 
 const Initializing = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <ActivityIndicator size="large" color="tomato" />
+    <View
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#355C96",
+      }}
+    >
+      <ActivityIndicator size="large" color="white" />
     </View>
   );
 };
@@ -135,6 +167,11 @@ function App() {
           options={({ route }) => ({
             headerTitle: route.params.item.name,
             headerBackTitle: "Back",
+            headerTintColor: "white",
+            headerStyle: {
+              backgroundColor: "#355C96",
+              shadowOpacity: 0,
+            },
           })}
         ></RootStack.Screen>
         {/* {isUserLoggedIn === "initializing" && <Initializing />}

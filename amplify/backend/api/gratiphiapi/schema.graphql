@@ -2,22 +2,44 @@ type Sponsor @model {
   id: ID!
   name: String!
   logo: String
-  users: [User] @connection(keyName: "bySponsorID", fields: ["id"])
+  locations: [String]
+  donee: [Donee] @connection(keyName: "bySponsorID", fields: ["id"])
 }
 
-type User @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
+type Location @model {
+  id: ID!
+  name: String!
+}
+
+type User @model {
   id: ID!
   name: String!
   lastName: String!
   email: String!
-  sponsorID: ID!
-  sponsor: Sponsor @connection(fields: ["sponsorID"])
-  comments: [Comment] @connection(keyName: "byUserID", fields: ["id"])
+  stripeID: String
 }
 
-type Donee @model @key(name: "byUserID", fields: ["userID", "content"]) {
+type Donee @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
   id: ID!
-  userID: ID!
-  user: User @connection(fields: ["userID"])
-  content: String!
+  firstName: String!
+  lastName: String!
+  location: Location
+  smallBiography: String!
+  fullBiography: String!
+  profilePhoto: String!
+  sponsorID: ID!
+  sponsor: Sponsor @connection(fields: ["sponsorID"])
+  # donations: Donations @connection(fields: ["donationsID"])
+}
+
+type Donations @model {
+  id: ID!
+  amount: Float
+  # user: User @connection(fields: ["userID"])
+  # donee: Donee @connection(fields: ["doneeID"])
+  gratificationPhoto: String
+}
+
+type Query {
+  createPaymentIntent: String @function(name: "createPaymentIntent-dev")
 }

@@ -7,12 +7,15 @@ export const onCreateSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -30,12 +33,15 @@ export const onUpdateSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
@@ -53,18 +59,51 @@ export const onDeleteSponsor = /* GraphQL */ `
       id
       name
       logo
-      users {
+      locations
+      donee {
         items {
           id
-          name
+          firstName
           lastName
-          email
+          smallBiography
+          fullBiography
+          profilePhoto
           sponsorID
           createdAt
           updatedAt
         }
         nextToken
       }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateLocation = /* GraphQL */ `
+  subscription OnCreateLocation {
+    onCreateLocation {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLocation = /* GraphQL */ `
+  subscription OnUpdateLocation {
+    onUpdateLocation {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLocation = /* GraphQL */ `
+  subscription OnDeleteLocation {
+    onDeleteLocation {
+      id
+      name
       createdAt
       updatedAt
     }
@@ -77,27 +116,7 @@ export const onCreateUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -110,27 +129,7 @@ export const onUpdateUser = /* GraphQL */ `
       name
       lastName
       email
-      sponsorID
-      sponsor {
-        id
-        name
-        logo
-        users {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
+      stripeID
       createdAt
       updatedAt
     }
@@ -143,117 +142,136 @@ export const onDeleteUser = /* GraphQL */ `
       name
       lastName
       email
+      stripeID
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateDonee = /* GraphQL */ `
+  subscription OnCreateDonee {
+    onCreateDonee {
+      id
+      firstName
+      lastName
+      location {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
       sponsorID
       sponsor {
         id
         name
         logo
-        users {
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
-      }
-      comments {
-        items {
-          id
-          userID
-          content
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       createdAt
       updatedAt
     }
   }
 `;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
+export const onUpdateDonee = /* GraphQL */ `
+  subscription OnUpdateDonee {
+    onUpdateDonee {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
+      sponsorID
+      sponsor {
+        id
+        name
+        logo
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment {
-    onUpdateComment {
+export const onDeleteDonee = /* GraphQL */ `
+  subscription OnDeleteDonee {
+    onDeleteDonee {
       id
-      userID
-      user {
+      firstName
+      lastName
+      location {
         id
         name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
+        createdAt
+        updatedAt
+      }
+      smallBiography
+      fullBiography
+      profilePhoto
+      sponsorID
+      sponsor {
+        id
+        name
+        logo
+        locations
+        donee {
           nextToken
         }
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment {
-    onDeleteComment {
+export const onCreateDonations = /* GraphQL */ `
+  subscription OnCreateDonations {
+    onCreateDonations {
       id
-      userID
-      user {
-        id
-        name
-        lastName
-        email
-        sponsorID
-        sponsor {
-          id
-          name
-          logo
-          createdAt
-          updatedAt
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      content
+      amount
+      gratificationPhoto
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDonations = /* GraphQL */ `
+  subscription OnUpdateDonations {
+    onUpdateDonations {
+      id
+      amount
+      gratificationPhoto
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDonations = /* GraphQL */ `
+  subscription OnDeleteDonations {
+    onDeleteDonations {
+      id
+      amount
+      gratificationPhoto
       createdAt
       updatedAt
     }

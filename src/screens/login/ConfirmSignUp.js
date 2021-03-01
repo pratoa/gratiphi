@@ -46,7 +46,7 @@ export default function ConfirmSignUp({ route, navigation }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: "#355C96",
   },
   container: {
     flex: 1,
