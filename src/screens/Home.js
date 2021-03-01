@@ -12,6 +12,7 @@ import {
   TouchableWithoutFeedback,
   Modal,
   Platform,
+  ScrollView,
 } from "react-native";
 import { Auth } from "aws-amplify";
 import Carousel, { Pagination } from "react-native-snap-carousel";
@@ -95,6 +96,14 @@ const images = [
   },
 ];
 
+const ourMission = {
+  title: "Our Mission",
+  description:
+    "Alimenta La Solidaridad is an organization that develops sustainable solutions to the food security challenges of Venezuelan families. \
+    We promote community organization and volunteer work as a way to provide daily lunches to children at risk or experiencing nutritional\
+  deficiency as a result of the complex humanitarian crisis.",
+};
+
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [index, setIndex] = useState(0);
@@ -160,6 +169,7 @@ export default function Home() {
         <View style={styles.secondContainer}>
           <Text style={styles.modalTitle}>Our Programs</Text>
           <FlatList
+            scrollEnabled={false}
             data={images}
             numColumns={3}
             keyExtractor={(item) => item.id.toString()}
@@ -183,8 +193,15 @@ export default function Home() {
             )}
           ></FlatList>
         </View>
-        <View style={styles.thirdContainer}></View>
+        <ScrollView
+          contentContainerStyle={styles.thirdViewContent}
+          style={styles.thirdContainer}
+        >
+          <Text style={styles.modalTitle}>{ourMission.title}</Text>
+          <Text style={styles.modalText}>{ourMission.description}</Text>
+        </ScrollView>
       </View>
+
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.modalView}>
           <Text style={styles.modalTitle}>{modalInfo.title}</Text>
@@ -220,6 +237,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     color: "black",
     padding: 15,
+    textAlign: "auto",
   },
   modalTitle: {
     fontWeight: "bold",
@@ -228,7 +246,7 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   container: {
-    flex: 2,
+    flex: 1,
     alignItems: "center",
     backgroundColor: "#325e9d", //'#325e9d'
     alignContent: "center",
@@ -237,12 +255,16 @@ const styles = StyleSheet.create({
   secondContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flex: 3,
+    flex: 2,
     backgroundColor: "white",
   },
   thirdContainer: {
-    backgroundColor: "grey",
+    backgroundColor: "white",
     flex: 2,
+  },
+  thirdViewContent: {
+    alignItems: "center",
+    justifyContent: "center",
   },
   icons: {
     width: 110,
