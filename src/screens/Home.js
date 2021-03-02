@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import { Auth } from "aws-amplify";
 import Carousel, { Pagination } from "react-native-snap-carousel";
+import { AppImagePicker } from "./../components/AppImagePicker";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -80,7 +81,9 @@ export default function Home() {
           autoplayInterval={3000}
         />
       </View>
-      <View style={styles.secondContainer}></View>
+      <View style={styles.secondContainer}>
+        <AppImagePicker></AppImagePicker>
+      </View>
     </View>
   );
 }
