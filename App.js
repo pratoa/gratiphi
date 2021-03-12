@@ -167,20 +167,13 @@ function App() {
           options={({ route }) => ({
             headerTitle: route.params.item.name,
             headerBackTitle: "Back",
-            headerTintColor: "white",
+            headerTintColor: "#355C96",
             headerStyle: {
-              backgroundColor: "#355C96",
+              backgroundColor: "white",
               shadowOpacity: 0,
             },
           })}
         ></RootStack.Screen>
-        {/* {isUserLoggedIn === "initializing" && <Initializing />}
-        {isUserLoggedIn === "loggedIn" && (
-          <BottomTabNavigator updateAuthState={updateAuthState} />
-        )}
-        {isUserLoggedIn === "loggedOut" && (
-          <AuthenticationNavigator updateAuthState={updateAuthState} />
-        )} */}
       </RootStack.Navigator>
     </NavigationContainer>
   );

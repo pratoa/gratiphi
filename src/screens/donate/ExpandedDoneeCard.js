@@ -17,15 +17,15 @@ export default function ExpandedCard({ route }) {
   const item = route.params.item;
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#355C96" }}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image source={item.image} style={styles.doneeImage}></Image>
         <View style={styles.detailsContainer}>
           <View style={styles.infoConatiner}>
-            <FontAwesome5 name={"birthday-cake"} size={25} color={"white"} />
+            <FontAwesome5 name={"birthday-cake"} size={25} color={"#355C96"} />
             <Text style={styles.infoText}>{item.age}</Text>
-            <FontAwesome5 name={"map-marker-alt"} size={25} color={"white"} />
+            <FontAwesome5 name={"map-marker-alt"} size={25} color={"#355C96"} />
             <Text style={styles.infoText}>{item.location}</Text>
           </View>
           <Text style={styles.doneeLongBiography}> {item.longBiograhy}</Text>
@@ -66,14 +66,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     alignSelf: "center",
-    color: "#F5F5F5",
+    color: "#355C96",
   },
   doneeLongBiography: {
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 18,
     textAlign: "justify",
-    color: "#F5F5F5",
+    color: "#355C96",
   },
   buttonContainer: {
     alignItems: "center",

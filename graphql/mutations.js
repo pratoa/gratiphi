@@ -1,6 +1,15 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createPaymentIntent = /* GraphQL */ `
+  mutation CreatePaymentIntent(
+    $email: String
+    $userId: String
+    $amount: Float
+  ) {
+    createPaymentIntent(email: $email, userId: $userId, amount: $amount)
+  }
+`;
 export const createSponsor = /* GraphQL */ `
   mutation CreateSponsor(
     $input: CreateSponsorInput!
@@ -20,11 +29,18 @@ export const createSponsor = /* GraphQL */ `
           fullBiography
           profilePhoto
           sponsorID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -49,11 +65,18 @@ export const updateSponsor = /* GraphQL */ `
           fullBiography
           profilePhoto
           sponsorID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -78,11 +101,18 @@ export const deleteSponsor = /* GraphQL */ `
           fullBiography
           profilePhoto
           sponsorID
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -96,6 +126,9 @@ export const createLocation = /* GraphQL */ `
     createLocation(input: $input, condition: $condition) {
       id
       name
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -109,6 +142,9 @@ export const updateLocation = /* GraphQL */ `
     updateLocation(input: $input, condition: $condition) {
       id
       name
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -122,6 +158,9 @@ export const deleteLocation = /* GraphQL */ `
     deleteLocation(input: $input, condition: $condition) {
       id
       name
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -138,6 +177,9 @@ export const createUser = /* GraphQL */ `
       lastName
       email
       stripeID
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -154,6 +196,9 @@ export const updateUser = /* GraphQL */ `
       lastName
       email
       stripeID
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -170,6 +215,9 @@ export const deleteUser = /* GraphQL */ `
       lastName
       email
       stripeID
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -184,12 +232,6 @@ export const createDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
       smallBiography
       fullBiography
       profilePhoto
@@ -201,10 +243,17 @@ export const createDonee = /* GraphQL */ `
         locations
         donee {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -219,12 +268,6 @@ export const updateDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
       smallBiography
       fullBiography
       profilePhoto
@@ -236,10 +279,17 @@ export const updateDonee = /* GraphQL */ `
         locations
         donee {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -254,12 +304,6 @@ export const deleteDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
       smallBiography
       fullBiography
       profilePhoto
@@ -271,10 +315,17 @@ export const deleteDonee = /* GraphQL */ `
         locations
         donee {
           nextToken
+          startedAt
         }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -289,6 +340,9 @@ export const createDonations = /* GraphQL */ `
       id
       amount
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -303,6 +357,9 @@ export const updateDonations = /* GraphQL */ `
       id
       amount
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -317,6 +374,9 @@ export const deleteDonations = /* GraphQL */ `
       id
       amount
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }

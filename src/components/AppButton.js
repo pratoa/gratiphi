@@ -16,10 +16,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 15,
     width: "80%",
-    backgroundColor: "white", //tomatio
+    backgroundColor: "#355C96", //tomatio
   },
   buttonText: {
-    color: "#355C96",
+    color: "white",
     fontSize: 14,
     fontWeight: "600",
     textTransform: "uppercase",

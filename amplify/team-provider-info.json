@@ -13,7 +13,8 @@
     },
     "categories": {
       "auth": {
-        "gratiphi02ff5042": {}
+        "gratiphi02ff5042": {},
+        "userPoolGroups": {}
       }
     }
   }

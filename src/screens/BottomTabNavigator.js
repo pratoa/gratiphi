@@ -40,10 +40,10 @@ function DonateStackScreen({ props }) {
         children={() => <Donate props={props} />}
         options={{
           headerTitle: "Donate",
-          headerTintColor: "white",
+          headerTintColor: "#355C96",
           headerShown: true,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: "white",
             shadowOpacity: 0,
           },
         }}
