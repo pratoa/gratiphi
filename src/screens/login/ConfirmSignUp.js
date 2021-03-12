@@ -14,7 +14,7 @@ export default function ConfirmSignUp({ route, navigation }) {
     try {
       await Auth.confirmSignUp(email, authCode);
       console.log("Code Confirmed");
-      navigation.navigate("SignIn");
+      navigation.navigate("Main");
     } catch (error) {
       setError(error);
       console.log("Verification code does not match.", error.code);

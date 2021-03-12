@@ -1,4 +1,4 @@
-type Sponsor @model {
+type Sponsor @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   logo: String
@@ -6,12 +6,12 @@ type Sponsor @model {
   donee: [Donee] @connection(keyName: "bySponsorID", fields: ["id"])
 }
 
-type Location @model {
+type Location @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
 }
 
-type User @model {
+type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   lastName: String!
@@ -19,27 +19,27 @@ type User @model {
   stripeID: String
 }
 
-type Donee @model @key(name: "bySponsorID", fields: ["sponsorID"]) {
+type Donee
+  @model
+  @key(name: "bySponsorID", fields: ["sponsorID"])
+  @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String!
   lastName: String!
-  location: Location
   smallBiography: String!
   fullBiography: String!
   profilePhoto: String!
   sponsorID: ID!
   sponsor: Sponsor @connection(fields: ["sponsorID"])
-  # donations: Donations @connection(fields: ["donationsID"])
 }
 
-type Donations @model {
+type Donations @model @auth(rules: [{ allow: public }]) {
   id: ID!
   amount: Float
-  # user: User @connection(fields: ["userID"])
-  # donee: Donee @connection(fields: ["doneeID"])
   gratificationPhoto: String
 }
 
-type Query {
-  createPaymentIntent: String @function(name: "createPaymentIntent-dev")
+type Mutation {
+  createPaymentIntent(email: String, userId: String, amount: Float): String
+    @function(name: "createPaymentIntent-dev")
 }

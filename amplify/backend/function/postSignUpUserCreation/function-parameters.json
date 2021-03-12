@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "auth": {
+      "gratiphi02ff5042": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "api": {
+      "gratiphiapi": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
