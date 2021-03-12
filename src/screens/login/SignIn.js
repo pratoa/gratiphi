@@ -5,15 +5,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
 
-export default function SignIn({ navigation, updateAuthState }) {
+export default function SignIn({
+  navigation,
+  updateAuthState,
+  updateUserGroup,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   async function signIn() {
     try {
-      await Auth.signIn(email, password);
+      let user = await Auth.signIn(email, password);
       console.log("Login Success!");
+      updateUserGroup(
+        user.signInUserSession.accessToken.payload["cognito:groups"][0]
+      );
       updateAuthState("loggedIn");
     } catch (error) {
       setError(error);

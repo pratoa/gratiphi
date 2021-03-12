@@ -13,13 +13,20 @@ export default function Welcome({
   navigation,
   updateAuthState,
   isUserLoggedIn,
+  userGroup,
 }) {
   const backgroundImage = "../../../assets/images/el-tigre.jpg";
   const logo = "../../../assets/logo/gratiphi-blue.png";
 
   useEffect(() => {
     if (isUserLoggedIn === "loggedIn") {
-      navigation.replace("Main");
+      console.log(userGroup);
+      if (userGroup === "gratiphiUser") {
+        navigation.replace("Main");
+      }
+      if (userGroup === "gratiphiAdmin") {
+        navigation.replace("Admin");
+      }
     }
   });
 

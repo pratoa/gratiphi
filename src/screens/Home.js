@@ -145,25 +145,9 @@ export default function Home() {
             onSnapToItem={(index) => setIndex(index)}
             loop={true}
             autoplay={true}
-            // enableMomentum={false}
-            // lockScrollWhileSnapping={true}
             autoplayDelay={1000}
             autoplayInterval={3000}
           />
-          {/* <Pagination 
-					dotsLength={DATA.length}
-					activeDotIndex={index}
-					containerStyle={{  }}
-              		dotStyle={{
-						width: 4,
-						height: 4,
-						borderRadius: 5,
-						marginHorizontal: 8,
-						backgroundColor: 'rgba(255, 255, 255, 0.92)'
-					  }}
-					inactiveDotOpacity={0.4}
-					inactiveDotScale={0.6}
-					/>	 */}
         </View>
 
         <View style={styles.secondContainer}>
