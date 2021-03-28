@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/createDonation-724c6e52555a43375543-build.zip"
+          "S3Key": "amplify-builds/createDonation-3732444b566935302b64-build.zip"
         }
       }
     },

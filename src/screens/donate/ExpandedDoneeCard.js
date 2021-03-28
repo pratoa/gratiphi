@@ -9,6 +9,7 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
+  Linking,
 } from "react-native";
 
 const windowHeight = Dimensions.get("window").height;
@@ -17,22 +18,28 @@ export default function ExpandedCard({ route }) {
   const item = route.params.item;
 
   return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={item.image} style={styles.doneeImage}></Image>
+        <Image
+          source={{ uri: item.profilePhoto }}
+          style={styles.doneeImage}
+        ></Image>
         <View style={styles.detailsContainer}>
           <View style={styles.infoConatiner}>
             <FontAwesome5 name={"birthday-cake"} size={25} color={"#355C96"} />
             <Text style={styles.infoText}>{item.age}</Text>
             <FontAwesome5 name={"map-marker-alt"} size={25} color={"#355C96"} />
-            <Text style={styles.infoText}>{item.location}</Text>
+            <Text style={styles.infoText}>{item.location.name}</Text>
           </View>
-          <Text style={styles.doneeLongBiography}> {item.longBiograhy}</Text>
+          <Text style={styles.doneeLongBiography}> {item.fullBiography}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
-        <AppButton title={"Donate"}></AppButton>
+        <AppButton
+          title={"Donate"}
+          onPress={() => Linking.openURL("https://gratiphi.org")}
+        ></AppButton>
       </View>
     </View>
   );

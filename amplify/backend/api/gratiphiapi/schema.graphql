@@ -2,13 +2,19 @@ type Sponsor @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   logo: String
-  locations: [String]
-  donee: [Donee] @connection(keyName: "bySponsorID", fields: ["id"])
+  locations: [Location] @connection(keyName: "bySponsorId", fields: ["id"])
+  donees: [Donee] @connection(keyName: "bySponsorId", fields: ["id"])
 }
 
-type Location @model @auth(rules: [{ allow: public }]) {
+type Location
+  @model
+  @key(name: "bySponsorId", fields: ["sponsorId"])
+  @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
+  sponsorId: ID!
+  sponsor: Sponsor @connection(fields: ["sponsorId"])
+  donees: [Donee] @connection(keyName: "byLocationId", fields: ["id"])
 }
 
 type User @model @auth(rules: [{ allow: public }]) {
@@ -16,26 +22,41 @@ type User @model @auth(rules: [{ allow: public }]) {
   name: String!
   lastName: String!
   email: String!
-  stripeID: String
+  stripeId: String
+  donations: [Donations] @connection(keyName: "byUserId", fields: ["id"])
 }
 
 type Donee
   @model
-  @key(name: "bySponsorID", fields: ["sponsorID"])
+  @key(name: "bySponsorId", fields: ["sponsorId"])
+  @key(name: "byLocationId", fields: ["locationId"])
   @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String!
   lastName: String!
+  birthDate: AWSDate!
   smallBiography: String!
   fullBiography: String!
   profilePhoto: String!
-  sponsorID: ID!
-  sponsor: Sponsor @connection(fields: ["sponsorID"])
+  sponsorId: ID!
+  sponsor: Sponsor @connection(fields: ["sponsorId"])
+  locationId: ID!
+  location: Location @connection(fields: ["locationId"])
+  donations: [Donations] @connection(keyName: "byDoneeId", fields: ["id"])
 }
 
-type Donations @model @auth(rules: [{ allow: public }]) {
+type Donations
+  @model
+  @key(name: "byUserId", fields: ["userId"])
+  @key(name: "byDoneeId", fields: ["doneeId"])
+  @auth(rules: [{ allow: public }]) {
   id: ID!
+  userId: ID!
+  user: User @connection(fields: ["userId"])
+  doneeId: ID!
+  donee: Donee @connection(fields: ["doneeId"])
   amount: Float
+  isGratificationSent: Boolean
   gratificationPhoto: String
 }
 

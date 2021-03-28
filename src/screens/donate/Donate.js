@@ -1,17 +1,9 @@
-import React, { useState } from "react";
-import {
-  View,
-  Image,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Modal,
-  Animated,
-} from "react-native";
-import { TouchableHighlight } from "react-native-gesture-handler";
-import Carousel, { Pagination } from "react-native-snap-carousel";
+import React, { useState, useEffect } from "react";
+import { API } from "aws-amplify";
+import * as queries from "../../../graphql/queries";
+import { View, StyleSheet, Dimensions } from "react-native";
+import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
-import ExpandedDoneeCard from "./ExpandedDoneeCard";
 
 class DoneeItem {
   constructor(name, shortBiography, longBiograhy, image, age, location) {
@@ -84,7 +76,17 @@ export default function Donate({ props }) {
   const [yOffset, setYoffSet] = useState(null);
   const [xOffset, setXoffSet] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
-  // state = { yOffset: null, xOffset: null, selectedCard: null };
+  const [donees, setDonees] = useState([]);
+
+  useEffect(() => {
+    async function getDonees() {
+      const response = await API.graphql({ query: queries.listDonees });
+      const listOfDonees = await response.data.listDonees.items;
+      // console.log(listOfDonees);
+      setDonees(listOfDonees);
+    }
+    getDonees();
+  }, []);
 
   function renderItem({ item, index }) {
     return (
@@ -111,7 +113,7 @@ export default function Donate({ props }) {
   return (
     <View style={styles.container}>
       <Carousel
-        data={DATA}
+        data={donees}
         renderItem={renderItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
@@ -121,14 +123,6 @@ export default function Donate({ props }) {
         loop={true}
         enableMomentum={true}
       />
-      {/* {selectedCard && (
-        <ExpandedDoneeCard
-          updateSelectedCard={updateSelectedCard}
-          item={DATA[index]}
-          yOffset={yOffset}
-          xOffset={xOffset}
-        />
-      )} */}
     </View>
   );
 }

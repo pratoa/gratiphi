@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import {
   View,
   TouchableWithoutFeedback,
@@ -13,6 +14,9 @@ const ITEM_WIDTH = Math.round(WINDOW_WIDTH * 0.8);
 
 export default function DoneeCard({ navigation, item }) {
   const [container, setContainer] = useState(null);
+  const now = moment();
+  const birthDate = moment(item.birthDate, "YYYY-MM-DD");
+  item.age = moment.duration(now.diff(birthDate)).years();
 
   function openExpandedCard() {
     navigation.navigate("ExpandedCard", { item: item });
@@ -22,15 +26,18 @@ export default function DoneeCard({ navigation, item }) {
     <View ref={(container) => setContainer(container)}>
       <TouchableWithoutFeedback onPress={() => openExpandedCard()}>
         <View style={styles.itemContainer}>
-          <Image source={item.image} style={styles.doneeImage} />
+          <Image
+            source={{ uri: item.profilePhoto }}
+            style={styles.doneeImage}
+          />
           <View style={styles.textContainer}>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.doneeName}>{item.name}</Text>
+              <Text style={styles.doneeName}>{item.firstName}</Text>
               <Text style={styles.doneeAge}>{item.age}</Text>
             </View>
-            <Text style={styles.doneeLocation}>{item.location}</Text>
+            <Text style={styles.doneeLocation}>{item.location.name}</Text>
             <Text style={styles.doneeSmallBiography}>
-              {item.shortBiography}
+              {item.smallBiography}
             </Text>
           </View>
         </View>

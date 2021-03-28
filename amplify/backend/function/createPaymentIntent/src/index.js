@@ -10,7 +10,7 @@ const stripe = require("stripe")(
 const getUser = gql`
   query getUser($id: ID!) {
     getUser(id: $id) {
-      stripeID
+      stripeId
     }
   }
 `;
@@ -19,7 +19,7 @@ const updateUser = gql`
   mutation updateUser($input: UpdateUserInput!) {
     updateUser(input: $input) {
       id
-      stripeID
+      stripeId
     }
   }
 `;
@@ -51,7 +51,7 @@ async function getUserStripeId(userId) {
       },
     });
     console.log("GET STRIPE ID: ", graphqlData.data);
-    return graphqlData.data.data.getUser.stripeID;
+    return graphqlData.data.data.getUser.stripeId;
   } catch (err) {
     console.log("ERROR GETTING STRIPEID: ", err);
   }
@@ -70,7 +70,7 @@ async function addStripeIdToUser(userId, stripeId) {
       variables: {
         input: {
           id: userId,
-          stripeID: stripeId,
+          stripeId: stripeId,
         },
       },
     },
@@ -92,10 +92,6 @@ exports.handler = async (event, context, callback) => {
   console.log("Event", event);
   try {
     var userStripeId = await getUserStripeId(event.arguments.userId);
-
-    console.log("BEFORE", userStripeId);
-
-    console.log("IS THIS TRUE??", userStripeId == null);
 
     if (userStripeId == null) {
       const stripeUser = await createStripeUser(event.arguments.email);

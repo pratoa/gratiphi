@@ -190,7 +190,7 @@ function App() {
           name="ExpandedCard"
           component={ExpandedDoneeCard}
           options={({ route }) => ({
-            headerTitle: route.params.item.name,
+            headerTitle: route.params.item.firstName,
             headerBackTitle: "Back",
             headerTintColor: "#355C96",
             headerStyle: {
