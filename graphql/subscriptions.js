@@ -7,21 +7,43 @@ export const onCreateSponsor = /* GraphQL */ `
       id
       name
       logo
-      locations
-      donee {
+      locations {
         items {
           id
-          firstName
-          lastName
-          smallBiography
-          fullBiography
-          profilePhoto
-          sponsorID
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -33,21 +55,43 @@ export const onUpdateSponsor = /* GraphQL */ `
       id
       name
       logo
-      locations
-      donee {
+      locations {
         items {
           id
-          firstName
-          lastName
-          smallBiography
-          fullBiography
-          profilePhoto
-          sponsorID
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -59,21 +103,43 @@ export const onDeleteSponsor = /* GraphQL */ `
       id
       name
       logo
-      locations
-      donee {
+      locations {
         items {
           id
-          firstName
-          lastName
-          smallBiography
-          fullBiography
-          profilePhoto
-          sponsorID
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
+        startedAt
       }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -84,6 +150,48 @@ export const onCreateLocation = /* GraphQL */ `
     onCreateLocation {
       id
       name
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        locations {
+          nextToken
+          startedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -94,6 +202,48 @@ export const onUpdateLocation = /* GraphQL */ `
     onUpdateLocation {
       id
       name
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        locations {
+          nextToken
+          startedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -104,6 +254,48 @@ export const onDeleteLocation = /* GraphQL */ `
     onDeleteLocation {
       id
       name
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        locations {
+          nextToken
+          startedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          sponsorId
+          locationId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -116,7 +308,27 @@ export const onCreateUser = /* GraphQL */ `
       name
       lastName
       email
-      stripeID
+      stripeId
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -129,7 +341,27 @@ export const onUpdateUser = /* GraphQL */ `
       name
       lastName
       email
-      stripeID
+      stripeId
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -142,7 +374,27 @@ export const onDeleteUser = /* GraphQL */ `
       name
       lastName
       email
-      stripeID
+      stripeId
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -154,27 +406,74 @@ export const onCreateDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
+      birthDate
       smallBiography
       fullBiography
       profilePhoto
-      sponsorID
+      sponsorId
       sponsor {
         id
         name
         logo
-        locations
-        donee {
+        locations {
           nextToken
+          startedAt
         }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      locationId
+      location {
+        id
+        name
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -186,27 +485,74 @@ export const onUpdateDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
+      birthDate
       smallBiography
       fullBiography
       profilePhoto
-      sponsorID
+      sponsorId
       sponsor {
         id
         name
         logo
-        locations
-        donee {
+        locations {
           nextToken
+          startedAt
         }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      locationId
+      location {
+        id
+        name
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -218,27 +564,74 @@ export const onDeleteDonee = /* GraphQL */ `
       id
       firstName
       lastName
-      location {
-        id
-        name
-        createdAt
-        updatedAt
-      }
+      birthDate
       smallBiography
       fullBiography
       profilePhoto
-      sponsorID
+      sponsorId
       sponsor {
         id
         name
         logo
-        locations
-        donee {
+        locations {
           nextToken
+          startedAt
         }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
         createdAt
         updatedAt
       }
+      locationId
+      location {
+        id
+        name
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donees {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          isGratificationSent
+          gratificationPhoto
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        nextToken
+        startedAt
+      }
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -248,8 +641,70 @@ export const onCreateDonations = /* GraphQL */ `
   subscription OnCreateDonations {
     onCreateDonations {
       id
+      userId
+      user {
+        id
+        name
+        lastName
+        email
+        stripeId
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       amount
+      isGratificationSent
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -259,8 +714,70 @@ export const onUpdateDonations = /* GraphQL */ `
   subscription OnUpdateDonations {
     onUpdateDonations {
       id
+      userId
+      user {
+        id
+        name
+        lastName
+        email
+        stripeId
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       amount
+      isGratificationSent
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -270,8 +787,70 @@ export const onDeleteDonations = /* GraphQL */ `
   subscription OnDeleteDonations {
     onDeleteDonations {
       id
+      userId
+      user {
+        id
+        name
+        lastName
+        email
+        stripeId
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          _version
+          _deleted
+          _lastChangedAt
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+          startedAt
+        }
+        _version
+        _deleted
+        _lastChangedAt
+        createdAt
+        updatedAt
+      }
       amount
+      isGratificationSent
       gratificationPhoto
+      _version
+      _deleted
+      _lastChangedAt
       createdAt
       updatedAt
     }

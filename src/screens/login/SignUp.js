@@ -90,7 +90,7 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "#355C96",
+    backgroundColor: "white",
   },
   container: {
     flex: 1,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "white",
+    color: "#355C96",
     fontWeight: "500",
     marginVertical: 15,
   },
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPasswordButtonText: {
-    color: "white",
+    color: "#355C96",
     fontSize: 18,
     fontWeight: "600",
   },

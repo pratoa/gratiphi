@@ -11,6 +11,7 @@ import SignIn from "./src/screens/login/SignIn";
 import SignUp from "./src/screens/login/SignUp";
 import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
 import ExpandedDoneeCard from "./src/screens/donate/ExpandedDoneeCard";
+import Admin from "./src/screens/Admin";
 
 Amplify.configure({
   ...awsconfig,
@@ -41,6 +42,8 @@ const AuthenticationStackScreen = (props) => {
             {...screenProps}
             updateAuthState={props.updateAuthState}
             isUserLoggedIn={props.isUserLoggedIn}
+            userGroup={props.userGroup}
+            updateUserGroup={props.updateUserGroup}
           />
         )}
       </AuthenticationStack.Screen>
@@ -58,7 +61,11 @@ const AuthenticationStackScreen = (props) => {
         }}
       >
         {(screenProps) => (
-          <SignIn {...screenProps} updateAuthState={props.updateAuthState} />
+          <SignIn
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+            updateUserGroup={props.updateUserGroup}
+          />
         )}
       </AuthenticationStack.Screen>
       <AuthenticationStack.Screen
@@ -110,6 +117,7 @@ const Initializing = () => {
 
 function App() {
   let [isUserLoggedIn, setUserLoggedIn] = useState("initializing");
+  let [userGroup, setUserGroup] = useState("");
 
   useEffect(() => {
     checkAuthState();
@@ -117,7 +125,10 @@ function App() {
 
   async function checkAuthState() {
     try {
-      await Auth.currentAuthenticatedUser();
+      let user = await Auth.currentAuthenticatedUser();
+      setUserGroup(
+        user.signInUserSession.accessToken.payload["cognito:groups"][0]
+      );
       console.log("✅ User is signed in");
       setUserLoggedIn("loggedIn");
     } catch (err) {
@@ -126,6 +137,10 @@ function App() {
       setUserLoggedIn("loggedOut");
       return null;
     }
+  }
+
+  function updateUserGroup(userGroup) {
+    setUserGroup(userGroup);
   }
 
   function updateAuthState(isUserLoggedIn) {
@@ -146,6 +161,8 @@ function App() {
               {...screenProps}
               updateAuthState={updateAuthState}
               isUserLoggedIn={isUserLoggedIn}
+              userGroup={userGroup}
+              updateUserGroup={updateUserGroup}
             />
           )}
         </RootStack.Screen>
@@ -162,25 +179,26 @@ function App() {
           )}
         </RootStack.Screen>
         <RootStack.Screen
+          name="Admin"
+          options={{ headerShown: false, headerLeft: null }}
+        >
+          {(screenProps) => (
+            <Admin {...screenProps} updateAuthState={updateAuthState}></Admin>
+          )}
+        </RootStack.Screen>
+        <RootStack.Screen
           name="ExpandedCard"
           component={ExpandedDoneeCard}
           options={({ route }) => ({
-            headerTitle: route.params.item.name,
+            headerTitle: route.params.item.firstName,
             headerBackTitle: "Back",
-            headerTintColor: "white",
+            headerTintColor: "#355C96",
             headerStyle: {
-              backgroundColor: "#355C96",
+              backgroundColor: "white",
               shadowOpacity: 0,
             },
           })}
         ></RootStack.Screen>
-        {/* {isUserLoggedIn === "initializing" && <Initializing />}
-        {isUserLoggedIn === "loggedIn" && (
-          <BottomTabNavigator updateAuthState={updateAuthState} />
-        )}
-        {isUserLoggedIn === "loggedOut" && (
-          <AuthenticationNavigator updateAuthState={updateAuthState} />
-        )} */}
       </RootStack.Navigator>
     </NavigationContainer>
   );

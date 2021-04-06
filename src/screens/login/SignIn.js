@@ -5,15 +5,22 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
 
-export default function SignIn({ navigation, updateAuthState }) {
+export default function SignIn({
+  navigation,
+  updateAuthState,
+  updateUserGroup,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   async function signIn() {
     try {
-      await Auth.signIn(email, password);
+      let user = await Auth.signIn(email, password);
       console.log("Login Success!");
+      updateUserGroup(
+        user.signInUserSession.accessToken.payload["cognito:groups"][0]
+      );
       updateAuthState("loggedIn");
     } catch (error) {
       setError(error);
@@ -68,7 +75,7 @@ export default function SignIn({ navigation, updateAuthState }) {
 const styles = StyleSheet.create({
   safeAreaContainer: {
     flex: 1,
-    backgroundColor: "#355C96",
+    backgroundColor: "white",
   },
   container: {
     flex: 1,
@@ -76,7 +83,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: "white",
+    color: "#355C96",
     fontWeight: "500",
     marginVertical: 15,
   },
@@ -86,7 +93,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPasswordButtonText: {
-    color: "white",
+    color: "#355C96",
     fontSize: 18,
     fontWeight: "600",
   },

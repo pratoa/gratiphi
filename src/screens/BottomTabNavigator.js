@@ -40,10 +40,10 @@ function DonateStackScreen({ props }) {
         children={() => <Donate props={props} />}
         options={{
           headerTitle: "Donate",
-          headerTintColor: "white",
+          headerTintColor: "#355C96",
           headerShown: true,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: "white",
             shadowOpacity: 0,
           },
         }}
@@ -71,12 +71,14 @@ function HistoryStackScreen() {
   );
 }
 
-function SettingsStackScreen({ updateAuthState }) {
+function SettingsStackScreen({ navigation, updateAuthState }) {
   return (
     <SettingsStack.Navigator initialRouteName="Settings">
       <SettingsStack.Screen
         name="Settings"
-        children={() => <Settings updateAuthState={updateAuthState} />}
+        children={() => (
+          <Settings navigation={navigation} updateAuthState={updateAuthState} />
+        )}
         options={{
           headerTitle: "Settings",
           headerTintColor: "white",
@@ -132,7 +134,10 @@ const BottomTabNavigator = (props) => {
       <BottomNavigator.Screen
         name="Settings"
         children={() => (
-          <SettingsStackScreen updateAuthState={props.updateAuthState} />
+          <SettingsStackScreen
+            navigation={props.navigation}
+            updateAuthState={props.updateAuthState}
+          />
         )}
         options={{
           tabBarLabel: "Settings",

@@ -1,36 +1,32 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  unstable_batchedUpdates,
-} from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { Auth } from "aws-amplify";
 
-export default function Settings({ navigation, updateAuthState }) {
+export default function Admin({ navigation, updateAuthState }) {
   async function signOut() {
     try {
       console.log(Auth.currentUserInfo);
       await Auth.signOut();
       updateAuthState("loggedOut");
-      navigation.navigate("Welcome");
+      navigation.replace("Welcome");
     } catch (error) {
       console.log("Error signing out: ", error);
     }
   }
 
   return (
-    <View style={styles.container}>
-      <Button title="Sign Out" color="tomato" onPress={signOut} />
+    <View style={styles.mainContiner}>
+      <Text>Welcome Admin</Text>
+      <Button title="Sign Out" onPress={signOut}></Button>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContiner: {
     flex: 1,
+    alignContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    justifyContent: "center",
   },
 });
