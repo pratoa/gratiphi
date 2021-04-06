@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import Screen from "../components/Screen";
 
 export default function HistoryDonations() {
-  return <View style={styles.container}></View>;
+  return <Screen></Screen>;
 }
 
 const styles = StyleSheet.create({

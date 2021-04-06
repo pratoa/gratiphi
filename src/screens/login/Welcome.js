@@ -1,13 +1,8 @@
-import React, { useEffect, useState, ReactElement } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  StatusBar,
-} from "react-native";
+import React, { useEffect } from "react";
+import { View, StyleSheet, Image, StatusBar } from "react-native";
+
 import AppButton from "../../components/AppButton";
+import Screen from "../../components/Screen";
 
 export default function Welcome({
   navigation,
@@ -15,7 +10,6 @@ export default function Welcome({
   isUserLoggedIn,
   userGroup,
 }) {
-  const backgroundImage = "../../../assets/images/el-tigre.jpg";
   const logo = "../../../assets/logo/gratiphi-blue.png";
 
   useEffect(() => {
@@ -31,40 +25,26 @@ export default function Welcome({
   });
 
   return (
-    <View style={styles.backgroundContainer}>
-      <StatusBar barStyle="light-content" />
-      {/* <ImageBackground source={require(backgroundImage)} style={styles.backgroundImage}> */}
-      <View style={styles.container}>
-        <Image source={require(logo)} style={styles.logo} />
-        <View style={styles.bottomContainer}>
-          <AppButton
-            title="Sign In"
-            onPress={() => navigation.navigate("SignIn")}
-            style={styles.button}
-          />
-          <AppButton
-            title="Sign Up"
-            onPress={() => navigation.navigate("SignUp")}
-            style={styles.button}
-          />
-        </View>
+    <Screen style={styles.container}>
+      <Image source={require(logo)} style={styles.logo} />
+      <View style={styles.bottomContainer}>
+        <AppButton
+          title="Sign In"
+          onPress={() => navigation.navigate("SignIn")}
+        />
+        <AppButton
+          title="Sign Up"
+          onPress={() => navigation.navigate("SignUp")}
+        />
       </View>
-      {/* </ImageBackground> */}
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-  },
-  backgroundContainer: {
-    flex: 1,
-    backgroundColor: "white", //#355C96"
-  },
   container: {
-    flex: 1,
     alignItems: "center",
+    width: "100%",
   },
   bottomContainer: {
     flex: 1,

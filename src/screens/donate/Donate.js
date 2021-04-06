@@ -4,6 +4,7 @@ import * as queries from "../../../graphql/queries";
 import { View, StyleSheet, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
+import Screen from "../../components/Screen";
 
 class DoneeItem {
   constructor(name, shortBiography, longBiograhy, image, age, location) {
@@ -111,7 +112,7 @@ export default function Donate({ props }) {
   }
 
   return (
-    <View style={styles.container}>
+    <Screen style={styles.container}>
       <Carousel
         data={donees}
         renderItem={renderItem}
@@ -123,14 +124,12 @@ export default function Donate({ props }) {
         loop={true}
         enableMomentum={true}
       />
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
-    backgroundColor: "white",
   },
 });
