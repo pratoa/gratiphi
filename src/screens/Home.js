@@ -16,6 +16,7 @@ import {
 } from "react-native";
 import { Auth } from "aws-amplify";
 import Carousel, { Pagination } from "react-native-snap-carousel";
+import { AppImagePicker } from "./../components/AppImagePicker";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
