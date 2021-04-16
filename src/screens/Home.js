@@ -17,6 +17,8 @@ import {
 import { Auth } from "aws-amplify";
 import Carousel, { Pagination } from "react-native-snap-carousel";
 import { AppImagePicker } from "./../components/AppImagePicker";
+import colors from "../config/colors";
+import Screen from "../components/Screen";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -134,7 +136,7 @@ export default function Home() {
 
   return (
     <>
-      <View style={styles.mainContainer}>
+      <Screen>
         <View style={styles.container}>
           <Carousel
             data={DATA}
@@ -185,7 +187,7 @@ export default function Home() {
             <Text style={styles.modalText}>{ourMission.description}</Text>
           </ScrollView>
         </View>
-      </View>
+      </Screen>
 
       <Modal visible={modalVisible} animationType="slide">
         <View style={styles.modalView}>
@@ -204,13 +206,10 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-  },
   modalView: {
     flex: 1,
     paddingTop: Constants.statusBarHeight,
-    backgroundColor: "#add8e6",
+    backgroundColor: colors.lightBlue,
     alignItems: "center",
   },
   modalImage: {
@@ -233,7 +232,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#325e9d", //'#325e9d'
+    backgroundColor: colors.primary, //'#325e9d'
     alignContent: "center",
     justifyContent: "center",
   },
@@ -241,10 +240,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 4,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
   },
   thirdContainer: {
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     flex: 4,
     flexGrow: 5,
   },
@@ -257,7 +256,7 @@ const styles = StyleSheet.create({
     height: 110,
     padding: 15,
     margin: 5,
-    backgroundColor: "white",
+    backgroundColor: colors.white,
   },
   carouselContainer: {
     alignItems: "center",
@@ -268,17 +267,17 @@ const styles = StyleSheet.create({
     height: "90%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#f2c300",
+    backgroundColor: colors.mustardYellow,
     borderRadius: 20,
   },
   itemLabel: {
-    color: "white",
+    color: colors.white,
     fontSize: 24,
   },
   itemTitle: {
     marginTop: 15,
     flex: 1,
-    color: "white",
+    color: colors.white,
     fontSize: 24,
   },
   image: {

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import AppTextInput from "../../components/AppTextInput";
 import AppButton from "../../components/AppButton";
+import colors from "../../config/colors";
+import Screen from "../../components/Screen";
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState("");
@@ -34,71 +37,65 @@ export default function SignUp({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.safeAreaContainer}>
-      <View style={styles.container}>
-        <Text style={styles.title}>Create a new account</Text>
-        <AppTextInput
-          value={email}
-          onChangeText={(text) => {
-            setEmail(text);
-            setUsername(text);
-          }}
-          leftIcon="account"
-          placeholder="Enter email address"
-          autoCapitalize="none"
-          keyboardType="email-address"
-          textContentType="emailAddress"
-        />
-        <AppTextInput
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          leftIcon="lock"
-          placeholder="Enter password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry
-          textContentType="password"
-        />
-        <AppTextInput
-          value={confirmPassword}
-          onChangeText={(text) => setConfirmPassword(text)}
-          leftIcon="lock"
-          placeholder="Confirm password"
-          autoCapitalize="none"
-          autoCorrect={false}
-          secureTextEntry
-          textContentType="password"
-        />
-        <AppButton title="Sign Up" onPress={signUp} />
-        {error !== "" && (
-          <Text title={error.message} style={styles.errorText}>
-            {error.message}
+    <Screen style={style.container}>
+      <Text style={styles.title}>Create a new account</Text>
+      <AppTextInput
+        value={email}
+        onChangeText={(text) => {
+          setEmail(text);
+          setUsername(text);
+        }}
+        leftIcon="account"
+        placeholder="Enter email address"
+        autoCapitalize="none"
+        keyboardType="email-address"
+        textContentType="emailAddress"
+      />
+      <AppTextInput
+        value={password}
+        onChangeText={(text) => setPassword(text)}
+        leftIcon="lock"
+        placeholder="Enter password"
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry
+        textContentType="password"
+      />
+      <AppTextInput
+        value={confirmPassword}
+        onChangeText={(text) => setConfirmPassword(text)}
+        leftIcon="lock"
+        placeholder="Confirm password"
+        autoCapitalize="none"
+        autoCorrect={false}
+        secureTextEntry
+        textContentType="password"
+      />
+      <AppButton title="Sign Up" onPress={signUp} />
+      {error !== "" && (
+        <Text title={error.message} style={styles.errorText}>
+          {error.message}
+        </Text>
+      )}
+      <View style={styles.footerButtonContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+          <Text style={styles.forgotPasswordButtonText}>
+            Already have an account? Sign In
           </Text>
-        )}
-        <View style={styles.footerButtonContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-            <Text style={styles.forgotPasswordButtonText}>
-              Already have an account? Sign In
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  safeAreaContainer: {
-    flex: 1,
-    backgroundColor: "white",
-  },
   container: {
     flex: 1,
     alignItems: "center",
   },
   title: {
     fontSize: 20,
-    color: "#355C96",
+    color: colors.primary,
     fontWeight: "500",
     marginVertical: 15,
   },
@@ -108,7 +105,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPasswordButtonText: {
-    color: "#355C96",
+    color: colors.primary,
     fontSize: 18,
     fontWeight: "600",
   },

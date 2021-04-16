@@ -12,13 +12,15 @@ import {
   Linking,
 } from "react-native";
 
+import colors from "./../../config/colors";
+
 const windowHeight = Dimensions.get("window").height;
 
 export default function ExpandedCard({ route }) {
   const item = route.params.item;
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image
@@ -27,9 +29,17 @@ export default function ExpandedCard({ route }) {
         ></Image>
         <View style={styles.detailsContainer}>
           <View style={styles.infoConatiner}>
-            <FontAwesome5 name={"birthday-cake"} size={25} color={"#355C96"} />
+            <FontAwesome5
+              name={"birthday-cake"}
+              size={25}
+              color={colors.primary}
+            />
             <Text style={styles.infoText}>{item.age}</Text>
-            <FontAwesome5 name={"map-marker-alt"} size={25} color={"#355C96"} />
+            <FontAwesome5
+              name={"map-marker-alt"}
+              size={25}
+              color={colors.primary}
+            />
             <Text style={styles.infoText}>{item.location.name}</Text>
           </View>
           <Text style={styles.doneeLongBiography}> {item.fullBiography}</Text>
@@ -73,14 +83,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     alignSelf: "center",
-    color: "#355C96",
+    color: colors.primary,
   },
   doneeLongBiography: {
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 18,
     textAlign: "justify",
-    color: "#355C96",
+    color: colors.primary,
   },
   buttonContainer: {
     alignItems: "center",
