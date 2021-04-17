@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AppButton from "./../../components/AppButton";
+import AppButton from "./../../../components/common/AppButton";
 import {
   View,
   ScrollView,
@@ -12,7 +12,7 @@ import {
   Linking,
 } from "react-native";
 
-import colors from "./../../config/colors";
+import colors from "./../../../config/colors";
 
 const windowHeight = Dimensions.get("window").height;
 

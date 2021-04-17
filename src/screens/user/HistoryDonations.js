@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import Screen from "../components/Screen";
+import { StyleSheet } from "react-native";
+import Screen from "../../components/common/Screen";
 
 export default function HistoryDonations() {
   return <Screen></Screen>;

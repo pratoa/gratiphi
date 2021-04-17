@@ -14,11 +14,9 @@ import {
   Platform,
   ScrollView,
 } from "react-native";
-import { Auth } from "aws-amplify";
-import Carousel, { Pagination } from "react-native-snap-carousel";
-import { AppImagePicker } from "./../components/AppImagePicker";
-import colors from "../config/colors";
-import Screen from "../components/Screen";
+import Carousel from "react-native-snap-carousel";
+import colors from "../../config/colors";
+import Screen from "../../components/common/Screen";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -32,7 +30,7 @@ class InformationItem {
     this.type = type;
   }
 }
-const comida = require("../../assets/images/comida_logo.png");
+const comida = require("../../../assets/images/comida_logo.png");
 const item1 = new InformationItem(
   "1 plate of food = 0.6 USD",
   "Feed a child for 1 month: 12 USD",
@@ -59,43 +57,43 @@ DATA.push(item4);
 const images = [
   {
     id: 1,
-    url: require("./../../assets/images/food_security.png"),
+    url: require("../../../assets/images/food_security.png"),
     description:
       "A team of nutritutionists prepare weekly menus that the volunteer mothers cook, based on calorie requirements to ensure normal growth and development in children. We work to ensure that every child receives 1 meal a day from Monday to Friday.",
     title: "Food Security",
-    modalImage: require("./../../assets/images/programa-seguridad.jpg"),
+    modalImage: require("../../../assets/images/programa-seguridad.jpg"),
   },
   {
     id: 2,
-    url: require("./../../assets/images/education.png"),
+    url: require("../../../assets/images/education.png"),
     description:
       "We are committed to the comprehensive growth of children. Through reading and playing, we seek to develop skills that allow us to influence their emotional and social development, so that they can have better school performance.",
     title: "Education and Recreation",
-    modalImage: require("./../../assets/images/programa-educacion.jpg"),
+    modalImage: require("../../../assets/images/programa-educacion.jpg"),
   },
   {
     id: 3,
-    url: require("./../../assets/images/health.png"),
+    url: require("../../../assets/images/health.png"),
     description:
       "We focus on monitoring the height and weight of children, in order to assess their nutritional status and be able to provide supplements to malnutrition cases. We also deworm children twice a year to ensure better absorption of nutrients, avoid diarrhea and anemia.",
     title: "Health",
-    modalImage: require("./../../assets/images/programa-salud.jpg"),
+    modalImage: require("../../../assets/images/programa-salud.jpg"),
   },
   {
     id: 4,
-    url: require("./../../assets/images/training.png"),
+    url: require("../../../assets/images/training.png"),
     description:
       "Mothers do volunteer work and develop leadership in their communities. We train them in nutrition, breastfeeding, hygiene, food handling, negotiation, conflict resolution, disease prevention, anthropometric measurement and weighing, among others.",
     title: "Training and Empowerment",
-    modalImage: require("./../../assets/images/programa-formacion.jpg"),
+    modalImage: require("../../../assets/images/programa-formacion.jpg"),
   },
   {
     id: 5,
-    url: require("./../../assets/images/family.png"),
+    url: require("../../../assets/images/family.png"),
     description:
       "We work in communities to handle crisis situations and thus prevent abuse, child abuse and depression. We offer psychological support and promote positive education.",
     title: "Family Development",
-    modalImage: require("./../../assets/images/programa-desarrollo.jpg"),
+    modalImage: require("../../../assets/images/programa-desarrollo.jpg"),
   },
 ];
 

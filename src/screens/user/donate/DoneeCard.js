@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 
-import colors from "./../../config/colors";
+import colors from "./../../../config/colors";
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(WINDOW_WIDTH * 0.8);

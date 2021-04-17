@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Button,
-  unstable_batchedUpdates,
-} from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 import { Auth } from "aws-amplify";
 
 export default function Settings({ navigation, updateAuthState }) {
@@ -14,7 +8,7 @@ export default function Settings({ navigation, updateAuthState }) {
       console.log(Auth.currentUserInfo);
       await Auth.signOut();
       updateAuthState("loggedOut");
-      navigation.navigate("Welcome");
+      navigation.replace("Welcome");
     } catch (error) {
       console.log("Error signing out: ", error);
     }

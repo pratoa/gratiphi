@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Auth } from "aws-amplify";
-import { SafeAreaView } from "react-native-safe-area-context";
 
-import AppTextInput from "../../components/AppTextInput";
-import AppButton from "../../components/AppButton";
+import AppTextInput from "../../components/common/AppTextInput";
+import AppButton from "../../components/common/AppButton";
 import colors from "../../config/colors";
-import Screen from "../../components/Screen";
+import Screen from "../../components/common/Screen";
 
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState("");
