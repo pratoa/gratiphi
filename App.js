@@ -6,12 +6,12 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import awsconfig from "./aws-exports";
 import Welcome from "./src/screens/login/Welcome";
-import BottomTabNavigator from "./src/screens/BottomTabNavigator";
+import BottomTabNavigator from "./src/screens/user/BottomTabNavigator";
 import SignIn from "./src/screens/login/SignIn";
 import SignUp from "./src/screens/login/SignUp";
 import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
-import ExpandedDoneeCard from "./src/screens/donate/ExpandedDoneeCard";
-import Admin from "./src/screens/Admin";
+import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
+import Admin from "./src/screens/admin/Admin";
 import colors from "./src/config/colors";
 
 Amplify.configure({
@@ -150,7 +150,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator>
+      <RootStack.Navigator initialRouteName="Welcome">
         <RootStack.Screen
           name="Welcome"
           options={{

@@ -7,7 +7,7 @@ import Home from "./Home";
 import Donate from "./donate/Donate";
 import HistoryDonations from "./HistoryDonations";
 import Settings from "./Settings";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
 const BottomNavigator = createBottomTabNavigator();
 const HomeStack = createStackNavigator();

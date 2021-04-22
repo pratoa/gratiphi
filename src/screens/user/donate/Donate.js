@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-import * as queries from "../../../graphql/queries";
-import { View, StyleSheet, Dimensions } from "react-native";
+import * as queries from "../../../../graphql/queries";
+import { StyleSheet, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
-import Screen from "../../components/Screen";
+import Screen from "../../../components/common/Screen";
 
 class DoneeItem {
   constructor(name, shortBiography, longBiograhy, image, age, location) {
@@ -25,7 +25,7 @@ DATA.push(
     "Austin",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/austin-nicomedez.jpg"),
+    require("../../../../assets/images/donees/austin-nicomedez.jpg"),
     8,
     "La Vega, Caracas"
   )
@@ -35,7 +35,7 @@ DATA.push(
     "Katie",
     "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/katie-moum.jpg"),
+    require("../../../../assets/images/donees/katie-moum.jpg"),
     10,
     "Portuguesa, Venezuela"
   )
@@ -45,7 +45,7 @@ DATA.push(
     "Muhammad",
     "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/muhammad-muzamil.jpg"),
+    require("../../../../assets/images/donees/muhammad-muzamil.jpg"),
     7,
     "Petare, Venezuela"
   )
@@ -55,7 +55,7 @@ DATA.push(
     "Muhammad",
     "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/muhammad-taha-khan.jpg"),
+    require("../../../../assets/images/donees/muhammad-taha-khan.jpg"),
     11,
     "Coro, Falcon"
   )
@@ -65,7 +65,7 @@ DATA.push(
     "Nivedita",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    require("../../../assets/images/donees/nivedita-singh.jpg"),
+    require("../../../../assets/images/donees/nivedita-singh.jpg"),
     6,
     "Sucre, Venezuela"
   )

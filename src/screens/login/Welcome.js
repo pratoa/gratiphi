@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet, Image, StatusBar } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 
-import AppButton from "../../components/AppButton";
-import Screen from "../../components/Screen";
+import AppButton from "../../components/common/AppButton";
+import Screen from "../../components/common/Screen";
 
 export default function Welcome({
   navigation,
