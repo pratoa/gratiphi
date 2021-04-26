@@ -101,21 +101,6 @@ const AuthenticationStackScreen = (props) => {
   );
 };
 
-const Initializing = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: colors.primary,
-      }}
-    >
-      <ActivityIndicator size="large" color={colors.white} />
-    </View>
-  );
-};
-
 function App() {
   let [isUserLoggedIn, setUserLoggedIn] = useState("initializing");
   let [userGroup, setUserGroup] = useState("");
@@ -181,7 +166,10 @@ function App() {
         </RootStack.Screen>
         <RootStack.Screen
           name="Admin"
-          options={{ headerShown: false, headerLeft: null }}
+          options={({ navigation, route }) => ({
+            headerShown: true,
+            title: "Alimenta La Solaridad",
+          })}
         >
           {(screenProps) => (
             <Admin {...screenProps} updateAuthState={updateAuthState}></Admin>

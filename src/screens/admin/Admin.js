@@ -1,31 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
-import { Auth } from "aws-amplify";
 import Screen from "../../components/common/Screen";
-import { NavigationContainer } from "@react-navigation/native";
+import SignOutButton from "../../components/common/SignOutButton";
 
 export default function Admin({ navigation, updateAuthState }) {
-  async function signOut() {
-    try {
-      console.log(Auth.currentUserInfo);
-      await Auth.signOut();
-      updateAuthState("loggedOut");
-      navigation.replace("Welcome");
-    } catch (error) {
-      console.log("Error signing out: ", error);
-    }
-  }
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <SignOutButton
+          updateAuthState={updateAuthState}
+          navigation={navigation}
+        />
+      ),
+    });
+  }, [navigation]);
 
   return (
     <Screen style={styles.mainContiner}>
       <Text>Welcome Admin</Text>
-      <Button title="Sign Out" onPress={signOut}></Button>
     </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   mainContiner: {
-    justifyContent: "center",
+    alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
 });
