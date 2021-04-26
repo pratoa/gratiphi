@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import Screen from "../../components/common/Screen";
 import SignOutButton from "../../components/common/SignOutButton";
 
@@ -14,6 +14,7 @@ export default function Admin({ navigation, updateAuthState }) {
       ),
     });
   }, [navigation]);
+
 
   return (
     <Screen style={styles.mainContiner}>
