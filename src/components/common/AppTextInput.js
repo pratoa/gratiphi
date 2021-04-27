@@ -2,6 +2,8 @@ import React from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+import colors from "../../config/colors";
+
 export default function AppTextInput({ leftIcon, ...otherProps }) {
   return (
     <View style={styles.container}>
@@ -9,13 +11,13 @@ export default function AppTextInput({ leftIcon, ...otherProps }) {
         <MaterialCommunityIcons
           name={leftIcon}
           size={20}
-          color="#6e6869"
+          color={colors.grey}
           style={styles.icon}
         />
       )}
       <TextInput
         style={styles.input}
-        placeholderTextColor="#6e6869"
+        placeholderTextColor={colors.grey}
         {...otherProps}
       />
     </View>
@@ -24,12 +26,11 @@ export default function AppTextInput({ leftIcon, ...otherProps }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f9f9f9",
     borderRadius: 25,
     flexDirection: "row",
     padding: 15,
     marginVertical: 10,
-    backgroundColor: "#DCDCDC",
+    backgroundColor: colors.lightGrey,
   },
   icon: {
     marginRight: 10,
@@ -37,6 +38,6 @@ const styles = StyleSheet.create({
   input: {
     width: "80%",
     fontSize: 18,
-    color: "#101010",
+    color: colors.black,
   },
 });

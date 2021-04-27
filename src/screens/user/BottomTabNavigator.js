@@ -2,10 +2,12 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { FontAwesome5 } from "@expo/vector-icons";
+
 import Home from "./Home";
 import Donate from "./donate/Donate";
 import HistoryDonations from "./HistoryDonations";
 import Settings from "./Settings";
+import colors from "../../config/colors";
 
 const BottomNavigator = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -21,9 +23,9 @@ function HomeStackScreen() {
         component={Home}
         options={{
           headerTitle: "Alimenta la Solidaridad",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#325e9d",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -40,10 +42,10 @@ function DonateStackScreen({ props }) {
         children={() => <Donate props={props} />}
         options={{
           headerTitle: "Donate",
-          headerTintColor: "#355C96",
+          headerTintColor: colors.primary,
           headerShown: true,
           headerStyle: {
-            backgroundColor: "white",
+            backgroundColor: colors.white,
             shadowOpacity: 0,
           },
         }}
@@ -60,9 +62,9 @@ function HistoryStackScreen() {
         component={HistoryDonations}
         options={{
           headerTitle: "History",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -81,9 +83,9 @@ function SettingsStackScreen({ navigation, updateAuthState }) {
         )}
         options={{
           headerTitle: "Settings",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -98,8 +100,8 @@ const BottomTabNavigator = (props) => {
       initialRouteName="Home"
       tabBarOptions={{
         showLabel: true,
-        activeTintColor: "#e91e63",
-        inactiveTintColor: "grey",
+        activeTintColor: colors.pinkRed,
+        inactiveTintColor: colors.grey,
       }}
     >
       <BottomNavigator.Screen

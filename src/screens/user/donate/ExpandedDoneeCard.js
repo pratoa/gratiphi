@@ -1,7 +1,7 @@
 import React from "react";
 import { Auth } from "aws-amplify";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AppButton from "./../../components/AppButton";
+import AppButton from "./../../../components/common/AppButton";
 import {
   View,
   ScrollView,
@@ -13,6 +13,8 @@ import {
   Linking,
 } from "react-native";
 import { useEffect, useState } from "react/cjs/react.development";
+
+import colors from "./../../../config/colors";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -32,7 +34,7 @@ export default function ExpandedCard({ route }) {
     "http://gratiphi.org/donate/" + currentUser + "/" + donee.id;
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={{ flex: 1, backgroundColor: colors.white }}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image
@@ -41,10 +43,18 @@ export default function ExpandedCard({ route }) {
         ></Image>
         <View style={styles.detailsContainer}>
           <View style={styles.infoConatiner}>
-            <FontAwesome5 name={"birthday-cake"} size={25} color={"#355C96"} />
-            <Text style={styles.infoText}>{donee.age}</Text>
-            <FontAwesome5 name={"map-marker-alt"} size={25} color={"#355C96"} />
-            <Text style={styles.infoText}>{donee.location.name}</Text>
+            <FontAwesome5
+              name={"birthday-cake"}
+              size={25}
+              color={colors.primary}
+            />
+            <Text style={styles.infoText}>{item.age}</Text>
+            <FontAwesome5
+              name={"map-marker-alt"}
+              size={25}
+              color={colors.primary}
+            />
+            <Text style={styles.infoText}>{item.location.name}</Text>
           </View>
           <Text style={styles.doneeLongBiography}> {donee.fullBiography}</Text>
         </View>
@@ -87,14 +97,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     alignSelf: "center",
-    color: "#355C96",
+    color: colors.primary,
   },
   doneeLongBiography: {
     paddingTop: 10,
     paddingBottom: 10,
     fontSize: 18,
     textAlign: "justify",
-    color: "#355C96",
+    color: colors.primary,
   },
   buttonContainer: {
     alignItems: "center",

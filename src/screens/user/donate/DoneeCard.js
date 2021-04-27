@@ -9,6 +9,8 @@ import {
   Dimensions,
 } from "react-native";
 
+import colors from "./../../../config/colors";
+
 const WINDOW_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(WINDOW_WIDTH * 0.8);
 
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
     height: "99%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "white",
+    backgroundColor: colors.white,
     borderRadius: 20,
   },
   doneeImage: {
@@ -74,24 +76,24 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
   },
   doneeName: {
-    color: "white",
+    color: colors.white,
     paddingBottom: 5,
     fontSize: 18,
     fontWeight: "bold",
   },
   doneeAge: {
-    color: "white",
+    color: colors.white,
     paddingBottom: 5,
     paddingLeft: 5,
     fontSize: 18,
   },
   doneeLocation: {
-    color: "white",
+    color: colors.white,
     paddingBottom: 5,
     fontSize: 14,
     fontWeight: "600",
   },
   doneeSmallBiography: {
-    color: "white",
+    color: colors.white,
   },
 });

@@ -6,12 +6,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import awsconfig from "./aws-exports";
 import Welcome from "./src/screens/login/Welcome";
-import BottomTabNavigator from "./src/screens/BottomTabNavigator";
+import BottomTabNavigator from "./src/screens/user/BottomTabNavigator";
 import SignIn from "./src/screens/login/SignIn";
 import SignUp from "./src/screens/login/SignUp";
 import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
-import ExpandedDoneeCard from "./src/screens/donate/ExpandedDoneeCard";
-import Admin from "./src/screens/Admin";
+import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
+import Admin from "./src/screens/admin/Admin";
+import colors from "./src/config/colors";
 
 Amplify.configure({
   ...awsconfig,
@@ -32,7 +33,7 @@ const AuthenticationStackScreen = (props) => {
           headerShown: true,
           headerTitle: "",
           headerStyle: {
-            backgroundColor: "white",
+            backgroundColor: colors.white,
             shadowOpacity: 0,
           },
         }}
@@ -53,9 +54,9 @@ const AuthenticationStackScreen = (props) => {
           headerShown: true,
           headerTitle: "",
           headerBackTitle: "Back",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -75,9 +76,9 @@ const AuthenticationStackScreen = (props) => {
           headerShown: true,
           headerTitle: "",
           headerBackTitle: "Back",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -89,9 +90,9 @@ const AuthenticationStackScreen = (props) => {
           headerShown: true,
           headerTitle: "",
           headerBackTitle: "Back",
-          headerTintColor: "white",
+          headerTintColor: colors.white,
           headerStyle: {
-            backgroundColor: "#355C96",
+            backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
         }}
@@ -107,10 +108,10 @@ const Initializing = () => {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#355C96",
+        backgroundColor: colors.primary,
       }}
     >
-      <ActivityIndicator size="large" color="white" />
+      <ActivityIndicator size="large" color={colors.white} />
     </View>
   );
 };
@@ -149,7 +150,7 @@ function App() {
 
   return (
     <NavigationContainer>
-      <RootStack.Navigator>
+      <RootStack.Navigator initialRouteName="Welcome">
         <RootStack.Screen
           name="Welcome"
           options={{
@@ -192,9 +193,9 @@ function App() {
           options={({ route }) => ({
             headerTitle: route.params.item.firstName,
             headerBackTitle: "Back",
-            headerTintColor: "#355C96",
+            headerTintColor: colors.primary,
             headerStyle: {
-              backgroundColor: "white",
+              backgroundColor: colors.white,
               shadowOpacity: 0,
             },
           })}
