@@ -1,4 +1,5 @@
 import React from "react";
+import { Auth } from "aws-amplify";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AppButton from "./../../components/AppButton";
 import {
@@ -11,34 +12,47 @@ import {
   Dimensions,
   Linking,
 } from "react-native";
+import { useEffect, useState } from "react/cjs/react.development";
 
 const windowHeight = Dimensions.get("window").height;
 
 export default function ExpandedCard({ route }) {
-  const item = route.params.item;
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+    getCurrentUser();
+  });
+
+  async function getCurrentUser() {
+    let userInfo = await Auth.currentUserInfo();
+    setCurrentUser(await userInfo.username);
+  }
+  const donee = route.params.item;
+  const donateUrl =
+    "http://gratiphi.org/donate/" + currentUser + "/" + donee.id;
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image
-          source={{ uri: item.profilePhoto }}
+          source={{ uri: donee.profilePhoto }}
           style={styles.doneeImage}
         ></Image>
         <View style={styles.detailsContainer}>
           <View style={styles.infoConatiner}>
             <FontAwesome5 name={"birthday-cake"} size={25} color={"#355C96"} />
-            <Text style={styles.infoText}>{item.age}</Text>
+            <Text style={styles.infoText}>{donee.age}</Text>
             <FontAwesome5 name={"map-marker-alt"} size={25} color={"#355C96"} />
-            <Text style={styles.infoText}>{item.location.name}</Text>
+            <Text style={styles.infoText}>{donee.location.name}</Text>
           </View>
-          <Text style={styles.doneeLongBiography}> {item.fullBiography}</Text>
+          <Text style={styles.doneeLongBiography}> {donee.fullBiography}</Text>
         </View>
       </ScrollView>
       <View style={styles.buttonContainer}>
         <AppButton
           title={"Donate"}
-          onPress={() => Linking.openURL("https://gratiphi.org")}
+          onPress={() => Linking.openURL(donateUrl)}
         ></AppButton>
       </View>
     </View>
