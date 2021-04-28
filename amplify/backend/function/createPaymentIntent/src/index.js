@@ -41,7 +41,7 @@ async function getUserStripeId(userId) {
         "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
       method: "post",
       headers: {
-        "x-api-key": "da2-5tz74lmo6rehrhp5bjicpcqdqm",
+        "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
       },
       data: {
         query: print(getUser),
