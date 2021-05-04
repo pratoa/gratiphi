@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   forgotPasswordButtonText: {
+    marginTop: 10,
     color: colors.primary,
     fontSize: 18,
     fontWeight: "600",

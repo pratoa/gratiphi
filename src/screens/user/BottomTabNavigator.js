@@ -100,7 +100,7 @@ const BottomTabNavigator = (props) => {
       initialRouteName="Home"
       tabBarOptions={{
         showLabel: true,
-        activeTintColor: colors.pinkRed,
+        activeTintColor: colors.primary,
         inactiveTintColor: colors.grey,
       }}
     >

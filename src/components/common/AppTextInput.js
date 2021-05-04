@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.lightGrey,
   },
   icon: {
-    marginRight: 10,
+    marginRight: 5,
   },
   input: {
     width: "80%",

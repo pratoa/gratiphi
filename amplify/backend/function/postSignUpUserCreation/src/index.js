@@ -63,8 +63,8 @@ exports.handler = async (event, context, callback) => {
         variables: {
           input: {
             id: event.request.userAttributes.sub,
-            name: "Andres",
-            lastName: "Prato",
+            name: event.request.userAttributes.firstName,
+            lastName: event.request.userAttributes.lastName,
             email: event.request.userAttributes.email,
           },
         },

@@ -74,7 +74,7 @@ const AuthenticationStackScreen = (props) => {
         component={SignUp}
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Create Account",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {

@@ -19,6 +19,7 @@ import colors from "./../../../config/colors";
 const windowHeight = Dimensions.get("window").height;
 
 export default function ExpandedCard({ route }) {
+  const item = route.params.item;
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {

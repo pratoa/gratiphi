@@ -13,15 +13,18 @@ import {
   Modal,
   Platform,
   ScrollView,
+  ImageBackground,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import colors from "../../config/colors";
 import Screen from "../../components/common/Screen";
+import AppButton from "../../components/common/AppButton";
+import { Header } from "react-native/Libraries/NewAppScreen";
 
-const SLIDER_WIDTH = Dimensions.get("window").width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 const DATA = [];
-
+const testImage = require("../../../assets/images/delta2.jpeg");
 class InformationItem {
   constructor(title, message, image, type) {
     this.title = title;
@@ -115,31 +118,49 @@ export default function Home() {
   });
 
   function renderItem({ item, index }) {
-    if (item.image) {
-      return (
-        <View style={styles.itemContainer}>
-          <Image source={item.image} style={styles.image} />
-          <Text style={styles.itemTitle}>{item.title}</Text>
-        </View>
-      );
-    }
-
     return (
       <View style={styles.itemContainer}>
-        <Text style={styles.itemLabel}>{item.title}</Text>
-        <Text style={styles.itemLabel}>{item.message}</Text>
+        <ImageBackground
+          source={testImage}
+          style={styles.backgroundImage}
+          imageStyle={{ borderRadius: 20, opacity: 0.5 }}
+        >
+          <View style={styles.itemWrapper}>
+            <Text style={styles.itemLabel}>+936</Text>
+          </View>
+          <Text style={styles.itemTitle}>Volunteer Mothers</Text>
+        </ImageBackground>
       </View>
     );
+
+    // if (item.image) {
+    //   return (
+    //     <View style={styles.itemContainer}>
+    //       <Image source={item.image} style={styles.image} />
+    //       <Text style={styles.itemTitle}>{item.title}</Text>
+    //     </View>
+    //   );
+    // }
+
+    // return (
+    //   <View style={styles.itemContainer}>
+    //     <Text style={styles.itemLabel}>{item.title}</Text>
+    //     <Text style={styles.itemLabel}>{item.message}</Text>
+    //   </View>
+    // );
   }
 
   return (
     <>
-      <Screen>
+      <Screen
+        style={modalVisible ? { backgroundColor: "rgba(0,0,0,0.5)" } : ""}
+      >
+        <Text style={styles.sectionTitle}>Statistics</Text>
         <View style={styles.container}>
           <Carousel
             data={DATA}
             renderItem={renderItem}
-            sliderWidth={SLIDER_WIDTH}
+            sliderWidth={SCREEN_WIDTH}
             itemWidth={ITEM_WIDTH}
             layout={"default"}
             contentContainerCustomStyle={styles.carouselContainer}
@@ -187,16 +208,24 @@ export default function Home() {
         </View>
       </Screen>
 
-      <Modal visible={modalVisible} animationType="slide">
+      <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <View style={styles.modalView}>
-          <Text style={styles.modalTitle}>{modalInfo.title}</Text>
-          <Image
-            resizeMode="stretch"
-            style={styles.modalImage}
-            source={modalInfo.image}
-          ></Image>
-          <Text style={styles.modalText}>{modalInfo.description}</Text>
-          <Button title="Close" onPress={() => setModalVisible(false)} />
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>{modalInfo.title}</Text>
+            <Image
+              resizeMode="stretch"
+              style={styles.modalImage}
+              source={modalInfo.image}
+            ></Image>
+            <Text style={styles.modalText}>{modalInfo.description}</Text>
+            <View style={styles.modalBottom}>
+              <AppButton
+                title="Close"
+                onPress={() => setModalVisible(false)}
+                style={{ fontSize: 0.035 * SCREEN_WIDTH, padding: 10 }}
+              />
+            </View>
+          </View>
         </View>
       </Modal>
     </>
@@ -204,33 +233,14 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  modalView: {
-    flex: 1,
-    paddingTop: Constants.statusBarHeight,
-    backgroundColor: colors.lightBlue,
-    alignItems: "center",
-  },
-  modalImage: {
-    height: "30%",
-    width: "60%",
-  },
-  modalText: {
-    fontSize: 22,
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
-    color: "black",
-    padding: 15,
-    textAlign: "auto",
-  },
-  modalTitle: {
-    fontWeight: "bold",
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
-    color: "black",
-    fontSize: 25,
+  sectionTitle: {
+    marginLeft: 15,
+    fontSize: 0.05 * SCREEN_WIDTH,
+    fontWeight: "500",
   },
   container: {
-    flex: 1,
+    flex: 2,
     alignItems: "center",
-    backgroundColor: colors.primary, //'#325e9d'
     alignContent: "center",
     justifyContent: "center",
   },
@@ -256,6 +266,7 @@ const styles = StyleSheet.create({
     margin: 5,
     backgroundColor: colors.white,
   },
+  //carousel
   carouselContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -265,18 +276,33 @@ const styles = StyleSheet.create({
     height: "90%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.mustardYellow,
+    backgroundColor: colors.black,
     borderRadius: 20,
+  },
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 20,
+  },
+  itemWrapper: {
+    backgroundColor: colors.mustardYellow,
+    borderRadius: 10,
+    width: "50%",
+    height: "30%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   itemLabel: {
     color: colors.white,
-    fontSize: 24,
+    fontSize: 0.07 * SCREEN_WIDTH,
   },
   itemTitle: {
-    marginTop: 15,
-    flex: 1,
+    paddingTop: 5,
     color: colors.white,
-    fontSize: 24,
+    fontSize: 0.045 * SCREEN_WIDTH,
+    fontWeight: "bold",
   },
   image: {
     marginTop: 15,
@@ -284,5 +310,47 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     resizeMode: "contain",
+  },
+  //modal
+  modalView: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContainer: {
+    flex: 1,
+    margin: 40,
+    width: "80%",
+    alignItems: "center",
+    backgroundColor: colors.white,
+    borderRadius: 10,
+  },
+  modalImage: {
+    marginTop: 10,
+    height: "30%",
+    width: "60%",
+    borderRadius: 10,
+  },
+  modalText: {
+    fontSize: 0.05 * SCREEN_WIDTH,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    color: "black",
+    paddingTop: 10,
+    paddingHorizontal: 15,
+    textAlign: "auto",
+  },
+  modalTitle: {
+    marginTop: 10,
+    fontWeight: "bold",
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    color: "black",
+    fontSize: 23,
+  },
+  modalBottom: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
+    minHeight: 60,
+    paddingBottom: 5,
   },
 });
