@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import moment from "moment";
+import { FontAwesome5 } from "@expo/vector-icons";
 import {
   View,
   TouchableWithoutFeedback,
@@ -10,9 +11,10 @@ import {
 } from "react-native";
 
 import colors from "./../../../config/colors";
+import { color } from "react-native-reanimated";
 
-const WINDOW_WIDTH = Dimensions.get("window").width;
-const ITEM_WIDTH = Math.round(WINDOW_WIDTH * 0.8);
+const SCREEN_WIDTH = Dimensions.get("window").width;
+const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 
 export default function DoneeCard({ navigation, item }) {
   const [container, setContainer] = useState(null);
@@ -37,7 +39,20 @@ export default function DoneeCard({ navigation, item }) {
               <Text style={styles.doneeName}>{item.firstName}</Text>
               <Text style={styles.doneeAge}>{item.age}</Text>
             </View>
-            <Text style={styles.doneeLocation}>{item.location.name}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                marginBottom: 5,
+                alignItems: "center",
+              }}
+            >
+              <FontAwesome5
+                name={"map-marker-alt"}
+                size={Math.round(SCREEN_WIDTH * 0.03)}
+                color={colors.white}
+              />
+              <Text style={styles.doneeLocation}>{item.location.name}</Text>
+            </View>
             <Text style={styles.doneeSmallBiography}>
               {item.smallBiography}
             </Text>
@@ -66,7 +81,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // flexWrap: "wrap",
     position: "absolute",
-    height: "18%",
+    height: SCREEN_WIDTH * 0.3,
     bottom: 0,
     left: 0,
     right: 0,
@@ -78,22 +93,23 @@ const styles = StyleSheet.create({
   doneeName: {
     color: colors.white,
     paddingBottom: 5,
-    fontSize: 18,
+    fontSize: SCREEN_WIDTH * 0.04,
     fontWeight: "bold",
   },
   doneeAge: {
     color: colors.white,
     paddingBottom: 5,
     paddingLeft: 5,
-    fontSize: 18,
+    fontSize: SCREEN_WIDTH * 0.04,
   },
   doneeLocation: {
     color: colors.white,
-    paddingBottom: 5,
-    fontSize: 14,
-    fontWeight: "600",
+    paddingLeft: 5,
+    fontSize: SCREEN_WIDTH * 0.035,
+    fontWeight: "bold",
   },
   doneeSmallBiography: {
     color: colors.white,
+    fontSize: SCREEN_WIDTH * 0.035,
   },
 });

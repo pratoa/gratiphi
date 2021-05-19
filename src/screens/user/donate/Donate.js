@@ -5,6 +5,7 @@ import { StyleSheet, Dimensions, View, Alert } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
 import Screen from "../../../components/common/Screen";
+import AppButton from "../../../components/common/AppButton";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -56,6 +57,10 @@ export default function Donate({ props }) {
     setSelectedCard(selectedCard);
   }
 
+  function donate() {
+    console.log(index);
+  }
+
   return (
     <Screen style={styles.container}>
       <Carousel
@@ -69,6 +74,7 @@ export default function Donate({ props }) {
         loop={true}
         enableMomentum={true}
       />
+      <AppButton title="Donate" onPress={donate} />
     </Screen>
   );
 }
@@ -76,5 +82,6 @@ export default function Donate({ props }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
+    paddingTop: 10,
   },
 });

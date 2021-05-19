@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Dimensions,
+} from "react-native";
 import { Auth } from "aws-amplify";
 
 import AppTextInput from "../../components/common/AppTextInput";
@@ -7,6 +14,7 @@ import AppButton from "../../components/common/AppButton";
 import colors from "../../config/colors";
 import Screen from "../../components/common/Screen";
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
 export default function SignUp({ navigation }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -78,79 +86,83 @@ export default function SignUp({ navigation }) {
   return (
     <Screen style={styles.container}>
       <Image source={require(logo)} style={styles.logo} />
-      <View style={styles.nameContainer}>
-        <View style={styles.firstNameWrapper}>
-          <AppTextInput
-            value={firstName}
-            onChangeText={(text) => {
-              setFirstName(text);
-            }}
-            leftIcon="account"
-            placeholder="First name"
-            autoCapitalize="words"
-            keyboardType="default"
-            textContentType="name"
-          />
+      <View style={styles.formContainer}>
+        <View style={styles.nameContainer}>
+          <View style={styles.firstNameWrapper}>
+            <AppTextInput
+              value={firstName}
+              onChangeText={(text) => {
+                setFirstName(text);
+              }}
+              leftIcon="account"
+              placeholder="First name"
+              autoCapitalize="words"
+              keyboardType="default"
+              textContentType="name"
+            />
+          </View>
+          <View style={styles.lastNameWrapper}>
+            <AppTextInput
+              value={lastName}
+              onChangeText={(text) => {
+                setLastName(text);
+              }}
+              leftIcon="account"
+              placeholder="Last name"
+              autoCapitalize="words"
+              keyboardType="default"
+              textContentType="name"
+            />
+          </View>
         </View>
-        <View style={styles.lastNameWrapper}>
-          <AppTextInput
-            value={lastName}
-            onChangeText={(text) => {
-              setLastName(text);
-            }}
-            leftIcon="account"
-            placeholder="Last name"
-            autoCapitalize="words"
-            keyboardType="default"
-            textContentType="name"
-          />
+        <AppTextInput
+          value={email}
+          onChangeText={(text) => {
+            setEmail(text);
+            setUsername(text);
+          }}
+          leftIcon="account"
+          placeholder="Email address"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          textContentType="emailAddress"
+        />
+        <AppTextInput
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          leftIcon="lock"
+          placeholder="Password"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+          textContentType="password"
+        />
+        <AppTextInput
+          value={confirmPassword}
+          onChangeText={(text) => setConfirmPassword(text)}
+          leftIcon="lock"
+          placeholder="Confirm password"
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+          textContentType="password"
+        />
+        <View style={styles.signUpContainer}>
+          <AppButton title="Sign Up" onPress={signUp} />
+          {error !== "" && (
+            <Text title={error} style={styles.errorText}>
+              {error}
+            </Text>
+          )}
         </View>
-      </View>
-      <AppTextInput
-        value={email}
-        onChangeText={(text) => {
-          setEmail(text);
-          setUsername(text);
-        }}
-        leftIcon="account"
-        placeholder="Email address"
-        autoCapitalize="none"
-        keyboardType="email-address"
-        textContentType="emailAddress"
-      />
-      <AppTextInput
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        leftIcon="lock"
-        placeholder="Password"
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
-        textContentType="password"
-      />
-      <AppTextInput
-        value={confirmPassword}
-        onChangeText={(text) => setConfirmPassword(text)}
-        leftIcon="lock"
-        placeholder="Confirm password"
-        autoCapitalize="none"
-        autoCorrect={false}
-        secureTextEntry
-        textContentType="password"
-      />
-      <AppButton title="Sign Up" onPress={signUp} />
-      {error !== "" && (
-        <Text title={error} style={styles.errorText}>
-          {error}
-        </Text>
-      )}
-      <View style={styles.footerButtonContainer}>
-        <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
-          <Text style={styles.alreadyHaveAccount}>
-            Already have an account?
-            <Text style={styles.forgotPasswordButtonText}> Sign In</Text>
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.footerButtonContainer}>
+          <TouchableOpacity onPress={() => navigation.navigate("SignIn")}>
+            <Text style={styles.alreadyHaveAccount}>
+              Already have an account?
+              <Text style={styles.forgotPasswordButtonText}> Sign In</Text>
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Screen>
   );
@@ -164,10 +176,15 @@ const styles = StyleSheet.create({
   logo: {
     width: 250,
     resizeMode: "contain",
+    marginTop: 50,
+  },
+  formContainer: {
+    position: "absolute",
+    bottom: 0.035 * SCREEN_WIDTH < 13 ? 0 : 100,
   },
   nameContainer: {
     flexDirection: "row",
-    width: "88%",
+    width: "100%",
   },
   firstNameWrapper: {
     flex: 1,
@@ -177,6 +194,9 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 5,
   },
+  signUpContainer: {
+    alignItems: "center",
+  },
   footerButtonContainer: {
     marginVertical: 15,
     justifyContent: "center",
@@ -184,12 +204,12 @@ const styles = StyleSheet.create({
   },
   alreadyHaveAccount: {
     color: colors.darkGrey,
-    fontSize: 18,
+    fontSize: 0.034 * SCREEN_WIDTH,
     fontWeight: "600",
   },
   forgotPasswordButtonText: {
     color: colors.primary,
-    fontSize: 18,
+    fontSize: 0.034 * SCREEN_WIDTH,
     fontWeight: "600",
   },
   errorText: {

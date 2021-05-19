@@ -52,7 +52,7 @@ const AuthenticationStackScreen = (props) => {
         name="SignIn"
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Sign In",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {
@@ -88,7 +88,7 @@ const AuthenticationStackScreen = (props) => {
         component={ConfirmSignUp}
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Confirm Account",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {

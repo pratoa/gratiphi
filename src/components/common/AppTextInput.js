@@ -1,16 +1,17 @@
 import React from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Dimensions } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import colors from "../../config/colors";
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
 export default function AppTextInput({ leftIcon, ...otherProps }) {
   return (
     <View style={styles.container}>
       {leftIcon && (
         <MaterialCommunityIcons
           name={leftIcon}
-          size={20}
+          size={0.035 * SCREEN_WIDTH < 13 ? 15 : 20}
           color={colors.grey}
           style={styles.icon}
         />
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 25,
     flexDirection: "row",
-    padding: 15,
+    padding: 0.035 * SCREEN_WIDTH < 13 ? 10 : 15,
     marginVertical: 10,
     backgroundColor: colors.lightGrey,
   },
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-    fontSize: 18,
+    fontSize: 0.035 * SCREEN_WIDTH,
     color: colors.black,
   },
 });

@@ -1,25 +1,13 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, Dimensions } from "react-native";
 
 import colors from "../../config/colors";
 
-function AppButton({ title, onPress, style }) {
+const SCREEN_WIDTH = Dimensions.get("window").width;
+function AppButton({ title, onPress }) {
   return (
-    <TouchableOpacity
-      style={[
-        styles.button,
-        style && style.padding ? { padding: style.padding } : "",
-      ]}
-      onPress={onPress}
-    >
-      <Text
-        style={[
-          styles.buttonText,
-          style && style.fontSize ? { fontSize: style.fontSize } : "",
-        ]}
-      >
-        {title}
-      </Text>
+    <TouchableOpacity style={styles.button} onPress={onPress}>
+      <Text style={styles.buttonText}>{title}</Text>
     </TouchableOpacity>
   );
 }
@@ -30,13 +18,13 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    padding: 15,
+    padding: 0.034 * SCREEN_WIDTH < 13 ? 10 : 15,
     width: "80%",
     backgroundColor: colors.primary,
   },
   buttonText: {
     color: colors.secondary,
-    fontSize: 14,
+    fontSize: 0.034 * SCREEN_WIDTH,
     fontWeight: "bold",
     textTransform: "uppercase",
   },

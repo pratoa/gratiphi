@@ -16,7 +16,8 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 import colors from "./../../../config/colors";
 
-const windowHeight = Dimensions.get("window").height;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
 export default function ExpandedCard({ route }) {
   const item = route.params.item;
@@ -36,27 +37,32 @@ export default function ExpandedCard({ route }) {
 
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <StatusBar barStyle="light-content" />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Image
           source={{ uri: donee.profilePhoto }}
           style={styles.doneeImage}
         ></Image>
         <View style={styles.detailsContainer}>
-          <View style={styles.infoConatiner}>
-            <FontAwesome5
-              name={"birthday-cake"}
-              size={25}
-              color={colors.primary}
-            />
-            <Text style={styles.infoText}>{item.age}</Text>
+          <Text style={styles.doneeName}>{donee.firstName}</Text>
+          <View style={{ flexDirection: "row" }}>
             <FontAwesome5
               name={"map-marker-alt"}
-              size={25}
-              color={colors.primary}
+              size={SCREEN_WIDTH * 0.045}
+              color={colors.grey}
             />
             <Text style={styles.infoText}>{item.location.name}</Text>
           </View>
+          <View style={{ flexDirection: "row" }}>
+            <FontAwesome5
+              name={"birthday-cake"}
+              size={SCREEN_WIDTH * 0.045}
+              color={colors.grey}
+            />
+            <Text style={styles.infoText}>{item.age}</Text>
+          </View>
+          <Text style={styles.doneeSection}>Interests</Text>
+          <Text style={styles.doneeSection}>Q&A</Text>
+
           <Text style={styles.doneeLongBiography}> {donee.fullBiography}</Text>
         </View>
       </ScrollView>
@@ -75,17 +81,23 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     width: "100%",
     alignItems: "center",
-    borderRadius: 20,
+    // borderRadius: 20,
   },
   doneeImage: {
-    width: "100%",
+    width: "90%",
     height: 300,
-    height: windowHeight * 0.45,
+    height: SCREEN_HEIGHT * 0.45,
     borderRadius: 20,
   },
   detailsContainer: {
-    width: "100%",
-    padding: 10,
+    // width: "90%",
+    padding: 20,
+    // backgroundColor: colors.yellow,
+  },
+  doneeName: {
+    fontSize: SCREEN_WIDTH * 0.06,
+    fontWeight: "bold",
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
   },
   infoConatiner: {
     flexDirection: "row",
@@ -93,12 +105,18 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   infoText: {
-    paddingLeft: 5,
-    paddingRight: 10,
-    fontSize: 18,
-    fontWeight: "bold",
+    paddingLeft: 10,
+    fontSize: SCREEN_WIDTH * 0.045,
+    // fontWeight: "bold",
     alignSelf: "center",
-    color: colors.primary,
+    color: colors.grey,
+  },
+  doneeSection: {
+    marginTop: 5,
+    fontSize: SCREEN_WIDTH * 0.045,
+    fontWeight: "bold",
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    color: colors.black,
   },
   doneeLongBiography: {
     paddingTop: 10,
