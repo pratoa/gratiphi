@@ -1,10 +1,10 @@
 [
-  {
-    "groupName": "gratiphiAdmin",
-    "precedence": 1
-  },
-  {
-    "groupName": "gratiphiUser",
-    "precedence": 2
-  }
+    {
+        "groupName": "gratiphiAdmin",
+        "precedence": 1
+    },
+    {
+        "groupName": "gratiphiUser",
+        "precedence": 2
+    }
 ]

@@ -52,8 +52,7 @@ exports.handler = async (event, context, callback) => {
 
     //Create user in db
     const graphqlData = await axios({
-      url:
-        "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
+      url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
       method: "post",
       headers: {
         "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
@@ -63,9 +62,10 @@ exports.handler = async (event, context, callback) => {
         variables: {
           input: {
             id: event.request.userAttributes.sub,
-            name: "Andres",
-            lastName: "Prato",
+            name: event.request.userAttributes.firstName,
+            lastName: event.request.userAttributes.lastName,
             email: event.request.userAttributes.email,
+            // dateOfBirth: event.request.userAttributes.birthDate,
           },
         },
       },

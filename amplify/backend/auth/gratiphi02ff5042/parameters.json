@@ -23,13 +23,19 @@
     "userpoolClientGenerateSecret": true,
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [
+        "birthdate",
+        "family_name",
+        "name",
         "email"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "birthdate",
+        "email",
+        "family_name",
+        "name"
     ],
     "userpoolClientLambdaRole": "gratip02ff5042_userpoolclient_lambda_role",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "sharedId": "02ff5042",
     "resourceName": "gratiphi02ff5042",
     "authSelections": "identityPoolAndUserPool",
@@ -45,11 +51,23 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
         "email"
     ],
-    "userPoolGroupList": [],
+    "userPoolGroupList": [
+        "gratiphiAdmin",
+        "gratiphiUser"
+    ],
     "serviceName": "Cognito",
-    "dependsOn": []
+    "dependsOn": [],
+    "thirdPartyAuth": false,
+    "userPoolGroups": true,
+    "adminQueries": false,
+    "triggers": "{}",
+    "hostedUI": false,
+    "parentStack": {
+        "Ref": "AWS::StackId"
+    },
+    "permissions": []
 }
