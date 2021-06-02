@@ -7,9 +7,13 @@ import ListItemSeparator from "../../components/common/ListItemSeparator";
 import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
 
-export default function Admin({ navigation, updateAuthState }) {
-  const [locations, setLocations] = useState([]);
-
+export default function DoneesAtLocation({
+  route,
+  navigation,
+  updateAuthState,
+}) {
+  const [donees, setDoness] = useState([]);
+  const { locationId } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -24,11 +28,12 @@ export default function Admin({ navigation, updateAuthState }) {
   useEffect(() => {
     async function getDoneesByLocation() {
       const response = await API.graphql({
-        query: customQueries.getLocationForSponsor,
-        variables: { id: "36702f2c-10b3-4a50-900b-b9cbf9e121cf" },
+        query: customQueries.getDoneesAtLocation,
+        variables: { id: locationId },
       });
-      var listOfLocations = await response.data.getSponsor.locations.items;
-      setLocations(listOfLocations);
+      var listOfDonees = await response.data.getLocation.donees.items;
+      console.log(listOfDonees);
+      setDoness(listOfDonees);
     }
     getDoneesByLocation();
   }, []);
@@ -36,14 +41,12 @@ export default function Admin({ navigation, updateAuthState }) {
   return (
     <Screen>
       <FlatList
-        data={locations}
-        keyExtractor={(location) => location.name}
+        data={donees}
+        keyExtractor={(donees) => donees.id}
         renderItem={({ item }) => (
           <ListItemComponent
-            title={item.name}
-            onPress={() =>
-              navigation.navigate("DoneesAtLocation", { locationId: item.id })
-            }
+            title={item.firstName + " " + item.lastName}
+            onPress={() => console.log(item.firstName)}
             showChevrons
           />
         )}

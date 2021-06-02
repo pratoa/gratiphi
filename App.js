@@ -13,6 +13,7 @@ import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
 import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
 import Admin from "./src/screens/admin/Admin";
 import colors from "./src/config/colors";
+import DoneesAtLocation from "./src/screens/admin/DoneesAtLocation";
 
 Amplify.configure({
   ...awsconfig,
@@ -22,7 +23,40 @@ Amplify.configure({
 });
 
 const AuthenticationStack = createStackNavigator();
+const AdminStack = createStackNavigator();
 const RootStack = createStackNavigator();
+
+const AdminStackScreen = (props) => {
+  return (
+    <AdminStack.Navigator>
+      <AdminStack.Screen
+        name="Admin"
+        options={{
+          headerShown: true,
+          headerTitle: "Locations",
+        }}
+      >
+        {(screenProps) => (
+          <Admin {...screenProps} updateAuthState={props.updateAuthState} />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="DoneesAtLocation"
+        options={{
+          headerShown: true,
+          headerTitle: "Donees",
+        }}
+      >
+        {(screenProps) => (
+          <DoneesAtLocation
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+    </AdminStack.Navigator>
+  );
+};
 
 const AuthenticationStackScreen = (props) => {
   return (
@@ -167,12 +201,14 @@ function App() {
         <RootStack.Screen
           name="Admin"
           options={({ navigation, route }) => ({
-            headerShown: true,
-            title: "Alimenta La Solaridad",
+            headerShown: false,
           })}
         >
           {(screenProps) => (
-            <Admin {...screenProps} updateAuthState={updateAuthState}></Admin>
+            <AdminStackScreen
+              {...screenProps}
+              updateAuthState={updateAuthState}
+            />
           )}
         </RootStack.Screen>
         <RootStack.Screen
