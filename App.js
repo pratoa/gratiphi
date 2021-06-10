@@ -35,6 +35,7 @@ const AuthenticationStackScreen = (props) => {
           headerStyle: {
             backgroundColor: colors.white,
             shadowOpacity: 0,
+            elevation: 0,
           },
         }}
       >
@@ -191,7 +192,7 @@ function App() {
           name="ExpandedCard"
           component={ExpandedDoneeCard}
           options={({ route }) => ({
-            headerTitle: route.params.item.firstName,
+            headerTitle: "",
             headerBackTitle: "Back",
             headerTintColor: colors.primary,
             headerStyle: {

@@ -97,7 +97,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/postSignUpUserCreation-727144426e6e74504872-build.zip"
+          "S3Key": "amplify-builds/postSignUpUserCreation-552f796d614c7631716e-build.zip"
         }
       }
     },
@@ -107,12 +107,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "gratiphiLambdaRoleca6e47be",
+            "gratiphiLambdaRole5d2d696d",
             {
               "Fn::Join": [
                 "",
                 [
-                  "gratiphiLambdaRoleca6e47be",
+                  "gratiphiLambdaRole5d2d696d",
                   "-",
                   {
                     "Ref": "env"
@@ -271,17 +271,7 @@
                 "cognito-idp:UpdateGroup",
                 "cognito-idp:AdminUpdateAuthEventFeedback",
                 "cognito-idp:UpdateDeviceStatus",
-                "cognito-idp:UpdateUserPool",
-                "cognito-idp:DeleteUserPoolDomain",
-                "cognito-idp:DeleteResourceServer",
-                "cognito-idp:DeleteGroup",
-                "cognito-idp:AdminDeleteUserAttributes",
-                "cognito-idp:DeleteUserPoolClient",
-                "cognito-idp:DeleteUserAttributes",
-                "cognito-idp:DeleteUserPool",
-                "cognito-idp:AdminDeleteUser",
-                "cognito-idp:DeleteIdentityProvider",
-                "cognito-idp:DeleteUser"
+                "cognito-idp:UpdateUserPool"
               ],
               "Resource": [
                 {
@@ -313,8 +303,7 @@
                 "appsync:GraphQL",
                 "appsync:Get*",
                 "appsync:List*",
-                "appsync:Update*",
-                "appsync:Delete*"
+                "appsync:Update*"
               ],
               "Resource": [
                 {

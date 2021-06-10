@@ -18,10 +18,10 @@ import {
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import colors from "../../config/colors";
+import { default as defaultStyle } from "../../config/styles";
 import Screen from "../../components/common/Screen";
 import AppButton from "../../components/common/AppButton";
 import { Header } from "react-native/Libraries/NewAppScreen";
-import { color } from "react-native-reanimated";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -61,7 +61,7 @@ DATA.push(item2);
 DATA.push(item3);
 DATA.push(item4);
 
-const images = [
+const programs = [
   {
     id: 1,
     url: require("../../../assets/images/weight.png"),
@@ -176,7 +176,7 @@ export default function Home() {
             </>
           }
           scrollEnabled={true}
-          data={images}
+          data={programs}
           numColumns={2}
           backgroundColor={colors.white}
           keyExtractor={(item) => item.id.toString()}
@@ -392,6 +392,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     color: "black",
     fontSize: 23,
+    textAlign: "center"
   },
   modalBottom: {
     flex: 1,

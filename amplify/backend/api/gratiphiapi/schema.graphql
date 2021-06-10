@@ -21,6 +21,7 @@ type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   lastName: String!
+  dateOfBirth: AWSDate!
   email: String!
   stripeId: String
   donations: [Donations] @connection(keyName: "byUserId", fields: ["id"])
@@ -43,6 +44,26 @@ type Donee
   locationId: ID!
   location: Location @connection(fields: ["locationId"])
   donations: [Donations] @connection(keyName: "byDoneeId", fields: ["id"])
+  questionAnswer: [QuestionAnswer]
+    @connection(keyName: "byDoneeId", fields: ["id"])
+}
+
+type Question @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  question: String!
+}
+
+type QuestionAnswer
+  @model
+  @key(name: "byQuestionId", fields: ["questionId"])
+  @key(name: "byDoneeId", fields: ["doneeId"])
+  @auth(rules: [{ allow: public }]) {
+  id: ID!
+  answer: String!
+  questionId: ID!
+  question: Question! @connection(fields: ["questionId"])
+  doneeId: ID!
+  donee: Donee! @connection(fields: ["doneeId"])
 }
 
 type Donations

@@ -91,11 +91,32 @@ Parameters:
               
   userPoolGroupList:
     Type: CommaDelimitedList
-                  
+      
   serviceName:
     Type: String
                       
   dependsOn:
+    Type: CommaDelimitedList
+        
+  thirdPartyAuth:
+    Type: String
+              
+  userPoolGroups:
+    Type: String
+              
+  adminQueries:
+    Type: String
+            
+  triggers:
+    Type: String
+                
+  hostedUI:
+    Type: String
+                              
+  parentStack:
+    Type: String
+                
+  permissions:
     Type: CommaDelimitedList
     
 Conditions:
@@ -175,12 +196,27 @@ Resources:
         ExternalId: gratip02ff5042_role_external_id
     
   
+    
+    
+  
+    
+    
+  
+  
+   
+    
+  # Updating lambda role with permissions to Cognito
+  
+  
   UserPoolClientWeb:
   # Created provide application access to user pool
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: gratip02ff5042_app_clientWeb
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -191,6 +227,9 @@ Resources:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: gratip02ff5042_app_client
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity

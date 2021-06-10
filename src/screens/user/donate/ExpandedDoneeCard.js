@@ -2,22 +2,12 @@ import React from "react";
 import { Auth } from "aws-amplify";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AppButton from "./../../../components/common/AppButton";
-import {
-  View,
-  ScrollView,
-  Text,
-  Image,
-  StyleSheet,
-  StatusBar,
-  Dimensions,
-  Linking,
-} from "react-native";
+import { default as defaultStyle } from "../../../config/styles";
+import { View, Text, Image, StyleSheet, Linking } from "react-native";
 import { useEffect, useState } from "react/cjs/react.development";
 
 import colors from "./../../../config/colors";
-
-const SCREEN_HEIGHT = Dimensions.get("window").height;
-const SCREEN_WIDTH = Dimensions.get("window").width;
+import { FlatList } from "react-native-gesture-handler";
 
 export default function ExpandedCard({ route }) {
   const item = route.params.item;
@@ -35,37 +25,84 @@ export default function ExpandedCard({ route }) {
   const donateUrl =
     "http://gratiphi.org/donate/" + currentUser + "/" + donee.id;
 
+  const questions = [
+    {
+      id: 1,
+      question: "This is question 1",
+      answer: "This is answer 1",
+    },
+    {
+      id: 2,
+      question: "This is question 2",
+      answer: "This is answer 2",
+    },
+    {
+      id: 3,
+      question: "This is question 3",
+      answer: "This is answer 3",
+    },
+    {
+      id: 4,
+      question: "This is question 4",
+      answer: "This is answer 4",
+    },
+  ];
+
   return (
     <View style={{ flex: 1, backgroundColor: colors.white }}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image
-          source={{ uri: donee.profilePhoto }}
-          style={styles.doneeImage}
-        ></Image>
-        <View style={styles.detailsContainer}>
-          <Text style={styles.doneeName}>{donee.firstName}</Text>
-          <View style={{ flexDirection: "row" }}>
-            <FontAwesome5
-              name={"map-marker-alt"}
-              size={SCREEN_WIDTH * 0.045}
-              color={colors.grey}
-            />
-            <Text style={styles.infoText}>{item.location.name}</Text>
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <Image
+              source={{ uri: donee.profilePhoto }}
+              style={styles.doneeImage}
+            ></Image>
+            <View style={styles.detailsContainer}>
+              <Text style={styles.doneeName}>{donee.firstName}</Text>
+              <View style={{ flexDirection: "row" }}>
+                <FontAwesome5
+                  name={"map-marker-alt"}
+                  size={defaultStyle.SCREEN_WIDTH * 0.045}
+                  color={colors.grey}
+                />
+                <Text style={styles.infoText}>{item.location.name}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <FontAwesome5
+                  name={"birthday-cake"}
+                  size={defaultStyle.SCREEN_WIDTH * 0.045}
+                  color={colors.grey}
+                />
+                <Text style={styles.infoText}>{item.age} years old</Text>
+              </View>
+              <Text style={styles.doneeSection}>Interests</Text>
+              <Text style={styles.doneeSection}>Q&A</Text>
+            </View>
+          </>
+        }
+        scrollEnabled={true}
+        data={questions}
+        numColumns={1}
+        backgroundColor={colors.white}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item, index }) => (
+          <View style={styles.questionsContainer}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.questionNumber}>{index + 1}.</Text>
+              <Text style={styles.question}> {item.question}</Text>
+            </View>
+            <Text style={styles.answer}>{item.answer}</Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <FontAwesome5
-              name={"birthday-cake"}
-              size={SCREEN_WIDTH * 0.045}
-              color={colors.grey}
-            />
-            <Text style={styles.infoText}>{item.age}</Text>
-          </View>
-          <Text style={styles.doneeSection}>Interests</Text>
-          <Text style={styles.doneeSection}>Q&A</Text>
-
-          <Text style={styles.doneeLongBiography}> {donee.fullBiography}</Text>
-        </View>
-      </ScrollView>
+        )}
+        ListFooterComponent={
+          <>
+            {/* <Text style={styles.doneeLongBiography}>
+              {" "}
+              {donee.fullBiography}
+            </Text> */}
+          </>
+        }
+      />
       <View style={styles.buttonContainer}>
         <AppButton
           title={"Donate"}
@@ -77,27 +114,19 @@ export default function ExpandedCard({ route }) {
 }
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    width: "100%",
-    alignItems: "center",
-    // borderRadius: 20,
-  },
   doneeImage: {
     width: "90%",
     height: 300,
-    height: SCREEN_HEIGHT * 0.45,
+    height: defaultStyle.SCREEN_HEIGHT * 0.45,
     borderRadius: 20,
+    alignSelf: "center",
   },
   detailsContainer: {
-    // width: "90%",
-    padding: 20,
-    // backgroundColor: colors.yellow,
+    paddingLeft: 20,
   },
   doneeName: {
-    fontSize: SCREEN_WIDTH * 0.06,
     fontWeight: "bold",
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    ...defaultStyle.largeText,
   },
   infoConatiner: {
     flexDirection: "row",
@@ -106,17 +135,28 @@ const styles = StyleSheet.create({
   },
   infoText: {
     paddingLeft: 10,
-    fontSize: SCREEN_WIDTH * 0.045,
-    // fontWeight: "bold",
-    alignSelf: "center",
     color: colors.grey,
+    ...defaultStyle.mediumText,
   },
   doneeSection: {
     marginTop: 5,
-    fontSize: SCREEN_WIDTH * 0.045,
     fontWeight: "bold",
-    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
-    color: colors.black,
+    ...defaultStyle.mediumText,
+  },
+  questionsContainer: {
+    paddingLeft: 20,
+    marginTop: 5,
+  },
+  questionNumber: {
+    fontWeight: "500",
+    ...defaultStyle.smallText,
+  },
+  question: {
+    ...defaultStyle.smallText,
+  },
+  answer: {
+    fontWeight: "700",
+    ...defaultStyle.smallText,
   },
   doneeLongBiography: {
     paddingTop: 10,

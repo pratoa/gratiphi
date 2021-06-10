@@ -52,8 +52,7 @@ exports.handler = async (event, context, callback) => {
 
     //Create user in db
     const graphqlData = await axios({
-      url:
-        "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
+      url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
       method: "post",
       headers: {
         "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
@@ -66,6 +65,7 @@ exports.handler = async (event, context, callback) => {
             name: event.request.userAttributes.firstName,
             lastName: event.request.userAttributes.lastName,
             email: event.request.userAttributes.email,
+            dateOfBirth: event.request.userAttributes.birthDate,
           },
         },
       },
@@ -77,4 +77,17 @@ exports.handler = async (event, context, callback) => {
   } catch (err) {
     callback(err);
   }
+};
+
+exports.handler = async (event) => {
+    // TODO implement
+    const response = {
+        statusCode: 200,
+    //  Uncomment below to enable CORS requests
+    //  headers: {
+    //      "Access-Control-Allow-Origin": "*"
+    //  }, 
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
 };

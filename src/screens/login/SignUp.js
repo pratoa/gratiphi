@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Auth } from "aws-amplify";
 import {
   View,
   Text,
@@ -6,23 +7,29 @@ import {
   StyleSheet,
   Image,
   Dimensions,
+  Pressable,
+  KeyboardAvoidingView,
 } from "react-native";
-import { Auth } from "aws-amplify";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
+import moment from "moment";
 
 import AppTextInput from "../../components/common/AppTextInput";
 import AppButton from "../../components/common/AppButton";
 import colors from "../../config/colors";
 import Screen from "../../components/common/Screen";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 export default function SignUp({ navigation }) {
-  const [firstName, setFirstName] = useState("");
+  const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("");
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
+  const [showDatepicker, setShowDatepicker] = useToggle();
   const logo = "../../../assets/logo/gratiphi-blue-small2.png";
 
   async function signUp() {
@@ -31,13 +38,18 @@ export default function SignUp({ navigation }) {
       //verify all fields have been provided
       //fix responsiveness issues
 
-      if (!firstName) {
+      if (!name) {
         setError("First name is empty, please enter your first name!");
         throw error;
       }
 
       if (!lastName) {
         setError("Last name is empty, please enter your last name!");
+        throw error;
+      }
+
+      if (!dateOfBirth) {
+        setError("Birth date is empty, please enter your birth date!");
         throw error;
       }
 
@@ -68,7 +80,7 @@ export default function SignUp({ navigation }) {
       const { user } = await Auth.signUp({
         username,
         password,
-        attributes: { email, firstName, lastName },
+        attributes: { email },
       });
       console.log(user);
       console.log("Sign-up Confirmed");
@@ -78,21 +90,39 @@ export default function SignUp({ navigation }) {
     }
   }
 
+  const hideDatePicker = () => {
+    setShowDatepicker(false);
+  };
+
+  const handleConfirm = (date) => {
+    setDateOfBirth(date);
+    hideDatePicker();
+  };
+
+  function useToggle(initialValue = false) {
+    const [value, setValue] = React.useState(initialValue);
+    const toggle = React.useCallback(() => {
+      setValue((v) => !v);
+    }, []);
+    return [value, toggle];
+  }
+
   function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re =
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
 
   return (
-    <Screen style={styles.container}>
+    <KeyboardAvoidingView style={styles.container}>
       <Image source={require(logo)} style={styles.logo} />
       <View style={styles.formContainer}>
         <View style={styles.nameContainer}>
-          <View style={styles.firstNameWrapper}>
+          <View style={styles.nameWrapper}>
             <AppTextInput
-              value={firstName}
+              value={name}
               onChangeText={(text) => {
-                setFirstName(text);
+                setName(text);
               }}
               leftIcon="account"
               placeholder="First name"
@@ -114,6 +144,25 @@ export default function SignUp({ navigation }) {
               textContentType="name"
             />
           </View>
+        </View>
+        <Pressable onPress={setShowDatepicker}>
+          <View>
+            <AppTextInput
+              value={dateOfBirth ? dateOfBirth.toDateString() : ""}
+              placeholder="Birth date"
+              leftIcon="cake"
+              editable={false}
+            />
+          </View>
+        </Pressable>
+        <View>
+          <DateTimePickerModal
+            isVisible={showDatepicker}
+            mode="date"
+            onConfirm={handleConfirm}
+            onCancel={hideDatePicker}
+            maximumDate={moment().subtract(18, "years").toDate()}
+          />
         </View>
         <AppTextInput
           value={email}
@@ -164,7 +213,7 @@ export default function SignUp({ navigation }) {
           </TouchableOpacity>
         </View>
       </View>
-    </Screen>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -176,17 +225,18 @@ const styles = StyleSheet.create({
   logo: {
     width: 250,
     resizeMode: "contain",
-    marginTop: 50,
+    marginTop: 0,
   },
   formContainer: {
     position: "absolute",
-    bottom: 0.035 * SCREEN_WIDTH < 13 ? 0 : 100,
+    bottom: 0,
+    justifyContent: "space-around",
   },
   nameContainer: {
     flexDirection: "row",
     width: "100%",
   },
-  firstNameWrapper: {
+  nameWrapper: {
     flex: 1,
     paddingRight: 5,
   },

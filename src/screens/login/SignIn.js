@@ -41,8 +41,8 @@ export default function SignIn({
 
   return (
     <Screen style={styles.container}>
-      <Image source={require(logo)} style={styles.logo} />
       <View style={styles.formContainer}>
+        <Image source={require(logo)} style={styles.logo} />
         <Text style={styles.fieldTitle}>Email Address</Text>
         <AppTextInput
           value={email}
@@ -93,13 +93,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   logo: {
-    marginTop: 0,
+    top: 0,
     width: 250,
     height: 180,
+    alignSelf: "center",
   },
   formContainer: {
     position: "absolute",
+    top: 0,
     bottom: 0.035 * SCREEN_WIDTH < 13 ? 0 : 100,
+    width: "90%",
+    // backgroundColor: colors.red,
   },
   fieldTitle: {
     fontSize: 0.035 * SCREEN_WIDTH,

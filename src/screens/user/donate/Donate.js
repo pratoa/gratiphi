@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { API } from "aws-amplify";
-import * as queries from "../../../../graphql/queries";
+import * as queries from "../../../graphql/queries";
 import { StyleSheet, Dimensions, View, Alert } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
 import Screen from "../../../components/common/Screen";
 import AppButton from "../../../components/common/AppButton";
+import Constants from "expo-constants";
+import colors from "../../../config/colors";
 
 const SLIDER_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.8);
@@ -30,6 +32,7 @@ export default function Donate({ props }) {
         Alert.alert(
           "There was an error fetching data! We apologize, please re-try later"
         );
+        console.log(err);
       }
     }
     getDonees();
@@ -82,6 +85,6 @@ export default function Donate({ props }) {
 const styles = StyleSheet.create({
   container: {
     alignItems: "center",
-    paddingTop: 10,
+    paddingTop: Constants.statusBarHeight,
   },
 });

@@ -12,14 +12,10 @@ export const onCreateSponsor = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       donees {
         items {
@@ -32,18 +28,11 @@ export const onCreateSponsor = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -60,14 +49,10 @@ export const onUpdateSponsor = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       donees {
         items {
@@ -80,18 +65,11 @@ export const onUpdateSponsor = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -108,14 +86,10 @@ export const onDeleteSponsor = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
       donees {
         items {
@@ -128,18 +102,11 @@ export const onDeleteSponsor = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -157,15 +124,10 @@ export const onCreateLocation = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -180,18 +142,11 @@ export const onCreateLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -209,15 +164,10 @@ export const onUpdateLocation = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -232,18 +182,11 @@ export const onUpdateLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -261,15 +204,10 @@ export const onDeleteLocation = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -284,18 +222,11 @@ export const onDeleteLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -307,6 +238,7 @@ export const onCreateUser = /* GraphQL */ `
       id
       name
       lastName
+      dateOfBirth
       email
       stripeId
       donations {
@@ -317,18 +249,11 @@ export const onCreateUser = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -340,6 +265,7 @@ export const onUpdateUser = /* GraphQL */ `
       id
       name
       lastName
+      dateOfBirth
       email
       stripeId
       donations {
@@ -350,18 +276,11 @@ export const onUpdateUser = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -373,6 +292,7 @@ export const onDeleteUser = /* GraphQL */ `
       id
       name
       lastName
+      dateOfBirth
       email
       stripeId
       donations {
@@ -383,18 +303,11 @@ export const onDeleteUser = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -417,15 +330,10 @@ export const onCreateDonee = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -438,19 +346,12 @@ export const onCreateDonee = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -462,18 +363,22 @@ export const onCreateDonee = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -496,15 +401,10 @@ export const onUpdateDonee = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -517,19 +417,12 @@ export const onUpdateDonee = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -541,18 +434,22 @@ export const onUpdateDonee = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -575,15 +472,10 @@ export const onDeleteDonee = /* GraphQL */ `
         logo
         locations {
           nextToken
-          startedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -596,19 +488,12 @@ export const onDeleteDonee = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donees {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -620,18 +505,205 @@ export const onDeleteDonee = /* GraphQL */ `
           amount
           isGratificationSent
           gratificationPhoto
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         nextToken
-        startedAt
       }
-      _version
-      _deleted
-      _lastChangedAt
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateQuestion = /* GraphQL */ `
+  subscription OnCreateQuestion {
+    onCreateQuestion {
+      id
+      question
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateQuestion = /* GraphQL */ `
+  subscription OnUpdateQuestion {
+    onUpdateQuestion {
+      id
+      question
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteQuestion = /* GraphQL */ `
+  subscription OnDeleteQuestion {
+    onDeleteQuestion {
+      id
+      question
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateQuestionAnswer = /* GraphQL */ `
+  subscription OnCreateQuestionAnswer {
+    onCreateQuestionAnswer {
+      id
+      answer
+      questionId
+      question {
+        id
+        question
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateQuestionAnswer = /* GraphQL */ `
+  subscription OnUpdateQuestionAnswer {
+    onUpdateQuestionAnswer {
+      id
+      answer
+      questionId
+      question {
+        id
+        question
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteQuestionAnswer = /* GraphQL */ `
+  subscription OnDeleteQuestionAnswer {
+    onDeleteQuestionAnswer {
+      id
+      answer
+      questionId
+      question {
+        id
+        question
+        createdAt
+        updatedAt
+      }
+      doneeId
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -646,15 +718,12 @@ export const onCreateDonations = /* GraphQL */ `
         id
         name
         lastName
+        dateOfBirth
         email
         stripeId
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -672,9 +741,6 @@ export const onCreateDonations = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -683,28 +749,21 @@ export const onCreateDonations = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
+        questionAnswer {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       amount
       isGratificationSent
       gratificationPhoto
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -719,15 +778,12 @@ export const onUpdateDonations = /* GraphQL */ `
         id
         name
         lastName
+        dateOfBirth
         email
         stripeId
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -745,9 +801,6 @@ export const onUpdateDonations = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -756,28 +809,21 @@ export const onUpdateDonations = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
+        questionAnswer {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       amount
       isGratificationSent
       gratificationPhoto
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }
@@ -792,15 +838,12 @@ export const onDeleteDonations = /* GraphQL */ `
         id
         name
         lastName
+        dateOfBirth
         email
         stripeId
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
         createdAt
         updatedAt
       }
@@ -818,9 +861,6 @@ export const onDeleteDonations = /* GraphQL */ `
           id
           name
           logo
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
@@ -829,28 +869,21 @@ export const onDeleteDonations = /* GraphQL */ `
           id
           name
           sponsorId
-          _version
-          _deleted
-          _lastChangedAt
           createdAt
           updatedAt
         }
         donations {
           nextToken
-          startedAt
         }
-        _version
-        _deleted
-        _lastChangedAt
+        questionAnswer {
+          nextToken
+        }
         createdAt
         updatedAt
       }
       amount
       isGratificationSent
       gratificationPhoto
-      _version
-      _deleted
-      _lastChangedAt
       createdAt
       updatedAt
     }

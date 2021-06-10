@@ -66,7 +66,7 @@ export default function DoneeCard({ navigation, item }) {
 const styles = StyleSheet.create({
   itemContainer: {
     width: ITEM_WIDTH,
-    height: "99%",
+    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.white,

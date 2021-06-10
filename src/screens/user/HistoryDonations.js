@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { API, Auth, graphqlOperation } from "aws-amplify";
-import * as queries from "../../../graphql/queries";
+import * as queries from "../../graphql/queries";
 import { StyleSheet, Alert, FlatList, Text, View } from "react-native";
 import Screen from "../../components/common/Screen";
 import Moment from "moment";
@@ -12,22 +12,26 @@ export default function HistoryDonations() {
   useEffect(() => {
     async function getPreviousDonations() {
       //TO-DO: better handling of error when api fails
-      try {
-        const currentUserId = await getCurrentUser();
-        console.log("THIS IS IT", currentUserId);
-        if (await currentUserId) {
-          const response = await API.graphql(
-            graphqlOperation(queries.listDonationss, {
-              filter: { userId: { eq: currentUserId } },
-            })
+      const currentUserId = await getCurrentUser();
+      console.log("THIS IS IT", currentUserId);
+      if (await currentUserId) {
+        const response = await API.graphql(
+          graphqlOperation(queries.listDonationss, {
+            filter: { userId: { eq: currentUserId } },
+          })
+        );
+
+        if (!response.data) {
+          console.log("this is the error", response);
+          Alert.alert(
+            "There was an error fetching data! We apologize, please re-try later"
           );
-          setPreviousDonations(response.data.listDonationss.items);
-          console.log(response.data.listDonationss.items);
         }
-      } catch (err) {
-        console.log(err);
-        Alert.alert(
-          "There was an error fetching data! We apologize, please re-try later"
+
+        setPreviousDonations(await response.data.listDonationss.items);
+        console.log(
+          "This is the response: ",
+          response.data.listDonationss.items
         );
       }
     }
@@ -52,13 +56,13 @@ export default function HistoryDonations() {
   const renderItem = ({ item }) => <Item item={item} />;
 
   return (
-    <Screen>
+    <View>
       <FlatList
         data={previousDonations}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
-    </Screen>
+    </View>
   );
 }
 
