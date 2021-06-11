@@ -4,16 +4,14 @@
       "gratiphi02ff5042": [
         "create",
         "read",
-        "update",
-        "delete"
+        "update"
       ]
     },
     "api": {
       "gratiphiapi": [
         "create",
         "read",
-        "update",
-        "delete"
+        "update"
       ]
     }
   },

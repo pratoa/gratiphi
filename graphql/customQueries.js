@@ -29,11 +29,6 @@ export const getDoneesAtLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          _version
-          _deleted
-          _lastChangedAt
-          createdAt
-          updatedAt
         }
       }
     }

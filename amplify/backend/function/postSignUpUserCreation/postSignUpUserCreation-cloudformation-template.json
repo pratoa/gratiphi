@@ -25,6 +25,12 @@
     "apigratiphiapiGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apigratiphiapiGraphQLAPIKeyOutput"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -96,8 +102,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/postSignUpUserCreation-6b6a43365a4f6d6b7562-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },
@@ -107,12 +117,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "gratiphiLambdaRoleca6e47be",
+            "gratiphiLambdaRole5d2d696d",
             {
               "Fn::Join": [
                 "",
                 [
-                  "gratiphiLambdaRoleca6e47be",
+                  "gratiphiLambdaRole5d2d696d",
                   "-",
                   {
                     "Ref": "env"
@@ -271,17 +281,7 @@
                 "cognito-idp:UpdateGroup",
                 "cognito-idp:AdminUpdateAuthEventFeedback",
                 "cognito-idp:UpdateDeviceStatus",
-                "cognito-idp:UpdateUserPool",
-                "cognito-idp:DeleteUserPoolDomain",
-                "cognito-idp:DeleteResourceServer",
-                "cognito-idp:DeleteGroup",
-                "cognito-idp:AdminDeleteUserAttributes",
-                "cognito-idp:DeleteUserPoolClient",
-                "cognito-idp:DeleteUserAttributes",
-                "cognito-idp:DeleteUserPool",
-                "cognito-idp:AdminDeleteUser",
-                "cognito-idp:DeleteIdentityProvider",
-                "cognito-idp:DeleteUser"
+                "cognito-idp:UpdateUserPool"
               ],
               "Resource": [
                 {
@@ -313,8 +313,7 @@
                 "appsync:GraphQL",
                 "appsync:Get*",
                 "appsync:List*",
-                "appsync:Update*",
-                "appsync:Delete*"
+                "appsync:Update*"
               ],
               "Resource": [
                 {
