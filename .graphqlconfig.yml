@@ -1,6 +1,6 @@
 projects:
   gratiphiapi:
-    schemaPath: ./amplify/graphql/schema.json
+    schemaPath: amplify/backend/api/gratiphiapi/build/schema.graphql
     includes:
       - ./graphql/**/*.js
     excludes:
@@ -8,8 +8,11 @@ projects:
     extensions:
       amplify:
         codeGenTarget: javascript
-        generatedFileName: ""
-        docsFilePath: ./graphql
+        generatedFileName: ''
+        docsFilePath: /graphql
+        region: us-east-1
+        apiId: null
+        maxDepth: 3
 extensions:
   amplify:
     version: 3

@@ -69,6 +69,7 @@ const AuthenticationStackScreen = (props) => {
           headerStyle: {
             backgroundColor: colors.white,
             shadowOpacity: 0,
+            elevation: 0,
           },
         }}
       >
@@ -86,7 +87,7 @@ const AuthenticationStackScreen = (props) => {
         name="SignIn"
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Sign In",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {
@@ -108,7 +109,7 @@ const AuthenticationStackScreen = (props) => {
         component={SignUp}
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Create Account",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {
@@ -122,7 +123,7 @@ const AuthenticationStackScreen = (props) => {
         component={ConfirmSignUp}
         options={{
           headerShown: true,
-          headerTitle: "",
+          headerTitle: "Confirm Account",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {
@@ -215,7 +216,7 @@ function App() {
           name="ExpandedCard"
           component={ExpandedDoneeCard}
           options={({ route }) => ({
-            headerTitle: route.params.item.firstName,
+            headerTitle: "",
             headerBackTitle: "Back",
             headerTintColor: colors.primary,
             headerStyle: {

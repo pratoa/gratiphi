@@ -8,6 +8,7 @@ import Donate from "./donate/Donate";
 import HistoryDonations from "./HistoryDonations";
 import Settings from "./Settings";
 import colors from "../../config/colors";
+import { Dimensions } from "react-native";
 
 const BottomNavigator = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -15,6 +16,7 @@ const DonateStack = createStackNavigator();
 const HistoryStack = createStackNavigator();
 const SettingsStack = createStackNavigator();
 
+const SCREEN_WIDTH = Dimensions.get("window").width;
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator initialRouteName="Home">
@@ -23,9 +25,13 @@ function HomeStackScreen() {
         component={Home}
         options={{
           headerTitle: "Alimenta la Solidaridad",
-          headerTintColor: colors.white,
+          headerTitleStyle: {
+            fontSize: 0.055 * SCREEN_WIDTH,
+            fontWeight: "700",
+          },
+          headerTintColor: colors.primary,
           headerStyle: {
-            backgroundColor: colors.primary,
+            backgroundColor: colors.white,
             shadowOpacity: 0,
           },
         }}
@@ -41,9 +47,9 @@ function DonateStackScreen({ props }) {
         name="Donate"
         children={() => <Donate props={props} />}
         options={{
-          headerTitle: "Donate",
+          headerTitle: "",
           headerTintColor: colors.primary,
-          headerShown: true,
+          headerShown: false,
           headerStyle: {
             backgroundColor: colors.white,
             shadowOpacity: 0,
@@ -100,16 +106,16 @@ const BottomTabNavigator = (props) => {
       initialRouteName="Home"
       tabBarOptions={{
         showLabel: true,
-        activeTintColor: colors.pinkRed,
+        activeTintColor: colors.primary,
         inactiveTintColor: colors.grey,
       }}
     >
       <BottomNavigator.Screen
-        name="Home"
+        name="Organization"
         component={HomeStackScreen}
         options={{
           tabBarIcon: ({ color }) => (
-            <FontAwesome5 name={"home"} size={25} color={color} />
+            <FontAwesome5 name={"list-alt"} size={25} color={color} />
           ),
         }}
       />

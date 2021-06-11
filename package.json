@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@aws-amplify/core": "^3.8.3",
-    "@expo/vector-icons": "^10.2.1",
+    "@react-native-community/datetimepicker": "3.0.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-native-community/netinfo": "^5.9.7",
     "@react-navigation/bottom-tabs": "^5.11.2",
@@ -30,7 +30,9 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
     "react-native-gesture-handler": "~1.7.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-keychain": "^6.2.0",
+    "react-native-modal-datetime-picker": "^10.0.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",

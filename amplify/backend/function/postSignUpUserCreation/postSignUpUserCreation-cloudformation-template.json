@@ -93,21 +93,14 @@
           }
         },
         "Role": {
-          "Fn::GetAtt": [
-            "LambdaExecutionRole",
-            "Arn"
-          ]
+          "Fn::GetAtt": ["LambdaExecutionRole", "Arn"]
         },
         "Runtime": "nodejs12.x",
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": {
-            "Ref": "s3Key"
-          }
+          "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
+          "S3Key": "amplify-builds/postSignUpUserCreation-552f796d614c7631716e-build.zip"
         }
       }
     },
@@ -138,22 +131,16 @@
             {
               "Effect": "Allow",
               "Principal": {
-                "Service": [
-                  "lambda.amazonaws.com"
-                ]
+                "Service": ["lambda.amazonaws.com"]
               },
-              "Action": [
-                "sts:AssumeRole"
-              ]
+              "Action": ["sts:AssumeRole"]
             }
           ]
         }
       }
     },
     "lambdaexecutionpolicy": {
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ],
+      "DependsOn": ["LambdaExecutionRole"],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "lambda-execution-policy",
@@ -194,9 +181,7 @@
       }
     },
     "AmplifyResourcesPolicy": {
-      "DependsOn": [
-        "LambdaExecutionRole"
-      ],
+      "DependsOn": ["LambdaExecutionRole"],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy",
@@ -351,10 +336,7 @@
     },
     "Arn": {
       "Value": {
-        "Fn::GetAtt": [
-          "LambdaFunction",
-          "Arn"
-        ]
+        "Fn::GetAtt": ["LambdaFunction", "Arn"]
       }
     },
     "Region": {
