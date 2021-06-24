@@ -33,8 +33,6 @@ async function createStripeUser(email) {
 }
 
 async function getUserStripeId(userId) {
-  console.log(userId);
-  console.log(typeof userId);
   try {
     const graphqlData = await axios({
       url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
