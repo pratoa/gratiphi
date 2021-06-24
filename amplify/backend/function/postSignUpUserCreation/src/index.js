@@ -14,6 +14,9 @@ const axios = require("axios");
 const gql = require("graphql-tag");
 const graphql = require("graphql");
 const { print } = graphql;
+const moment = require("moment");
+const API_KEY = process.env.API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT;
+const API_ENDPOINT = process.env.API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT;
 
 const createUser = gql`
   mutation createUser($input: CreateUserInput!) {
@@ -22,6 +25,7 @@ const createUser = gql`
       name
       lastName
       email
+      dateOfBirth
     }
   }
 `;
@@ -29,6 +33,11 @@ const createUser = gql`
 exports.handler = async (event, context, callback) => {
   console.log("Event", event);
   console.log("Context", context);
+  console.log("DATE", event.request.userAttributes["custom:birth_date"]);
+  console.log(
+    "DATE TYPE",
+    typeof event.request.userAttributes["custom:birth_date"]
+  );
 
   try {
     //Set group
@@ -52,42 +61,29 @@ exports.handler = async (event, context, callback) => {
 
     //Create user in db
     const graphqlData = await axios({
-      url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
+      url: API_ENDPOINT,
       method: "post",
       headers: {
-        "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
+        "x-api-key": API_KEY,
       },
       data: {
         query: print(createUser),
         variables: {
           input: {
             id: event.request.userAttributes.sub,
-            name: event.request.userAttributes.firstName,
-            lastName: event.request.userAttributes.lastName,
+            name: event.request.userAttributes["custom:first_name"],
+            lastName: event.request.userAttributes["custom:last_name"],
             email: event.request.userAttributes.email,
-            dateOfBirth: event.request.userAttributes.birthDate,
+            dateOfBirth: event.request.userAttributes["custom:birth_date"],
           },
         },
       },
     });
 
-    console.log(graphqlData);
+    console.log(graphqlData.data);
     console.log("Sucessfully saved user!");
     callback(null, event);
   } catch (err) {
     callback(err);
   }
-};
-
-exports.handler = async (event) => {
-    // TODO implement
-    const response = {
-        statusCode: 200,
-    //  Uncomment below to enable CORS requests
-    //  headers: {
-    //      "Access-Control-Allow-Origin": "*"
-    //  }, 
-        body: JSON.stringify('Hello from Lambda!'),
-    };
-    return response;
 };

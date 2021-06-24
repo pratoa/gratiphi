@@ -7,10 +7,12 @@ export const getSponsor = /* GraphQL */ `
       id
       name
       logo
+      identifier
       locations {
         items {
           id
           name
+          identifier
           sponsorId
           createdAt
           updatedAt
@@ -26,6 +28,7 @@ export const getSponsor = /* GraphQL */ `
           smallBiography
           fullBiography
           profilePhoto
+          identifier
           sponsorId
           locationId
           createdAt
@@ -49,6 +52,7 @@ export const listSponsors = /* GraphQL */ `
         id
         name
         logo
+        identifier
         locations {
           nextToken
         }
@@ -67,11 +71,13 @@ export const getLocation = /* GraphQL */ `
     getLocation(id: $id) {
       id
       name
+      identifier
       sponsorId
       sponsor {
         id
         name
         logo
+        identifier
         locations {
           nextToken
         }
@@ -90,6 +96,7 @@ export const getLocation = /* GraphQL */ `
           smallBiography
           fullBiography
           profilePhoto
+          identifier
           sponsorId
           locationId
           createdAt
@@ -112,11 +119,13 @@ export const listLocations = /* GraphQL */ `
       items {
         id
         name
+        identifier
         sponsorId
         sponsor {
           id
           name
           logo
+          identifier
           createdAt
           updatedAt
         }
@@ -191,11 +200,13 @@ export const getDonee = /* GraphQL */ `
       smallBiography
       fullBiography
       profilePhoto
+      identifier
       sponsorId
       sponsor {
         id
         name
         logo
+        identifier
         locations {
           nextToken
         }
@@ -209,11 +220,13 @@ export const getDonee = /* GraphQL */ `
       location {
         id
         name
+        identifier
         sponsorId
         sponsor {
           id
           name
           logo
+          identifier
           createdAt
           updatedAt
         }
@@ -267,11 +280,13 @@ export const listDonees = /* GraphQL */ `
         smallBiography
         fullBiography
         profilePhoto
+        identifier
         sponsorId
         sponsor {
           id
           name
           logo
+          identifier
           createdAt
           updatedAt
         }
@@ -279,6 +294,7 @@ export const listDonees = /* GraphQL */ `
         location {
           id
           name
+          identifier
           sponsorId
           createdAt
           updatedAt
@@ -344,11 +360,13 @@ export const getQuestionAnswer = /* GraphQL */ `
         smallBiography
         fullBiography
         profilePhoto
+        identifier
         sponsorId
         sponsor {
           id
           name
           logo
+          identifier
           createdAt
           updatedAt
         }
@@ -356,6 +374,7 @@ export const getQuestionAnswer = /* GraphQL */ `
         location {
           id
           name
+          identifier
           sponsorId
           createdAt
           updatedAt
@@ -400,6 +419,7 @@ export const listQuestionAnswers = /* GraphQL */ `
           smallBiography
           fullBiography
           profilePhoto
+          identifier
           sponsorId
           locationId
           createdAt
@@ -439,11 +459,13 @@ export const getDonations = /* GraphQL */ `
         smallBiography
         fullBiography
         profilePhoto
+        identifier
         sponsorId
         sponsor {
           id
           name
           logo
+          identifier
           createdAt
           updatedAt
         }
@@ -451,6 +473,7 @@ export const getDonations = /* GraphQL */ `
         location {
           id
           name
+          identifier
           sponsorId
           createdAt
           updatedAt
@@ -501,6 +524,7 @@ export const listDonationss = /* GraphQL */ `
           smallBiography
           fullBiography
           profilePhoto
+          identifier
           sponsorId
           locationId
           createdAt
