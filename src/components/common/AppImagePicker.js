@@ -32,7 +32,7 @@ export function AppImagePicker() {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.4,
     });
 
     console.log(result);

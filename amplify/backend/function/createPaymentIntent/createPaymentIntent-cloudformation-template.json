@@ -69,7 +69,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/createPaymentIntent-4f45775976557559666b-build.zip"
+          "S3Key": "amplify-builds/createPaymentIntent-6c624f69395a72694b73-build.zip"
         }
       }
     },

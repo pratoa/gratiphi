@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "api": {
+      "gratiphiapi": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    },
+    "storage": {
+      "gratiproof": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ],
+      "Donations:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
