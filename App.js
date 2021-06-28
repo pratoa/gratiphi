@@ -14,6 +14,8 @@ import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
 import Admin from "./src/screens/admin/Admin";
 import colors from "./src/config/colors";
 import DoneesAtLocation from "./src/screens/admin/DoneesAtLocation";
+import DoneeAdmin from "./src/screens/admin/DoneeAdmin";
+import PhotoUpload from "./src/screens/admin/PhotoUpload";
 
 Amplify.configure({
   ...awsconfig,
@@ -49,6 +51,32 @@ const AdminStackScreen = (props) => {
       >
         {(screenProps) => (
           <DoneesAtLocation
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="DoneeAdmin"
+        options={{
+          headerShown: true,
+        }}
+      >
+        {(screenProps) => (
+          <DoneeAdmin
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="PhotoUpload"
+        options={{
+          headerShown: true,
+        }}
+      >
+        {(screenProps) => (
+          <PhotoUpload
             {...screenProps}
             updateAuthState={props.updateAuthState}
           />

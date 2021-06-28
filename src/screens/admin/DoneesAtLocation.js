@@ -46,7 +46,15 @@ export default function DoneesAtLocation({
         renderItem={({ item }) => (
           <ListItemComponent
             title={item.firstName + " " + item.lastName}
-            onPress={() => console.log(item.firstName)}
+            onPress={() =>
+              navigation.navigate("DoneeAdmin", {
+                donee: {
+                  name: `${item.firstName} ${item.lastName}`,
+                  profilePhoto: item.profilePhoto,
+                  id: item.id,
+                },
+              })
+            }
             showChevrons
           />
         )}

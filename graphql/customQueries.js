@@ -34,3 +34,19 @@ export const getDoneesAtLocation = /* GraphQL */ `
     }
   }
 `;
+
+export const getDonationHistoryByDoneeId = /* GraphQL */ `
+  query getDonationHistoryByDoneeId($filter: ModelDonationsFilterInput) {
+    listDonationss(filter: $filter) {
+      items {
+        amount
+        createdAt
+        isGratificationSent
+        id
+        user {
+          email
+        }
+      }
+    }
+  }
+`;

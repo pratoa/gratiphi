@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     borderRadius: 25,
     justifyContent: "center",
+    alignSelf: "center",
     alignItems: "center",
     padding: 0.034 * SCREEN_WIDTH < 13 ? 10 : 15,
     width: "80%",
