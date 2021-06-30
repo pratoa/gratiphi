@@ -70,24 +70,21 @@ const updateDonationGraph = gql`
   }
 `;
 
-const getDonationsByUserAndDonee = gql`
-  query listDonationss($filter: ModelDonationsFilterInput) {
-    listDonationss(filter: $filter) {
-      items {
-        id
-        userId
-        doneeId
-        amount
-        isGratificationSent
-        gratificationPhoto
-      }
-    }
-  }
-`;
-
 exports.handler = async (event) => {
+  //get donations that don't have a gratification ----------
+  //loop through each ----------
+  //  check if there is a gratification in S3 by doneeId
+  //      if yes, CONTINUE
+  //      if no, BREAK
+  //  check if there is a previous donation by same user to same donee
+  //      if yes, check if image is the same
+  //          if image is the same BREAK
+  //          if image is different CONTINUE
+  //      if no, CONTINUE
+  //  send gratification to user
+  //  save gratification photo url in the donation and mark as completed
+
   try {
-    // Get eligible donations
     const graphqlData = await axios({
       url: API_ENDPOINT,
       method: "post",
@@ -109,12 +106,12 @@ exports.handler = async (event) => {
       },
     });
     var donations = graphqlData.data.data.listDonationss.items;
-
-    // Loop through each donation
+    // console.log(donations);
+    // await donations.forEach(processDonation);
     for (const donation of donations) {
-      console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
+      console.log("START OF PROCESSING");
       await processDonation(donation);
-      console.log("END OF PROCESSING FOR DONATIONID: ", donation.id);
+      console.log("END OF PROCESSING");
     }
   } catch (err) {
     console.log("ERROR: ", err);
@@ -127,129 +124,30 @@ async function processDonation(donation) {
   const locationId = donation.donee.location.id;
   const doneeIdentifier = donation.donee.identifier;
   const doneeId = donation.donee.id;
-  const userId = donation.user.id;
 
   var listParams = {
     Bucket: BUCKET_NAME,
-    Prefix: `public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_`,
+    Delimiter: "/",
+    Prefix: `public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}`,
   };
-
-  // Get all gratification photos for donee
   var s3List = await s3.listObjects(listParams).promise();
 
-  // If there are no gratification photos stop
   if (s3List.Contents === undefined || s3List.Contents.length == 0) {
     return;
   }
 
-  // Fetch all donations made by the user to the same donee
-  const graphqlData2 = await axios({
-    url: API_ENDPOINT,
-    method: "post",
-    headers: {
-      "x-api-key": API_KEY,
-    },
-    data: {
-      query: print(getDonationsByUserAndDonee),
-      variables: {
-        filter: {
-          userId: {
-            eq: userId,
-          },
-          doneeId: {
-            eq: doneeId,
-          },
-        },
-      },
-    },
-  });
+  var imageUrl = `https://${BUCKET_NAME}.s3.amazonaws.com/${s3List.Contents[0].Key}`;
+  console.log("IMAGE URL: ", imageUrl);
 
-  // if there are no prev donations stop. This should never happen, since we are looping through one technically
-  if (graphqlData2.data.data == null) {
+  if (!imageUrl) {
     return;
   }
 
-  var previosDonations = graphqlData2.data.data.listDonationss.items;
-  var gratifications = s3List.Contents;
-  var dates = getGratificationDates(gratifications);
-  const lastDate = dates[0].toISOString().split("T")[0];
+  var email = await sendEmail(donation, imageUrl);
+  console.log("EMAIL: ", email);
 
-  // If there is only one prev donation (meaning current donation in loop)
-  if (previosDonations.length < 2) {
-    var imageUrl = getImageUrl(
-      sponsorIdentifier,
-      locationIdentifier,
-      locationId,
-      doneeIdentifier,
-      doneeId,
-      lastDate
-    );
-    console.log("IMAGE URL: ", imageUrl);
-
-    // send email
-    var email = await sendEmail(donation, imageUrl);
-    console.log("EMAIL: ", email);
-
-    // update donation
-    var updatedDonation = await updateDonation(donation, imageUrl);
-    console.log("UPDATED DONATION: ", updatedDonation);
-  } else {
-    // if there are more than 1 previous donations
-    var counter = 0;
-
-    // loop through each and check if latest gratification photo added has been sent alreay
-    for (const donation of previosDonations) {
-      if (donation.gratificationPhoto) {
-        if (donation.gratificationPhoto.includes(lastDate)) {
-          counter++;
-        }
-      }
-    }
-
-    // if it latest gratification hasn't been sent, send email and update donation
-    if (counter == 0) {
-      var imageUrl = getImageUrl(
-        sponsorIdentifier,
-        locationIdentifier,
-        locationId,
-        doneeIdentifier,
-        doneeId,
-        lastDate
-      );
-      console.log("COUNTER = 0");
-      console.log("IMAGE URL: ", imageUrl);
-
-      var email = await sendEmail(donation, imageUrl);
-      console.log("EMAIL: ", email);
-
-      var updatedDonation = await updateDonation(donation, imageUrl);
-      console.log("UPDATED DONATION: ", updatedDonation);
-    } else {
-      //if the latest gratification has been sent, then stop
-      return;
-    }
-  }
-}
-
-function getImageUrl(
-  sponsorIdentifier,
-  locationIdentifier,
-  locationId,
-  doneeIdentifier,
-  doneeId,
-  date
-) {
-  return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpg`;
-}
-
-function getGratificationDates(gratifications) {
-  var dates = [];
-  for (const grat of gratifications) {
-    var date = grat.Key.split("_").pop().split(".")[0];
-    dates.push(new Date(date));
-  }
-  const sortedDates = dates.sort((a, b) => b - a);
-  return sortedDates;
+  var updatedDonation = await updateDonation(donation, imageUrl);
+  console.log("UPDATED DONATION: ", updatedDonation);
 }
 
 async function updateDonation(donation, imageUrl) {
