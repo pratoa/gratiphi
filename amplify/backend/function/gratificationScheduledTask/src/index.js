@@ -70,7 +70,7 @@ const updateDonationGraph = gql`
   }
 `;
 
-const getDonationsByUserAndDonee = gql`
+const getDonationByUserDoneeAndGratification = gql`
   query listDonationss($filter: ModelDonationsFilterInput) {
     listDonationss(filter: $filter) {
       items {
@@ -142,7 +142,20 @@ async function processDonation(donation) {
     return;
   }
 
-  // Fetch all donations made by the user to the same donee
+  var gratifications = s3List.Contents;
+  var dates = getGratificationDates(gratifications);
+  const lastDate = dates[0].toISOString().split("T")[0];
+
+  var imageUrl = getImageUrl(
+    sponsorIdentifier,
+    locationIdentifier,
+    locationId,
+    doneeIdentifier,
+    doneeId,
+    lastDate
+  );
+
+  // Check if there is a donation with the latest gratification photo
   const graphqlData2 = await axios({
     url: API_ENDPOINT,
     method: "post",
@@ -150,7 +163,7 @@ async function processDonation(donation) {
       "x-api-key": API_KEY,
     },
     data: {
-      query: print(getDonationsByUserAndDonee),
+      query: print(getDonationByUserDoneeAndGratification),
       variables: {
         filter: {
           userId: {
@@ -159,76 +172,27 @@ async function processDonation(donation) {
           doneeId: {
             eq: doneeId,
           },
+          gratificationPhoto: {
+            eq: imageUrl,
+          },
         },
       },
     },
   });
 
-  // if there are no prev donations stop. This should never happen, since we are looping through one technically
-  if (graphqlData2.data.data == null) {
+  // if there are prev donations with latest gratification, then don't send
+  if (graphqlData2.data.data.listDonationss.items.length != 0) {
+    console.log("No mandar foto");
     return;
   }
 
-  var previosDonations = graphqlData2.data.data.listDonationss.items;
-  var gratifications = s3List.Contents;
-  var dates = getGratificationDates(gratifications);
-  const lastDate = dates[0].toISOString().split("T")[0];
+  // send email
+  var email = await sendEmail(donation, imageUrl);
+  console.log("EMAIL: ", email);
 
-  // If there is only one prev donation (meaning current donation in loop)
-  if (previosDonations.length < 2) {
-    var imageUrl = getImageUrl(
-      sponsorIdentifier,
-      locationIdentifier,
-      locationId,
-      doneeIdentifier,
-      doneeId,
-      lastDate
-    );
-    console.log("IMAGE URL: ", imageUrl);
-
-    // send email
-    var email = await sendEmail(donation, imageUrl);
-    console.log("EMAIL: ", email);
-
-    // update donation
-    var updatedDonation = await updateDonation(donation, imageUrl);
-    console.log("UPDATED DONATION: ", updatedDonation);
-  } else {
-    // if there are more than 1 previous donations
-    var counter = 0;
-
-    // loop through each and check if latest gratification photo added has been sent alreay
-    for (const donation of previosDonations) {
-      if (donation.gratificationPhoto) {
-        if (donation.gratificationPhoto.includes(lastDate)) {
-          counter++;
-        }
-      }
-    }
-
-    // if it latest gratification hasn't been sent, send email and update donation
-    if (counter == 0) {
-      var imageUrl = getImageUrl(
-        sponsorIdentifier,
-        locationIdentifier,
-        locationId,
-        doneeIdentifier,
-        doneeId,
-        lastDate
-      );
-      console.log("COUNTER = 0");
-      console.log("IMAGE URL: ", imageUrl);
-
-      var email = await sendEmail(donation, imageUrl);
-      console.log("EMAIL: ", email);
-
-      var updatedDonation = await updateDonation(donation, imageUrl);
-      console.log("UPDATED DONATION: ", updatedDonation);
-    } else {
-      //if the latest gratification has been sent, then stop
-      return;
-    }
-  }
+  // update donation
+  var updatedDonation = await updateDonation(donation, imageUrl);
+  console.log("UPDATED DONATION: ", updatedDonation);
 }
 
 function getImageUrl(
@@ -239,7 +203,7 @@ function getImageUrl(
   doneeId,
   date
 ) {
-  return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpg`;
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
 }
 
 function getGratificationDates(gratifications) {
