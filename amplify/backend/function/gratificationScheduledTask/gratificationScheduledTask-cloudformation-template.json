@@ -123,7 +123,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/gratificationScheduledTask-71755949366d4836645a-build.zip"
+          "S3Key": "amplify-builds/gratificationScheduledTask-715032657833414c6e35-build.zip"
         }
       }
     },
