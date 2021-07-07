@@ -11,7 +11,7 @@ import AppButton from "../../components/common/AppButton";
 import { AppImagePicker } from "../../components/common/AppImagePicker";
 
 export default function PhotoUpload({ route, navigation, updateAuthState }) {
-  //   const { donee } = route.params;
+  const { path } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -23,23 +23,9 @@ export default function PhotoUpload({ route, navigation, updateAuthState }) {
     });
   }, [navigation]);
 
-  //   useEffect(() => {
-  //     async function getDoneeHistory() {
-  //       const response = await API.graphql(
-  //         graphqlOperation(customQueries.getDonationHistoryByDoneeId, {
-  //           filter: { doneeId: { eq: donee.id } },
-  //         })
-  //       );
-  //       var donationHistory = await response.data.listDonationss.items;
-  //       console.log(donationHistory);
-  //       setDonationHistory(donationHistory);
-  //     }
-  //     getDoneeHistory();
-  //   }, []);
-
   return (
     <Screen>
-      <AppImagePicker />
+      <AppImagePicker uploadPath={path} />
     </Screen>
   );
 }

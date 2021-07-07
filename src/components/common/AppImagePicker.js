@@ -12,7 +12,7 @@ class AppImage {
   }
 }
 
-export function AppImagePicker() {
+export function AppImagePicker({ uploadPath = null }) {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
@@ -35,8 +35,6 @@ export function AppImagePicker() {
       quality: 0.4,
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
       let imageUriAsArray = result.uri.split("/");
       let imageName = imageUriAsArray[imageUriAsArray.length - 1];
@@ -50,6 +48,9 @@ export function AppImagePicker() {
     try {
       const response = await fetch(image.uri);
       const blob = await response.blob();
+      if (uploadPath != null) {
+        image.title = uploadPath;
+      }
       await Storage.put(image.title, blob, {
         contentType: "image/jpeg",
       });

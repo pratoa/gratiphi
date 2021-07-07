@@ -11,7 +11,7 @@ import AppButton from "../../components/common/AppButton";
 
 export default function DoneeAdmin({ route, navigation, updateAuthState }) {
   const [donationHistory, setDonationHistory] = useState([]);
-  const { donee } = route.params;
+  const { donee, path } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -31,7 +31,6 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
         })
       );
       var donationHistory = await response.data.listDonationss.items;
-      console.log(donationHistory);
       setDonationHistory(donationHistory);
     }
     getDoneeHistory();
@@ -54,7 +53,7 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
       />
       <AppButton
         title="Upload Photo"
-        onPress={() => navigation.navigate("PhotoUpload")}
+        onPress={() => navigation.navigate("PhotoUpload", { path: path })}
       ></AppButton>
     </Screen>
   );

@@ -42,7 +42,10 @@ export default function Admin({ navigation, updateAuthState }) {
           <ListItemComponent
             title={item.name}
             onPress={() =>
-              navigation.navigate("DoneesAtLocation", { locationId: item.id })
+              navigation.navigate("DoneesAtLocation", {
+                locationId: item.id,
+                locationIdentifier: item.identifier,
+              })
             }
             showChevrons
           />

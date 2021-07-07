@@ -4,9 +4,11 @@ export const getLocationForSponsor = /* GraphQL */ `
       id
       name
       logo
+      identifier
       locations {
         items {
           id
+          identifier
           name
           sponsorId
         }
@@ -21,6 +23,7 @@ export const getDoneesAtLocation = /* GraphQL */ `
       donees {
         items {
           id
+          identifier
           firstName
           lastName
           birthDate

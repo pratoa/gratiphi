@@ -13,7 +13,8 @@ export default function DoneesAtLocation({
   updateAuthState,
 }) {
   const [donees, setDoness] = useState([]);
-  const { locationId } = route.params;
+  const { locationId, locationIdentifier } = route.params;
+  const date = new Date().toISOString().split("T")[0];
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -32,7 +33,6 @@ export default function DoneesAtLocation({
         variables: { id: locationId },
       });
       var listOfDonees = await response.data.getLocation.donees.items;
-      console.log(listOfDonees);
       setDoness(listOfDonees);
     }
     getDoneesByLocation();
@@ -48,6 +48,7 @@ export default function DoneesAtLocation({
             title={item.firstName + " " + item.lastName}
             onPress={() =>
               navigation.navigate("DoneeAdmin", {
+                path: `AlimentaLaSolidaridad/${locationIdentifier}-${locationId}/${item.identifier}-${item.id}/${item.identifier}_${date}.jpeg`,
                 donee: {
                   name: `${item.firstName} ${item.lastName}`,
                   profilePhoto: item.profilePhoto,

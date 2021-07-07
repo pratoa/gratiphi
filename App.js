@@ -35,7 +35,7 @@ const AdminStackScreen = (props) => {
         name="Admin"
         options={{
           headerShown: true,
-          headerTitle: "Locations",
+          headerTitle: "Sedes",
         }}
       >
         {(screenProps) => (
@@ -46,7 +46,7 @@ const AdminStackScreen = (props) => {
         name="DoneesAtLocation"
         options={{
           headerShown: true,
-          headerTitle: "Donees",
+          headerTitle: "Donatarios",
         }}
       >
         {(screenProps) => (
@@ -59,6 +59,7 @@ const AdminStackScreen = (props) => {
       <AdminStack.Screen
         name="DoneeAdmin"
         options={{
+          headerTitle: "Perfil Administrativo",
           headerShown: true,
         }}
       >
@@ -73,6 +74,7 @@ const AdminStackScreen = (props) => {
         name="PhotoUpload"
         options={{
           headerShown: true,
+          headerTitle: "GratiFoto",
         }}
       >
         {(screenProps) => (
