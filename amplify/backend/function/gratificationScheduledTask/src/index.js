@@ -14,6 +14,7 @@ const axios = require("axios");
 const gql = require("graphql-tag");
 const graphql = require("graphql");
 const { print } = graphql;
+const moment = require("moment");
 const API_KEY = process.env.API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT;
 const API_ENDPOINT = process.env.API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT;
 const BUCKET_NAME = process.env.STORAGE_GRATIPROOF_BUCKETNAME;
@@ -52,6 +53,7 @@ const getDonationsEligibleToProcess = gql`
           name
           email
         }
+        createdAt
       }
     }
   }
@@ -109,9 +111,17 @@ exports.handler = async (event) => {
     // console.log(donations);
     // await donations.forEach(processDonation);
     for (const donation of donations) {
+<<<<<<< Updated upstream
       console.log("START OF PROCESSING");
       await processDonation(donation);
       console.log("END OF PROCESSING");
+=======
+      console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
+      if (moment(donation.createdAt).add(5, "days") < moment()) {
+        await processDonation(donation);
+      }
+      console.log("END OF PROCESSING FOR DONATIONID: ", donation.id);
+>>>>>>> Stashed changes
     }
   } catch (err) {
     console.log("ERROR: ", err);
