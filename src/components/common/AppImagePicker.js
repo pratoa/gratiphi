@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Image, View, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Storage } from "aws-amplify";
-import Constants from "expo-constants";
+import AppButton from "./AppButton";
 
 class AppImage {
   constructor(title, uri, type) {
@@ -12,15 +12,14 @@ class AppImage {
   }
 }
 
-export function AppImagePicker() {
+export function AppImagePicker({ uploadPath = null }) {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
-        const {
-          status,
-        } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } =
+          await ImagePicker.requestCameraRollPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -33,10 +32,8 @@ export function AppImagePicker() {
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.4,
     });
-
-    console.log(result);
 
     if (!result.cancelled) {
       let imageUriAsArray = result.uri.split("/");
@@ -51,6 +48,9 @@ export function AppImagePicker() {
     try {
       const response = await fetch(image.uri);
       const blob = await response.blob();
+      if (uploadPath != null) {
+        image.title = uploadPath;
+      }
       await Storage.put(image.title, blob, {
         contentType: "image/jpeg",
       });
@@ -64,7 +64,7 @@ export function AppImagePicker() {
       {image && (
         <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
       )}
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
+      <AppButton title="Pick an image from camera roll" onPress={pickImage} />
     </View>
   );
 }

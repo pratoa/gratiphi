@@ -15,6 +15,12 @@
       "auth": {
         "gratiphi02ff5042": {},
         "userPoolGroups": {}
+      },
+      "function": {
+        "postSignUpUserCreation": {
+          "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
+          "s3Key": "amplify-builds/postSignUpUserCreation-4752325231705934596d-build.zip"
+        }
       }
     }
   }

@@ -13,6 +13,9 @@ import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
 import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
 import Admin from "./src/screens/admin/Admin";
 import colors from "./src/config/colors";
+import DoneesAtLocation from "./src/screens/admin/DoneesAtLocation";
+import DoneeAdmin from "./src/screens/admin/DoneeAdmin";
+import PhotoUpload from "./src/screens/admin/PhotoUpload";
 
 Amplify.configure({
   ...awsconfig,
@@ -22,7 +25,68 @@ Amplify.configure({
 });
 
 const AuthenticationStack = createStackNavigator();
+const AdminStack = createStackNavigator();
 const RootStack = createStackNavigator();
+
+const AdminStackScreen = (props) => {
+  return (
+    <AdminStack.Navigator>
+      <AdminStack.Screen
+        name="Admin"
+        options={{
+          headerShown: true,
+          headerTitle: "Sedes",
+        }}
+      >
+        {(screenProps) => (
+          <Admin {...screenProps} updateAuthState={props.updateAuthState} />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="DoneesAtLocation"
+        options={{
+          headerShown: true,
+          headerTitle: "Donatarios",
+        }}
+      >
+        {(screenProps) => (
+          <DoneesAtLocation
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="DoneeAdmin"
+        options={{
+          headerTitle: "Perfil Administrativo",
+          headerShown: true,
+        }}
+      >
+        {(screenProps) => (
+          <DoneeAdmin
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+      <AdminStack.Screen
+        name="PhotoUpload"
+        options={{
+          headerShown: true,
+          headerTitle: "GratiFoto",
+        }}
+      >
+        {(screenProps) => (
+          <PhotoUpload
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+          />
+        )}
+      </AdminStack.Screen>
+    </AdminStack.Navigator>
+  );
+};
 
 const AuthenticationStackScreen = (props) => {
   return (
@@ -102,21 +166,6 @@ const AuthenticationStackScreen = (props) => {
   );
 };
 
-const Initializing = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: colors.primary,
-      }}
-    >
-      <ActivityIndicator size="large" color={colors.white} />
-    </View>
-  );
-};
-
 function App() {
   let [isUserLoggedIn, setUserLoggedIn] = useState("initializing");
   let [userGroup, setUserGroup] = useState("");
@@ -182,10 +231,15 @@ function App() {
         </RootStack.Screen>
         <RootStack.Screen
           name="Admin"
-          options={{ headerShown: false, headerLeft: null }}
+          options={({ navigation, route }) => ({
+            headerShown: false,
+          })}
         >
           {(screenProps) => (
-            <Admin {...screenProps} updateAuthState={updateAuthState}></Admin>
+            <AdminStackScreen
+              {...screenProps}
+              updateAuthState={updateAuthState}
+            />
           )}
         </RootStack.Screen>
         <RootStack.Screen

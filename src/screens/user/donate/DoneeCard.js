@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+
+import React, { useState, memo } from "react";
 import moment from "moment";
 import { FontAwesome5 } from "@expo/vector-icons";
 import {
@@ -16,8 +17,7 @@ import { color } from "react-native-reanimated";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
 
-export default function DoneeCard({ navigation, item }) {
-  const [container, setContainer] = useState(null);
+function DoneeCard({ navigation, item }) {
   const now = moment();
   const birthDate = moment(item.birthDate, "YYYY-MM-DD");
   item.age = moment.duration(now.diff(birthDate)).years();
@@ -27,7 +27,7 @@ export default function DoneeCard({ navigation, item }) {
   }
 
   return (
-    <View ref={(container) => setContainer(container)}>
+    <View>
       <TouchableWithoutFeedback onPress={() => openExpandedCard()}>
         <View style={styles.itemContainer}>
           <Image
@@ -113,3 +113,6 @@ const styles = StyleSheet.create({
     fontSize: SCREEN_WIDTH * 0.035,
   },
 });
+
+export default memo(DoneeCard);
+
