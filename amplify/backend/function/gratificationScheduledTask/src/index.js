@@ -14,6 +14,7 @@ const axios = require("axios");
 const gql = require("graphql-tag");
 const graphql = require("graphql");
 const { print } = graphql;
+const moment = require("moment");
 const API_KEY = process.env.API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT;
 const API_ENDPOINT = process.env.API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT;
 const BUCKET_NAME = process.env.STORAGE_GRATIPROOF_BUCKETNAME;
@@ -52,6 +53,7 @@ const getDonationsEligibleToProcess = gql`
           name
           email
         }
+        createdAt
       }
     }
   }
@@ -70,21 +72,24 @@ const updateDonationGraph = gql`
   }
 `;
 
-exports.handler = async (event) => {
-  //get donations that don't have a gratification ----------
-  //loop through each ----------
-  //  check if there is a gratification in S3 by doneeId
-  //      if yes, CONTINUE
-  //      if no, BREAK
-  //  check if there is a previous donation by same user to same donee
-  //      if yes, check if image is the same
-  //          if image is the same BREAK
-  //          if image is different CONTINUE
-  //      if no, CONTINUE
-  //  send gratification to user
-  //  save gratification photo url in the donation and mark as completed
+const getDonationByUserDoneeAndGratification = gql`
+  query listDonationss($filter: ModelDonationsFilterInput) {
+    listDonationss(filter: $filter) {
+      items {
+        id
+        userId
+        doneeId
+        amount
+        isGratificationSent
+        gratificationPhoto
+      }
+    }
+  }
+`;
 
+exports.handler = async (event) => {
   try {
+    // Get eligible donations
     const graphqlData = await axios({
       url: API_ENDPOINT,
       method: "post",
@@ -106,12 +111,14 @@ exports.handler = async (event) => {
       },
     });
     var donations = graphqlData.data.data.listDonationss.items;
-    // console.log(donations);
-    // await donations.forEach(processDonation);
+
+    // Loop through each donation
     for (const donation of donations) {
-      console.log("START OF PROCESSING");
-      await processDonation(donation);
-      console.log("END OF PROCESSING");
+      console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
+      if (moment(donation.createdAt).add(5, "days") < moment()) {
+        await processDonation(donation);
+      }
+      console.log("END OF PROCESSING FOR DONATIONID: ", donation.id);
     }
   } catch (err) {
     console.log("ERROR: ", err);
@@ -124,30 +131,93 @@ async function processDonation(donation) {
   const locationId = donation.donee.location.id;
   const doneeIdentifier = donation.donee.identifier;
   const doneeId = donation.donee.id;
+  const userId = donation.user.id;
 
   var listParams = {
     Bucket: BUCKET_NAME,
-    Delimiter: "/",
-    Prefix: `public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}`,
+    Prefix: `public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_`,
   };
+
+  // Get all gratification photos for donee
   var s3List = await s3.listObjects(listParams).promise();
 
+  // If there are no gratification photos stop
   if (s3List.Contents === undefined || s3List.Contents.length == 0) {
     return;
   }
 
-  var imageUrl = `https://${BUCKET_NAME}.s3.amazonaws.com/${s3List.Contents[0].Key}`;
-  console.log("IMAGE URL: ", imageUrl);
+  var gratifications = s3List.Contents;
+  var dates = getGratificationDates(gratifications);
+  const lastDate = dates[0].toISOString().split("T")[0];
 
-  if (!imageUrl) {
+  var imageUrl = getImageUrl(
+    sponsorIdentifier,
+    locationIdentifier,
+    locationId,
+    doneeIdentifier,
+    doneeId,
+    lastDate
+  );
+
+  // Check if there is a donation with the latest gratification photo
+  const graphqlData2 = await axios({
+    url: API_ENDPOINT,
+    method: "post",
+    headers: {
+      "x-api-key": API_KEY,
+    },
+    data: {
+      query: print(getDonationByUserDoneeAndGratification),
+      variables: {
+        filter: {
+          userId: {
+            eq: userId,
+          },
+          doneeId: {
+            eq: doneeId,
+          },
+          gratificationPhoto: {
+            eq: imageUrl,
+          },
+        },
+      },
+    },
+  });
+
+  // if there are prev donations with latest gratification, then don't send
+  if (graphqlData2.data.data.listDonationss.items.length != 0) {
+    console.log("No mandar foto");
     return;
   }
 
+  // send email
   var email = await sendEmail(donation, imageUrl);
   console.log("EMAIL: ", email);
 
+  // update donation
   var updatedDonation = await updateDonation(donation, imageUrl);
   console.log("UPDATED DONATION: ", updatedDonation);
+}
+
+function getImageUrl(
+  sponsorIdentifier,
+  locationIdentifier,
+  locationId,
+  doneeIdentifier,
+  doneeId,
+  date
+) {
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
+}
+
+function getGratificationDates(gratifications) {
+  var dates = [];
+  for (const grat of gratifications) {
+    var date = grat.Key.split("_").pop().split(".")[0];
+    dates.push(new Date(date));
+  }
+  const sortedDates = dates.sort((a, b) => b - a);
+  return sortedDates;
 }
 
 async function updateDonation(donation, imageUrl) {

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import {
   View,
@@ -80,7 +80,12 @@ export default function SignUp({ navigation }) {
       const { user } = await Auth.signUp({
         username,
         password,
-        attributes: { email },
+        attributes: {
+          email,
+          "custom:first_name": name,
+          "custom:last_name": lastName,
+          "custom:birth_date": dateOfBirth,
+        },
       });
       console.log(user);
       console.log("Sign-up Confirmed");
@@ -95,7 +100,7 @@ export default function SignUp({ navigation }) {
   };
 
   const handleConfirm = (date) => {
-    setDateOfBirth(date);
+    setDateOfBirth(moment(date).format("YYYY-MM-DD"));
     hideDatePicker();
   };
 
@@ -148,7 +153,7 @@ export default function SignUp({ navigation }) {
         <Pressable onPress={setShowDatepicker}>
           <View>
             <AppTextInput
-              value={dateOfBirth ? dateOfBirth.toDateString() : ""}
+              value={dateOfBirth ? dateOfBirth : ""}
               placeholder="Birth date"
               leftIcon="cake"
               editable={false}
