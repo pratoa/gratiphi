@@ -30,9 +30,9 @@ const ListItemComponent = ({
         </View>
         {showChevrons && (
           <MaterialCommunityIcons
-            name="chevron-right"
+            name="alert-circle"
             size={20}
-            color={colors.grey}
+            color={colors.red}
             style={styles.icon}
           />
         )}

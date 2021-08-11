@@ -7,6 +7,21 @@ import ListItemSeparator from "../../components/common/ListItemSeparator";
 import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
 
+function setGratiphicationValue(listOfDonees) {
+  var newListOfDonees = [];
+  for (let doneeIndex = 0; doneeIndex < listOfDonees.length; doneeIndex++) {
+    const donee = listOfDonees[doneeIndex];
+    newListOfDonees.push({ ...donee, isAlertNeeeded: false });
+    const donationsInDonees = donee.donations.items;
+    if (donationsInDonees.length == 0) continue;
+    const isAlertNeeded = !donationsInDonees.every(
+      (donation) => donation.isGratificationSent === true
+    );
+    newListOfDonees[doneeIndex].isAlertNeeded = isAlertNeeded;
+  }
+  return newListOfDonees;
+}
+
 export default function DoneesAtLocation({
   route,
   navigation,
@@ -33,7 +48,7 @@ export default function DoneesAtLocation({
         variables: { id: locationId },
       });
       var listOfDonees = await response.data.getLocation.donees.items;
-      setDoness(listOfDonees);
+      setDoness(setGratiphicationValue(listOfDonees));
     }
     getDoneesByLocation();
   }, []);
