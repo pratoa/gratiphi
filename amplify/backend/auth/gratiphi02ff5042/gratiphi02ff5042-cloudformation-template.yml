@@ -112,7 +112,7 @@ Parameters:
                 
   hostedUI:
     Type: String
-                              
+                  
   parentStack:
     Type: String
                 

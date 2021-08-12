@@ -54,7 +54,7 @@ export default function ExpandedCard({ route }) {
         ListHeaderComponent={
           <>
             <Image
-              source={{ uri: donee.profilePhoto }}
+              source={{ uri: donee.profilePhotoUrl }}
               style={styles.doneeImage}
             ></Image>
             <View style={styles.detailsContainer}>

@@ -25,6 +25,14 @@
     "apigratiphiapiGraphQLAPIKeyOutput": {
       "Type": "String",
       "Default": "apigratiphiapiGraphQLAPIKeyOutput"
+    },
+    "s3Key": {
+      "Type": "String",
+      "Default": "amplify-builds/postSignUpUserCreation-382f394d6742416e4145-build.zip"
+    },
+    "deploymentBucketName": {
+      "Type": "String",
+      "Default": "amplify-gratiphi-dev-114704-deployment"
     }
   },
   "Conditions": {
