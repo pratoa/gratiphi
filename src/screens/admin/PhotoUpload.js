@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, FlatList, Image } from "react-native";
-import { API, graphqlOperation } from "aws-amplify";
+import React, { useState } from "react";
+import { StyleSheet, View, Image } from "react-native";
 import Screen from "../../components/common/Screen";
 import SignOutButton from "../../components/common/SignOutButton";
-import ListItemSeparator from "../../components/common/ListItemSeparator";
-import ListItemComponent from "../../components/common/ListItemComponent";
-import * as customQueries from "../../../graphql/customQueries";
 import { default as defaultStyle } from "../../config/styles";
-import AppButton from "../../components/common/AppButton";
 import { AppImagePicker } from "../../components/common/AppImagePicker";
 
 export default function PhotoUpload({ route, navigation, updateAuthState }) {
+  const [image, setImage] = useState(null);
+  const avatar = require("../../../assets/images/avatar.png");
   const { path } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,7 +22,11 @@ export default function PhotoUpload({ route, navigation, updateAuthState }) {
 
   return (
     <Screen>
-      <AppImagePicker uploadPath={path} />
+      <View>
+        {!image && <Image source={avatar} style={styles.imageStyle} />}
+        {image && <Image source={{ uri: image }} style={styles.imageStyle} />}
+      </View>
+      <AppImagePicker uploadPath={path} useImage={image} setImage={setImage} />
     </Screen>
   );
 }
@@ -40,11 +41,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     height: 44,
   },
-  doneeImage: {
+  imageStyle: {
     margin: 20,
-    width: defaultStyle.SCREEN_HEIGHT * 0.3,
-    height: defaultStyle.SCREEN_HEIGHT * 0.3,
-    borderRadius: (defaultStyle.SCREEN_HEIGHT * 0.3) / 2,
+    width: defaultStyle.SCREEN_WIDTH * 0.8,
+    height: defaultStyle.SCREEN_HEIGHT * 0.6,
+    resizeMode: "contain",
     alignSelf: "center",
+    justifyContent: "center",
   },
 });

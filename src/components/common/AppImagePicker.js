@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
+import { Button, Image, View, Platform, Dimensions } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Storage } from "aws-amplify";
 import AppButton from "./AppButton";
 
-class AppImage {
-  constructor(title, uri, type) {
-    this.title = title;
-    this.uri = uri;
-    this.type = type;
-  }
-}
-
-export function AppImagePicker({ uploadPath = null }) {
-  const [image, setImage] = useState(null);
-
+export function AppImagePicker({ uploadPath = null, useImage, setImage }) {
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
         const { status } =
-          await ImagePicker.requestCameraRollPermissionsAsync();
+          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== "granted") {
+          alert("Sorry, we need camera roll permissions to make this work!");
+        }
+      }
+    })();
+  }, []);
+  useEffect(() => {
+    (async () => {
+      if (Platform.OS !== "web") {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== "granted") {
           alert("Sorry, we need camera roll permissions to make this work!");
         }
@@ -29,42 +29,56 @@ export function AppImagePicker({ uploadPath = null }) {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       quality: 0.4,
     });
-
     if (!result.cancelled) {
-      let imageUriAsArray = result.uri.split("/");
-      let imageName = imageUriAsArray[imageUriAsArray.length - 1];
-      let image = new AppImage(imageName, result.uri);
-      uploadImage(image);
-      setImage(result.uri);
+      let imageUri = result.uri;
+      setImage(imageUri);
     }
   };
 
-  async function uploadImage(image) {
+  const takeImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      quality: 0.4,
+    });
+    if (!result.cancelled) {
+      let imageUri = result.uri;
+      setImage(imageUri);
+    }
+  };
+
+  const uploadPicture = async () => {
+    if (useImage == null) {
+      alert("Seleccione o tome una foto primero");
+      return;
+    }
+    uploadImage(useImage);
+  };
+
+  async function uploadImage(imageUri) {
     try {
-      const response = await fetch(image.uri);
+      const response = await fetch(imageUri);
       const blob = await response.blob();
       if (uploadPath != null) {
-        image.title = uploadPath;
+        await Storage.put(uploadPath, blob, {
+          contentType: "image/jpeg",
+        });
+        alert("Imagen subida satisfactoriamente");
       }
-      await Storage.put(image.title, blob, {
-        contentType: "image/jpeg",
-      });
     } catch {
-      console.log(`Cannot uploading file: ${err}`);
+      alert("Hubo un error subiendo la imagen. Intente otra vez");
     }
   }
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
-      <AppButton title="Pick an image from camera roll" onPress={pickImage} />
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
+      <AppButton title="Escoger Foto" onPress={pickImage} />
+      <AppButton title="Tomar Foto" onPress={takeImage} />
+      {useImage && <AppButton title="Subir Foto" onPress={uploadPicture} />}
     </View>
   );
 }

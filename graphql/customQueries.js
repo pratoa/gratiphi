@@ -11,6 +11,15 @@ export const getLocationForSponsor = /* GraphQL */ `
           identifier
           name
           sponsorId
+          donees {
+            items {
+              donations {
+                items {
+                  isGratificationSent
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -32,6 +41,11 @@ export const getDoneesAtLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
+          donations {
+            items {
+              isGratificationSent
+            }
+          }
         }
       }
     }
