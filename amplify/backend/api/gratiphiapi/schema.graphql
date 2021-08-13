@@ -88,7 +88,7 @@ type Gratification
   @auth(rules: [{ allow: public }] {
   id: ID!
   gratificationUrl: String
-  isGratificationSend: Boolean
+  isGratificationSent: Boolean
   donation: Donations! @connection(fields: ["donationsId"])
 }
 
