@@ -1,6 +1,6 @@
 {
     "identityPoolName": "gratiphi02ff5042_identitypool_02ff5042",
-    "allowUnauthenticatedIdentities": true,
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "gratip02ff5042",
     "userPoolName": "gratiphi02ff5042_userpool_02ff5042",
     "autoVerifiedAttributes": [
