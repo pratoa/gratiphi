@@ -8,16 +8,15 @@ import {
   Image,
   Dimensions,
   Pressable,
-  KeyboardAvoidingView,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import AppTextInput from "../../components/common/AppTextInput";
 import AppButton from "../../components/common/AppButton";
 import colors from "../../config/colors";
 import Screen from "../../components/common/Screen";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 export default function SignUp({ navigation }) {
@@ -119,9 +118,9 @@ export default function SignUp({ navigation }) {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <Screen style={styles.container}>
       <Image source={require(logo)} style={styles.logo} />
-      <View style={styles.formContainer}>
+      <KeyboardAwareScrollView>
         <View style={styles.nameContainer}>
           <View style={styles.nameWrapper}>
             <AppTextInput
@@ -151,24 +150,20 @@ export default function SignUp({ navigation }) {
           </View>
         </View>
         <Pressable onPress={setShowDatepicker}>
-          <View>
-            <AppTextInput
-              value={dateOfBirth ? dateOfBirth : ""}
-              placeholder="Birth date"
-              leftIcon="cake"
-              editable={false}
-            />
-          </View>
-        </Pressable>
-        <View>
-          <DateTimePickerModal
-            isVisible={showDatepicker}
-            mode="date"
-            onConfirm={handleConfirm}
-            onCancel={hideDatePicker}
-            maximumDate={moment().subtract(18, "years").toDate()}
+          <AppTextInput
+            value={dateOfBirth ? dateOfBirth : ""}
+            placeholder="Birth date"
+            leftIcon="cake"
+            editable={false}
           />
-        </View>
+        </Pressable>
+        <DateTimePickerModal
+          isVisible={showDatepicker}
+          mode="date"
+          onConfirm={handleConfirm}
+          onCancel={hideDatePicker}
+          maximumDate={moment().subtract(18, "years").toDate()}
+        />
         <AppTextInput
           value={email}
           onChangeText={(text) => {
@@ -217,26 +212,22 @@ export default function SignUp({ navigation }) {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
   },
   logo: {
     width: 250,
     resizeMode: "contain",
-    marginTop: 0,
+    marginTop: 10,
+    marginBottom: 10,
   },
-  formContainer: {
-    position: "absolute",
-    bottom: 0,
-    justifyContent: "space-around",
-  },
+  formContainer: {},
   nameContainer: {
     flexDirection: "row",
     width: "100%",

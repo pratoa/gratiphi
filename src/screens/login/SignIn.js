@@ -13,6 +13,7 @@ import AppTextInput from "../../components/common/AppTextInput";
 import AppButton from "../../components/common/AppButton";
 import colors from "../../config/colors";
 import Screen from "../../components/common/Screen";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 export default function SignIn({
@@ -41,7 +42,7 @@ export default function SignIn({
 
   return (
     <Screen style={styles.container}>
-      <View style={styles.formContainer}>
+      <KeyboardAwareScrollView style={styles.formContainer}>
         <Image source={require(logo)} style={styles.logo} />
         <Text style={styles.fieldTitle}>Email Address</Text>
         <AppTextInput
@@ -83,7 +84,7 @@ export default function SignIn({
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
+      </KeyboardAwareScrollView>
     </Screen>
   );
 }
