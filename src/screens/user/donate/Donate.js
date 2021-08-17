@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import * as queries from "../../../graphql/queries";
 import { StyleSheet, Dimensions, View, Alert } from "react-native";
 import Carousel from "react-native-snap-carousel";
@@ -27,6 +27,12 @@ export default function Donate({ props }) {
       try {
         const response = await API.graphql({ query: queries.listDonees });
         const listOfDonees = await response.data.listDonees.items;
+
+        for (const donee of listOfDonees) {
+          if (donee.profilePhoto) {
+            donee.profilePhotoUrl = await Storage.get(donee.profilePhoto);
+          }
+        }
         setDonees(listOfDonees);
       } catch (err) {
         Alert.alert(

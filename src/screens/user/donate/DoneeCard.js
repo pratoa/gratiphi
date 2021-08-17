@@ -1,4 +1,3 @@
-
 import React, { useState, memo } from "react";
 import moment from "moment";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -31,7 +30,7 @@ function DoneeCard({ navigation, item }) {
       <TouchableWithoutFeedback onPress={() => openExpandedCard()}>
         <View style={styles.itemContainer}>
           <Image
-            source={{ uri: item.profilePhoto }}
+            source={{ uri: item.profilePhotoUrl }}
             style={styles.doneeImage}
           />
           <View style={styles.textContainer}>
@@ -115,4 +114,3 @@ const styles = StyleSheet.create({
 });
 
 export default memo(DoneeCard);
-
