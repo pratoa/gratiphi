@@ -80,8 +80,16 @@ type Donations
   doneeId: ID!
   donee: Donee @connection(fields: ["doneeId"])
   amount: Float
+}
+
+type Gratification 
+  @model 
+  @key(name: "byDonationsId", fields: ["donationsId"])
+  @auth(rules: [{ allow: public }] {
+  id: ID!
+  gratificationUrl: String
   isGratificationSent: Boolean
-  gratificationPhoto: String
+  donation: Donations! @connection(fields: ["donationsId"])
 }
 
 type Mutation {
