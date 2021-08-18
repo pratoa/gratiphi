@@ -119,8 +119,8 @@ export default function SignUp({ navigation }) {
 
   return (
     <Screen style={styles.container}>
-      <Image source={require(logo)} style={styles.logo} />
       <KeyboardAwareScrollView>
+        <Image source={require(logo)} style={styles.logo} />
         <View style={styles.nameContainer}>
           <View style={styles.nameWrapper}>
             <AppTextInput
@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     marginTop: 10,
     marginBottom: 10,
+    alignSelf: "center",
   },
   formContainer: {},
   nameContainer: {
