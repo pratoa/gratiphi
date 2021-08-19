@@ -26,13 +26,11 @@
       "Type": "String",
       "Default": "apigratiphiapiGraphQLAPIKeyOutput"
     },
-    "s3Key": {
-      "Type": "String",
-      "Default": "amplify-builds/postSignUpUserCreation-382f394d6742416e4145-build.zip"
-    },
     "deploymentBucketName": {
-      "Type": "String",
-      "Default": "amplify-gratiphi-dev-114704-deployment"
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -104,8 +102,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/postSignUpUserCreation-382f394d6742416e4145-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },

@@ -1,14 +1,1 @@
-{
-    "groupPermissionMap": {
-        "gratiphiAdmin": [
-            "create/update",
-            "read",
-            "delete"
-        ],
-        "gratiphiUser": [
-            "create/update",
-            "read",
-            "delete"
-        ]
-    }
-}
+{}

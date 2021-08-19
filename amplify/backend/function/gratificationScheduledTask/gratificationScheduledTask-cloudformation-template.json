@@ -25,6 +25,12 @@
     "storagegratiproofBucketName": {
       "Type": "String",
       "Default": "storagegratiproofBucketName"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -122,8 +128,12 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/gratificationScheduledTask-644a3452504d654c3036-build.zip"
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
         }
       }
     },
