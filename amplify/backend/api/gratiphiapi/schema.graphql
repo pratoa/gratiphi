@@ -3,8 +3,9 @@ type Sponsor @model @auth(rules: [{ allow: public }]) {
   name: String!
   logo: String
   identifier: String!
-  locations: [Location] @connection(keyName: "bySponsorId", fields: ["id"])
-  donees: [Donee] @connection(keyName: "bySponsorId", fields: ["id"])
+  locations: [Location]
+    @connection(keyName: "locationBySponsorId", fields: ["id"])
+  donees: [Donee] @connection(keyName: "doneeBySponsorId", fields: ["id"])
 }
 
 type Location
@@ -20,8 +21,9 @@ type Location
   identifier: String!
   sponsorId: ID!
   sponsor: Sponsor @connection(fields: ["sponsorId"])
-  donees: [Donee] @connection(keyName: "byLocationId", fields: ["id"])
-  donations: [Donation] @connection(keyName: "byLocationId", fields: ["id"])
+  donees: [Donee] @connection(keyName: "doneeByLocationId", fields: ["id"])
+  donations: [Donation]
+    @connection(keyName: "donationByLocationId", fields: ["id"])
 }
 
 type User @model @auth(rules: [{ allow: public }]) {
@@ -31,7 +33,7 @@ type User @model @auth(rules: [{ allow: public }]) {
   dateOfBirth: AWSDate!
   email: String!
   stripeId: String
-  donations: [Donation] @connection(keyName: "byUserId", fields: ["id"])
+  donations: [Donation] @connection(keyName: "donatioByUserId", fields: ["id"])
 }
 
 type Donee
@@ -56,11 +58,14 @@ type Donee
   profilePhoto: String!
   identifier: String!
   gender: String!
+  sponsorId: ID!
   sponsor: Sponsor @connection(fields: ["sponsorId"])
+  locationId: ID!
   location: Location @connection(fields: ["locationId"])
-  donations: [Donation] @connection(keyName: "byDoneeId", fields: ["id"])
+  donations: [Donation]
+    @connection(keyName: "donationByDoneeId", fields: ["id"])
   questionAnswer: [QuestionAnswer]
-    @connection(keyName: "byDoneeId", fields: ["id"])
+    @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
 }
 
 type Question @model @auth(rules: [{ allow: public }]) {
@@ -106,15 +111,24 @@ type Donation
     fields: ["locationId"]
     queryField: "donationByLocationId"
   )
-  @key(fields: ["location", "gratification"])
+  @key(
+    name: "donationByGratificationId"
+    fields: ["gratificationId"]
+    queryField: "donationByGratificationId"
+  )
+  # @key(fields: ["locationId", "gratificationId"])
   @auth(rules: [{ allow: public }]) {
   id: ID!
+  userId: ID!
   user: User @connection(fields: ["userId"])
+  doneeId: ID!
   donee: Donee @connection(fields: ["doneeId"])
   amount: Float
   stripeTransactionId: String!
+  locationId: ID!
   location: Location @connection(fields: ["locationId"])
-  gratification: Gratification @connection(name: "DonationsGratification")
+  gratificationId: ID!
+  gratification: Gratification @connection(fields: ["gratificationId"])
 }
 
 type Gratification
@@ -124,28 +138,32 @@ type Gratification
     fields: ["isGratificationSent"]
     queryField: "gratificationBySent"
   )
-  @key(
-    name: "gratificationByDonation"
-    fields: ["donation"]
-    queryField: "gratificationByDonation"
-  )
+  # @key(
+  #   name: "gratificationByDonation"
+  #   fields: ["donation"]
+  #   queryField: "gratificationByDonation"
+  # )
   @key(
     name: "gratificationByLocation"
-    fields: ["location"]
+    fields: ["locationId"]
     queryField: "gratificationByLocation"
   )
   @key(
     name: "gratificationByDonee"
-    fields: ["location"]
+    fields: ["doneeId"]
     queryField: "gratificationByDonee"
   )
   @auth(rules: [{ allow: public }]) {
   id: ID!
   gratificationUrl: String
-  isGratificationSent: Boolean
-  donation: [Donation] @connection(name: "GratificationDonation")
+  isGratificationSent: String
+  donationId: ID!
+  donations: [Donation]
+    @connection(keyName: "donationByGratificationId", fields: ["id"])
+  locationId: ID!
   location: Location @connection(fields: ["locationId"])
-  donee: Doneee @connection(fields: ["doneeId"])
+  doneeId: ID!
+  donee: Donee @connection(fields: ["doneeId"])
 }
 
 type Mutation {
