@@ -33,7 +33,7 @@ type User @model @auth(rules: [{ allow: public }]) {
   dateOfBirth: AWSDate!
   email: String!
   stripeId: String
-  donations: [Donation] @connection(keyName: "donatioByUserId", fields: ["id"])
+  donations: [Donation] @connection(keyName: "donationByUserId", fields: ["id"])
 }
 
 type Donee
@@ -97,9 +97,9 @@ type QuestionAnswer
 type Donation
   @model
   @key(
-    name: "donatioByUserId"
+    name: "donationByUserId"
     fields: ["userId"]
-    queryField: "donatioByUserId"
+    queryField: "donationByUserId"
   )
   @key(
     name: "donationByDoneeId"
@@ -116,7 +116,7 @@ type Donation
     fields: ["gratificationId"]
     queryField: "donationByGratificationId"
   )
-  # @key(fields: ["locationId", "gratificationId"])
+  # @key(fields: ["locationId", "gratification"])
   @auth(rules: [{ allow: public }]) {
   id: ID!
   userId: ID!
@@ -140,7 +140,7 @@ type Gratification
   )
   # @key(
   #   name: "gratificationByDonation"
-  #   fields: ["donation"]
+  #   fields: ["donation {id}"]
   #   queryField: "gratificationByDonation"
   # )
   @key(
