@@ -3,27 +3,21 @@ type Sponsor @model @auth(rules: [{ allow: public }]) {
   name: String!
   logo: String
   identifier: String!
-  locations: [Location]
-    @connection(keyName: "locationBySponsorId", fields: ["id"])
-  donees: [Donee] @connection(keyName: "doneeBySponsorId", fields: ["id"])
+  locations: [Location] @connection(keyName: "bySponsorId", fields: ["id"])
+  donees: [Donee] @connection(keyName: "bySponsorId", fields: ["id"])
 }
 
 type Location
   @model
-  @key(
-    name: "locationBySponsorId"
-    fields: ["sponsorId"]
-    queryField: "locationBySponsorId"
-  )
+  @key(name: "bySponsorId", fields: ["sponsorId"], queryField: "bySponsorId")
   @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String!
   identifier: String!
   sponsorId: ID!
   sponsor: Sponsor @connection(fields: ["sponsorId"])
-  donees: [Donee] @connection(keyName: "doneeByLocationId", fields: ["id"])
-  donations: [Donation]
-    @connection(keyName: "donationByLocationId", fields: ["id"])
+  donees: [Donee] @connection(keyName: "byLocationId", fields: ["id"])
+  donations: [Donation] @connection(keyName: "byLocationId", fields: ["id"])
 }
 
 type User @model @auth(rules: [{ allow: public }]) {
@@ -38,16 +32,8 @@ type User @model @auth(rules: [{ allow: public }]) {
 
 type Donee
   @model
-  @key(
-    name: "doneeBySponsorId"
-    fields: ["sponsorId"]
-    queryField: "doneeBySponsorId"
-  )
-  @key(
-    name: "doneeByLocationId"
-    fields: ["locationId"]
-    queryField: "doneeByLocationId"
-  )
+  @key(name: "bySponsorId", fields: ["sponsorId"], queryField: "bySponsorId")
+  @key(name: "byLocationId", fields: ["locationId"], queryField: "byLocationId")
   @auth(rules: [{ allow: public }]) {
   id: ID!
   firstName: String!
@@ -62,10 +48,9 @@ type Donee
   sponsor: Sponsor @connection(fields: ["sponsorId"])
   locationId: ID!
   location: Location @connection(fields: ["locationId"])
-  donations: [Donation]
-    @connection(keyName: "donationByDoneeId", fields: ["id"])
+  donations: [Donation] @connection(keyName: "byDoneeId", fields: ["id"])
   questionAnswer: [QuestionAnswer]
-    @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
+    @connection(keyName: "byDoneeId", fields: ["id"])
 }
 
 type Question @model @auth(rules: [{ allow: public }]) {
@@ -80,11 +65,7 @@ type QuestionAnswer
     fields: ["questionId"]
     queryField: "questionAnswerByQuestionId"
   )
-  @key(
-    name: "questionAnswerByDoneeId"
-    fields: ["doneeId"]
-    queryField: "questionAnswerByDoneeId"
-  )
+  @key(name: "byDoneeId", fields: ["doneeId"], queryField: "byDoneeId")
   @auth(rules: [{ allow: public }]) {
   id: ID!
   answer: String!
@@ -101,20 +82,12 @@ type Donation
     fields: ["userId"]
     queryField: "donatioByUserId"
   )
+  @key(name: "byDoneeId", fields: ["doneeId"], queryField: "byDoneeId")
+  @key(name: "byLocationId", fields: ["locationId"], queryField: "byLocationId")
   @key(
-    name: "donationByDoneeId"
-    fields: ["doneeId"]
-    queryField: "donationByDoneeId"
-  )
-  @key(
-    name: "donationByLocationId"
-    fields: ["locationId"]
-    queryField: "donationByLocationId"
-  )
-  @key(
-    name: "donationByGratificationId"
+    name: "byGratificationId"
     fields: ["gratificationId"]
-    queryField: "donationByGratificationId"
+    queryField: "byGratificationId"
   )
   # @key(fields: ["locationId", "gratificationId"])
   @auth(rules: [{ allow: public }]) {
@@ -133,33 +106,21 @@ type Donation
 
 type Gratification
   @model
-  @key(
-    name: "gratificationBySent"
-    fields: ["isGratificationSent"]
-    queryField: "gratificationBySent"
-  )
+  @key(name: "bySent", fields: ["isGratificationSent"], queryField: "bySent")
   # @key(
   #   name: "gratificationByDonation"
   #   fields: ["donation"]
   #   queryField: "gratificationByDonation"
   # )
-  @key(
-    name: "gratificationByLocation"
-    fields: ["locationId"]
-    queryField: "gratificationByLocation"
-  )
-  @key(
-    name: "gratificationByDonee"
-    fields: ["doneeId"]
-    queryField: "gratificationByDonee"
-  )
+  @key(name: "byLocation", fields: ["locationId"], queryField: "byLocation")
+  @key(name: "byDonee", fields: ["doneeId"], queryField: "byDonee")
   @auth(rules: [{ allow: public }]) {
   id: ID!
   gratificationUrl: String
   isGratificationSent: String
   donationId: ID!
   donations: [Donation]
-    @connection(keyName: "donationByGratificationId", fields: ["id"])
+    @connection(keyName: "byGratificationId", fields: ["id"])
   locationId: ID!
   location: Location @connection(fields: ["locationId"])
   doneeId: ID!
