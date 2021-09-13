@@ -100,11 +100,8 @@ exports.handler = async (event) => {
         query: print(getDonationsEligibleToProcess),
         variables: {
           filter: {
-            isGratificationSent: {
-              eq: false,
-            },
-            gratificationPhoto: {
-              eq: null,
+            gratificationId: {
+              eq: "NONE",
             },
           },
         },

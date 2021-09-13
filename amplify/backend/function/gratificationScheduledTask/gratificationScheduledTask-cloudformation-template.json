@@ -128,12 +128,8 @@
         "Layers": [],
         "Timeout": "25",
         "Code": {
-          "S3Bucket": {
-            "Ref": "deploymentBucketName"
-          },
-          "S3Key": {
-            "Ref": "s3Key"
-          }
+          "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
+          "S3Key": "amplify-builds/gratificationScheduledTask-4f75757932483770546a-build.zip"
         }
       }
     },
