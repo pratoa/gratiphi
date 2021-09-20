@@ -23,7 +23,7 @@
         },
         "gratificationScheduledTask": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/gratificationScheduledTask-354b3043303762395a42-build.zip"
+          "s3Key": "amplify-builds/gratificationScheduledTask-68797359525146725870-build.zip"
         }
       }
     }

@@ -155,7 +155,7 @@ type Gratification
   @auth(rules: [{ allow: public }]) {
   id: ID!
   gratificationUrl: String
-  donationId: ID!
+  donationId: ID
   donations: [Donation]
     @connection(keyName: "donationByGratificationId", fields: ["id"])
   locationId: ID!
