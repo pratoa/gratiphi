@@ -137,11 +137,6 @@ type Donation
 
 type Gratification
   @model
-  # @key(
-  #   name: "gratificationByDonation"
-  #   fields: ["donation {id}"]
-  #   queryField: "gratificationByDonation"
-  # )
   @key(
     name: "gratificationByLocation"
     fields: ["locationId"]
@@ -151,6 +146,11 @@ type Gratification
     name: "gratificationByDonee"
     fields: ["doneeId"]
     queryField: "gratificationByDonee"
+  )
+  @key(
+    name: "gratificationByUrl"
+    fields: ["gratificationUrl"]
+    queryField: "gratificationByUrl"
   )
   @auth(rules: [{ allow: public }]) {
   id: ID!

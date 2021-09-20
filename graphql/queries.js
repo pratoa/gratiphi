@@ -1480,3 +1480,57 @@ export const gratificationByDonee = /* GraphQL */ `
     }
   }
 `;
+export const gratificationByUrl = /* GraphQL */ `
+  query GratificationByUrl(
+    $gratificationUrl: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelGratificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gratificationByUrl(
+      gratificationUrl: $gratificationUrl
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;

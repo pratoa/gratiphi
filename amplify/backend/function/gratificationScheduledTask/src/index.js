@@ -23,8 +23,8 @@ const s3 = new AWS.S3();
 const ses = new AWS.SES({ region: "us-east-1" });
 
 const getDonationsEligibleToProcess = gql`
-  query listDonationss($filter: ModelDonationsFilterInput) {
-    listDonationss(filter: $filter) {
+  query listDonations($filter: ModelDonationFilterInput) {
+    listDonations(filter: $filter) {
       items {
         id
         userId
@@ -60,8 +60,8 @@ const getDonationsEligibleToProcess = gql`
 `;
 
 const updateDonationGraph = gql`
-  mutation ($donation: UpdateDonationsInput!) {
-    updateDonations(input: $donation) {
+  mutation ($donation: UpdateDonationInput!) {
+    updateDonation(input: $donation) {
       id
       userId
       doneeId
@@ -73,15 +73,24 @@ const updateDonationGraph = gql`
 `;
 
 const getDonationByUserDoneeAndGratification = gql`
-  query listDonationss($filter: ModelDonationsFilterInput) {
-    listDonationss(filter: $filter) {
+  query listDonations($filter: ModelDonationFilterInput) {
+    listDonations(filter: $filter) {
       items {
         id
         userId
         doneeId
         amount
-        isGratificationSent
-        gratificationPhoto
+      }
+    }
+  }
+`;
+
+const getGratificatioByUserDoneeAndGratification = gql`
+  query gratificationByUrl(gratificationUrl: String) {
+    gratificationByUrl(gratificationUrl: gratificationUrl) {
+      items {
+        id
+        gratificationUrl
       }
     }
   }
@@ -107,12 +116,14 @@ exports.handler = async (event) => {
         },
       },
     });
-    var donations = graphqlData.data.data.listDonationss.items;
+    var donations = graphqlData.data.data.listDonations.items;
 
     // Loop through each donation
     for (const donation of donations) {
       console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
+      //process donation if it has 5 days of being created
       if (moment(donation.createdAt).add(5, "days") < moment()) {
+        //process each donation
         await processDonation(donation);
       }
       console.log("END OF PROCESSING FOR DONATIONID: ", donation.id);
@@ -157,6 +168,27 @@ async function processDonation(donation) {
   );
 
   // Check if there is a donation with the latest gratification photo
+
+  //Get gratificationId usando el gratificationPath
+  const gratification = await axios({
+    url: API_ENDPOINT,
+    method: "post",
+    headers: {
+      "x-api-key": API_KEY,
+    },
+    data: {
+      query: print(getDonationByUserDoneeAndGratification),
+      variables: {
+        gratificationUrl: imageUrl,
+      },
+    },
+  });
+
+  // gratification.data?
+  if (!gratification) {
+    throw err;
+  }
+
   const graphqlData2 = await axios({
     url: API_ENDPOINT,
     method: "post",
@@ -173,8 +205,9 @@ async function processDonation(donation) {
           doneeId: {
             eq: doneeId,
           },
-          gratificationPhoto: {
-            eq: imageUrl,
+          gratificationId: {
+            eq: gratification.data.data.gratificationByUrl.items
+              .gratificationId,
           },
         },
       },
@@ -182,7 +215,7 @@ async function processDonation(donation) {
   });
 
   // if there are prev donations with latest gratification, then don't send
-  if (graphqlData2.data.data.listDonationss.items.length != 0) {
+  if (graphqlData2.data.data.listDonation.items.length != 0) {
     console.log("No mandar foto");
     return;
   }
@@ -192,6 +225,7 @@ async function processDonation(donation) {
   console.log("EMAIL: ", email);
 
   // update donation
+  // if (email.sucess){}
   var updatedDonation = await updateDonation(donation, imageUrl);
   console.log("UPDATED DONATION: ", updatedDonation);
 }
@@ -217,7 +251,7 @@ function getGratificationDates(gratifications) {
   return sortedDates;
 }
 
-async function updateDonation(donation, imageUrl) {
+async function updateDonation(donation, gratificationId) {
   try {
     const graphqlData = await axios({
       url: API_ENDPOINT,
@@ -233,8 +267,7 @@ async function updateDonation(donation, imageUrl) {
             userId: donation.userId,
             doneeId: donation.doneeId,
             amount: donation.amount,
-            isGratificationSent: true,
-            gratificationPhoto: imageUrl,
+            gratificationId: gratificationId,
           },
         },
       },
