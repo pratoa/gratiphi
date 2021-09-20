@@ -1,24 +1,15 @@
 export const getLocationForSponsor = /* GraphQL */ `
-  query GetSponsor($id: ID!) {
-    getSponsor(id: $id) {
-      id
-      name
-      logo
-      identifier
-      locations {
-        items {
-          id
-          identifier
-          name
-          sponsorId
-          donees {
-            items {
-              donations {
-                items {
-                  isGratificationSent
-                }
-              }
-            }
+  query GetLocationsWithNoGratification($filter: ModelLocationFilterInput) {
+    listLocations(filter: $filter) {
+      items {
+        id
+        identifier
+        createdAt
+        name
+        donations(filter: { gratificationId: { eq: "NONE" } }) {
+          items {
+            id
+            amount
           }
         }
       }
@@ -41,9 +32,10 @@ export const getDoneesAtLocation = /* GraphQL */ `
           profilePhoto
           sponsorId
           locationId
-          donations {
+          donations(filter: { gratificationId: { eq: "NONE" } }) {
             items {
-              isGratificationSent
+              id
+              amount
             }
           }
         }
@@ -52,17 +44,12 @@ export const getDoneesAtLocation = /* GraphQL */ `
   }
 `;
 
-export const getDonationHistoryByDoneeId = /* GraphQL */ `
-  query getDonationHistoryByDoneeId($filter: ModelDonationsFilterInput) {
-    listDonationss(filter: $filter) {
+export const getGratificationHistoryByDoneeId = /* GraphQL */ `
+  query GetGratificationsForDonee($filter: ModelGratificationFilterInput) {
+    listGratifications(filter: $filter) {
       items {
-        amount
         createdAt
-        isGratificationSent
-        id
-        user {
-          email
-        }
+        gratificationUrl
       }
     }
   }

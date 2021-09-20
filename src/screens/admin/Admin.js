@@ -15,29 +15,21 @@ function setGratiphicationValue(listOfLocations) {
     locationIndex++
   ) {
     const location = listOfLocations[locationIndex];
+    const donationsAtLocationsWithNoGratiphication = location.donations.items;
+    var isAlertNeeded = false;
+    if (donationsAtLocationsWithNoGratiphication.length != 0)
+      isAlertNeeded = true;
     newListOfLocations.push({
       name: location.name,
       id: location.id,
       identifier: location.identifier,
-      isAlertNeeded: false,
+      isAlertNeeded: isAlertNeeded,
     });
-    const doneesAtLocation = location.donees.items;
-    if (doneesAtLocation.length == 0) continue;
-    for (
-      let doneeIndex = 0;
-      doneeIndex < doneesAtLocation.length;
-      doneeIndex++
-    ) {
-      const donee = doneesAtLocation[doneeIndex];
-      const donationsInDonees = donee.donations.items;
-      const isAlertNeeded = !donationsInDonees.every(
-        (donation) => donation.isGratificationSent === true
-      );
-      newListOfLocations[locationIndex].isAlertNeeded = isAlertNeeded;
-    }
   }
   return newListOfLocations;
 }
+
+const ALIMENTA_SPONSOR_ID = "36702f2c-10b3-4a50-900b-b9cbf9e121cf";
 
 export default function Admin({ navigation, updateAuthState }) {
   const [locations, setLocations] = useState([]);
@@ -57,9 +49,11 @@ export default function Admin({ navigation, updateAuthState }) {
     async function getDoneesByLocation() {
       const response = await API.graphql({
         query: customQueries.getLocationForSponsor,
-        variables: { id: "36702f2c-10b3-4a50-900b-b9cbf9e121cf" },
+        variables: {
+          filter: { sponsorId: { eq: ALIMENTA_SPONSOR_ID } },
+        },
       });
-      var listOfLocations = await response.data.getSponsor.locations.items;
+      var listOfLocations = await response.data.listLocations.items;
       setLocations(setGratiphicationValue(listOfLocations));
     }
     getDoneesByLocation();
