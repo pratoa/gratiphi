@@ -34,27 +34,31 @@ export const listDonees = /* GraphQL */ `
   }
 `;
 
-export const listDonationss = /* GraphQL */ `
-  query ListDonationss(
-    $filter: ModelDonationsFilterInput
+export const listDonations = /* GraphQL */ `
+  query ListDonations(
+    $filter: ModelDonationFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listDonationss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDonations(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         amount
         createdAt
-        isGratificationSent
-        gratificationPhoto
         donee {
           firstName
           lastName
           birthDate
-          location {
-            id
-            name
-          }
+          profilePhoto
+        }
+        location {
+          id
+          name
+        }
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
         }
       }
       nextToken

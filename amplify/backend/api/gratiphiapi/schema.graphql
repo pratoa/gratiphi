@@ -131,8 +131,8 @@ type Donation
   stripeTransactionId: String!
   locationId: ID!
   location: Location @connection(fields: ["locationId"])
-  gratificationId: ID
-  gratification: Gratification @connection
+  gratificationId: ID!
+  gratification: Gratification @connection(fields: ["gratificationId"])
 }
 
 type Gratification
@@ -155,7 +155,7 @@ type Gratification
   @auth(rules: [{ allow: public }]) {
   id: ID!
   gratificationUrl: String
-  donationId: ID!
+  donationId: ID
   donations: [Donation]
     @connection(keyName: "donationByGratificationId", fields: ["id"])
   locationId: ID!
