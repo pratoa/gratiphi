@@ -41,17 +41,21 @@ export default function DoneesAtLocation({
 
   useEffect(() => {
     async function getDoneesByLocation() {
-      const response = await API.graphql({
-        query: customQueries.getDoneesAtLocation,
-        variables: { id: locationId },
-      });
-      var listOfDonees = await response.data.getLocation.donees.items;
-      for (const donee of listOfDonees) {
-        if (donee.profilePhoto) {
-          donee.profilePhoto = await Storage.get(donee.profilePhoto);
+      try {
+        const response = await API.graphql({
+          query: customQueries.getDoneesAtLocation,
+          variables: { id: locationId },
+        });
+        var listOfDonees = await response.data.getLocation.donees.items;
+        for (const donee of listOfDonees) {
+          if (donee.profilePhoto) {
+            donee.profilePhoto = await Storage.get(donee.profilePhoto);
+          }
         }
+        setDonees(setGratiphicationValue(listOfDonees));
+      } catch (error) {
+        alert("Hubo un problema actulizando descargando la ultima informacion");
       }
-      setDonees(setGratiphicationValue(listOfDonees));
     }
     getDoneesByLocation();
   }, []);

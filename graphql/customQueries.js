@@ -48,6 +48,7 @@ export const getGratificationHistoryByDoneeId = /* GraphQL */ `
   query GetGratificationsForDonee($filter: ModelGratificationFilterInput) {
     listGratifications(filter: $filter) {
       items {
+        id
         createdAt
         gratificationUrl
       }

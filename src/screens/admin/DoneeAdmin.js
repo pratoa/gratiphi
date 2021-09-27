@@ -25,16 +25,20 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
 
   useEffect(() => {
     async function getGratiphications() {
-      const response = await API.graphql(
-        graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
-          filter: { doneeId: { eq: donee.id } },
-        })
-      );
-      var gratificationHistory = await response.data.listGratifications.items;
-      setGratificationHistory(gratificationHistory);
+      try {
+        const response = await API.graphql(
+          graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
+            filter: { doneeId: { eq: donee.id } },
+          })
+        );
+        var gratificationHistory = await response.data.listGratifications.items;
+        setGratificationHistory(gratificationHistory);
+      } catch (error) {
+        alert("Hubo un problema actulizando descargando la ultima informacion");
+      }
     }
     getGratiphications();
-  }, []);
+  }, [navigation.isFocused()]);
 
   return (
     <Screen>
