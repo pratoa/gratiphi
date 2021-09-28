@@ -18,10 +18,7 @@ import {
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import colors from "../../config/colors";
-import { default as defaultStyle } from "../../config/styles";
-import Screen from "../../components/common/Screen";
 import AppButton from "../../components/common/AppButton";
-import { Header } from "react-native/Libraries/NewAppScreen";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
@@ -392,7 +389,7 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     color: "black",
     fontSize: 23,
-    textAlign: "center"
+    textAlign: "center",
   },
   modalBottom: {
     flex: 1,

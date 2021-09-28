@@ -45,8 +45,14 @@ export const getDoneesAtLocation = /* GraphQL */ `
 `;
 
 export const getGratificationHistoryByDoneeId = /* GraphQL */ `
-  query GetGratificationsForDonee($filter: ModelGratificationFilterInput) {
-    listGratifications(filter: $filter) {
+  query GetGratificationsForDonee(
+    $doneeId: ID!
+    $sortDirection: ModelSortDirection
+  ) {
+    gratificationByDoneeByDate(
+      doneeId: $doneeId
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         createdAt
