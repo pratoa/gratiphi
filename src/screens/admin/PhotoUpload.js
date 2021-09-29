@@ -8,7 +8,7 @@ import { AppImagePicker } from "../../components/common/AppImagePicker";
 export default function PhotoUpload({ route, navigation, updateAuthState }) {
   const [image, setImage] = useState(null);
   const avatar = require("../../../assets/images/avatar.png");
-  const { path } = route.params;
+  const { path, doneeId, locationId } = route.params;
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -26,7 +26,13 @@ export default function PhotoUpload({ route, navigation, updateAuthState }) {
         {!image && <Image source={avatar} style={styles.imageStyle} />}
         {image && <Image source={{ uri: image }} style={styles.imageStyle} />}
       </View>
-      <AppImagePicker uploadPath={path} useImage={image} setImage={setImage} />
+      <AppImagePicker
+        doneeId={doneeId}
+        locationId={locationId}
+        uploadPath={path}
+        useImage={image}
+        setImage={setImage}
+      />
     </Screen>
   );
 }

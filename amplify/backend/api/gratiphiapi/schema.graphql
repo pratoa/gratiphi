@@ -69,7 +69,7 @@ type Donee
   questionAnswer: [QuestionAnswer]
     @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
   gratifications: [Gratification]
-    @connection(keyName: "gratificationByDonee", fields: ["id"])
+    @connection(keyName: "gratificationByDoneeByDate", fields: ["id"])
 }
 
 type Question @model @auth(rules: [{ allow: public }]) {
@@ -143,9 +143,9 @@ type Gratification
     queryField: "gratificationByLocation"
   )
   @key(
-    name: "gratificationByDonee"
-    fields: ["doneeId"]
-    queryField: "gratificationByDonee"
+    name: "gratificationByDoneeByDate"
+    fields: ["doneeId", "createdAt"]
+    queryField: "gratificationByDoneeByDate"
   )
   @key(
     name: "gratificationByUrl"
@@ -162,6 +162,7 @@ type Gratification
   location: Location @connection(fields: ["locationId"])
   doneeId: ID!
   donee: Donee @connection(fields: ["doneeId"])
+  createdAt: AWSDateTime!
 }
 
 type Mutation {

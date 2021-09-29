@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList } from "react-native";
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import Screen from "../../components/common/Screen";
 import SignOutButton from "../../components/common/SignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
@@ -11,14 +11,12 @@ function setGratiphicationValue(listOfDonees) {
   var newListOfDonees = [];
   for (let doneeIndex = 0; doneeIndex < listOfDonees.length; doneeIndex++) {
     const donee = listOfDonees[doneeIndex];
-    newListOfDonees.push({ ...donee, isAlertNeeeded: false });
-    const donationsInDonees = donee.donations.items;
-    if (donationsInDonees.length == 0) continue;
-    const isAlertNeeded = !donationsInDonees.every(
-      (donation) => donation.isGratificationSent === true
-    );
-    newListOfDonees[doneeIndex].isAlertNeeded = isAlertNeeded;
+    const donationsWithNoGratiphication = donee.donations.items;
+    var isAlertNeeded = false;
+    if (donationsWithNoGratiphication.length != 0) isAlertNeeded = true;
+    newListOfDonees.push({ ...donee, isAlertNeeded: isAlertNeeded });
   }
+
   return newListOfDonees;
 }
 
@@ -27,7 +25,7 @@ export default function DoneesAtLocation({
   navigation,
   updateAuthState,
 }) {
-  const [donees, setDoness] = useState([]);
+  const [donees, setDonees] = useState([]);
   const { locationId, locationIdentifier } = route.params;
   const date = new Date().toISOString().split("T")[0];
   React.useLayoutEffect(() => {
@@ -43,12 +41,21 @@ export default function DoneesAtLocation({
 
   useEffect(() => {
     async function getDoneesByLocation() {
-      const response = await API.graphql({
-        query: customQueries.getDoneesAtLocation,
-        variables: { id: locationId },
-      });
-      var listOfDonees = await response.data.getLocation.donees.items;
-      setDoness(setGratiphicationValue(listOfDonees));
+      try {
+        const response = await API.graphql({
+          query: customQueries.getDoneesAtLocation,
+          variables: { id: locationId },
+        });
+        var listOfDonees = await response.data.getLocation.donees.items;
+        for (const donee of listOfDonees) {
+          if (donee.profilePhoto) {
+            donee.profilePhoto = await Storage.get(donee.profilePhoto);
+          }
+        }
+        setDonees(setGratiphicationValue(listOfDonees));
+      } catch (error) {
+        alert("Hubo un problema actulizando descargando la ultima informacion");
+      }
     }
     getDoneesByLocation();
   }, []);
@@ -63,6 +70,7 @@ export default function DoneesAtLocation({
             title={item.firstName + " " + item.lastName}
             onPress={() =>
               navigation.navigate("DoneeAdmin", {
+                locationId: locationId,
                 path: `AlimentaLaSolidaridad/${locationIdentifier}-${locationId}/${item.identifier}-${item.id}/${item.identifier}_${date}.jpeg`,
                 donee: {
                   name: `${item.firstName} ${item.lastName}`,
@@ -71,7 +79,7 @@ export default function DoneesAtLocation({
                 },
               })
             }
-            showChevrons
+            showChevrons={item.isAlertNeeded}
           />
         )}
         ItemSeparatorComponent={ListItemSeparator}

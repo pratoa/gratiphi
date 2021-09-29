@@ -1,10 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Platform, ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Storage } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import AppButton from "./AppButton";
 
-export function AppImagePicker({ uploadPath = null, useImage, setImage }) {
+const createGratification = /* GraphQL */ `
+  mutation CreateGratification($input: CreateGratificationInput!) {
+    createGratification(input: $input) {
+      id
+    }
+  }
+`;
+
+export function AppImagePicker({
+  locationId,
+  doneeId,
+  uploadPath,
+  useImage,
+  setImage,
+}) {
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
@@ -51,11 +66,12 @@ export function AppImagePicker({ uploadPath = null, useImage, setImage }) {
     }
   };
 
-  const uploadPicture = async () => {
+  const uploadPicture = () => {
     if (useImage == null) {
       alert("Seleccione o tome una foto primero");
       return;
     }
+    setIsLoading(true);
     uploadImage(useImage);
   };
 
@@ -68,17 +84,31 @@ export function AppImagePicker({ uploadPath = null, useImage, setImage }) {
           contentType: "image/jpeg",
         });
         alert("Imagen subida satisfactoriamente");
+        await API.graphql({
+          query: createGratification,
+          variables: {
+            input: {
+              doneeId: doneeId,
+              locationId: locationId,
+              gratificationUrl: uploadPath,
+            },
+          },
+        });
       }
     } catch {
       alert("Hubo un error subiendo la imagen. Intente otra vez");
     }
+    setIsLoading(false);
   }
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
-      <AppButton title="Escoger Foto" onPress={pickImage} />
-      <AppButton title="Tomar Foto" onPress={takeImage} />
-      {useImage && <AppButton title="Subir Foto" onPress={uploadPicture} />}
+      {isLoading && <ActivityIndicator size="large" />}
+      <AppButton title="Escoger Foto" onPress={() => pickImage()} />
+      <AppButton title="Tomar Foto" onPress={() => takeImage()} />
+      {!isLoading && useImage && (
+        <AppButton title="Subir Foto" onPress={() => uploadPicture()} />
+      )}
     </View>
   );
 }
