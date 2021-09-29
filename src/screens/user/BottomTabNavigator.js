@@ -60,12 +60,12 @@ function DonateStackScreen({ props }) {
   );
 }
 
-function HistoryStackScreen() {
+function HistoryStackScreen({ navigation }) {
   return (
     <HistoryStack.Navigator initialRouteName="History">
       <HistoryStack.Screen
         name="History"
-        component={HistoryDonations}
+        children={() => <HistoryDonations navigation={navigation} />}
         options={{
           headerTitle: "History",
           headerTintColor: colors.white,
@@ -131,7 +131,7 @@ const BottomTabNavigator = (props) => {
       />
       <BottomNavigator.Screen
         name="History"
-        component={HistoryStackScreen}
+        children={() => <HistoryStackScreen navigation={props.navigation} />}
         options={{
           tabBarLabel: "History",
           tabBarIcon: ({ color }) => (
