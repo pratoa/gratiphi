@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { View, Platform, ActivityIndicator } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { API, Storage } from "aws-amplify";
+import { API, Storage, graphqlOperation } from "aws-amplify";
 import AppButton from "./AppButton";
+import * as customQueries from "../../../graphql/customQueries";
 
 const createGratification = /* GraphQL */ `
   mutation CreateGratification($input: CreateGratificationInput!) {
@@ -20,23 +21,45 @@ export function AppImagePicker({
   setImage,
 }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [canUpload, setCanUpload] = useState(false);
   useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
+          alert(
+            "Disculpe, se require activar los permisos para acceder a la libreria de fotos"
+          );
         }
       }
     })();
   }, []);
   useEffect(() => {
+    async function getExistingImages() {
+      try {
+        const response = await API.graphql(
+          graphqlOperation(customQueries.getExistingGratificationsWithURL, {
+            gratificationUrl: uploadPath,
+          })
+        );
+        var gratificationHistory = await response.data.gratificationByUrl.items;
+        setCanUpload(gratificationHistory.length == 0);
+      } catch (error) {
+        console.log(error);
+        alert("Hubo un problema descargando la última informacion");
+      }
+    }
+    getExistingImages();
+  }, [useImage]);
+  useEffect(() => {
     (async () => {
       if (Platform.OS !== "web") {
         const { status } = await ImagePicker.requestCameraPermissionsAsync();
         if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
+          alert(
+            "Disculpe, se require activar los permisos para acceder a la camara"
+          );
         }
       }
     })();
@@ -80,20 +103,26 @@ export function AppImagePicker({
       const response = await fetch(imageUri);
       const blob = await response.blob();
       if (uploadPath != null) {
-        await Storage.put(uploadPath, blob, {
-          contentType: "image/jpeg",
-        });
-        alert("Imagen subida satisfactoriamente");
-        await API.graphql({
-          query: createGratification,
-          variables: {
-            input: {
-              doneeId: doneeId,
-              locationId: locationId,
-              gratificationUrl: uploadPath,
+        if (canUpload) {
+          await Storage.put(uploadPath, blob, {
+            contentType: "image/jpeg",
+          });
+          alert("Imagen subida satisfactoriamente");
+          await API.graphql({
+            query: createGratification,
+            variables: {
+              input: {
+                doneeId: doneeId,
+                locationId: locationId,
+                gratificationUrl: uploadPath,
+              },
             },
-          },
-        });
+          });
+        } else {
+          alert(
+            "La gratificacion para este usuario ya fue realizada previamente el dia de hoy"
+          );
+        }
       }
     } catch {
       alert("Hubo un error subiendo la imagen. Intente otra vez");

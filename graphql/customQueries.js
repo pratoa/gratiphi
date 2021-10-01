@@ -61,3 +61,13 @@ export const getGratificationHistoryByDoneeId = /* GraphQL */ `
     }
   }
 `;
+
+export const getExistingGratificationsWithURL = /* GraphQL */ `
+  query getExistingGratificationsWithURL($gratificationUrl: String!) {
+    gratificationByUrl(gratificationUrl: $gratificationUrl) {
+      items {
+        id
+      }
+    }
+  }
+`;
