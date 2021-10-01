@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, FlatList, Image, Modal, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import Screen from "../../components/common/Screen";
 import SignOutButton from "../../components/common/SignOutButton";
@@ -8,6 +9,7 @@ import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
 import { default as defaultStyle } from "../../config/styles";
 import AppButton from "../../components/common/AppButton";
+import { formatDate } from "../../utils/utils";
 
 export default function DoneeAdmin({ route, navigation, updateAuthState }) {
   const [gratificationHistory, setGratificationHistory] = useState([]);
@@ -29,25 +31,29 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
     });
   }, [navigation]);
 
-  useEffect(() => {
-    async function getGratiphications() {
-      try {
-        const response = await API.graphql(
-          graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
-            doneeId: donee.id,
-            sortDirection: "DESC",
-          })
-        );
-        var gratificationHistory = await response.data
-          .gratificationByDoneeByDate.items;
-        setGratificationHistory(gratificationHistory);
-      } catch (error) {
-        console.log(error);
-        alert("Hubo un problema actulizando descargando la ultima informacion");
+  useFocusEffect(
+    React.useCallback(() => {
+      async function getGratiphications() {
+        try {
+          const response = await API.graphql(
+            graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
+              doneeId: donee.id,
+              sortDirection: "DESC",
+            })
+          );
+          var gratificationHistory = await response.data
+            .gratificationByDoneeByDate.items;
+          setGratificationHistory(gratificationHistory);
+        } catch (error) {
+          console.log(error);
+          alert(
+            "Hubo un problema actulizando descargando la última informacion"
+          );
+        }
       }
-    }
-    getGratiphications();
-  }, [navigation.isFocused()]);
+      getGratiphications();
+    }, [])
+  );
 
   return (
     <>
@@ -61,7 +67,7 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
         )}
         {gratificationHistory.length != 0 && (
           <Text style={styles.subtitle}>
-            Ultimas Gratificaciones a este donantariio (presione para ver foto):
+            Últimas Gratificaciones a este donantario (presione para ver foto):
           </Text>
         )}
         <FlatList
@@ -69,13 +75,13 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
           keyExtractor={(history) => history.id}
           renderItem={({ item }) => (
             <ListItemComponent
-              title={item.createdAt.split("T")[0]}
+              title={formatDate(item.createdAt)}
               onPress={async () => {
                 const gratificationFoto = await Storage.get(
                   item.gratificationUrl
                 );
                 setModalInfo({
-                  title: `Gratificacion ${item.createdAt.split("T")[0]}`,
+                  title: `Gratificacion ${formatDate(item.createdAt)}`,
                   image: gratificationFoto,
                 });
                 setModalVisible(true);
