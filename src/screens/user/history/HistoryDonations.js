@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
-import { withAuthenticator, S3Image } from "aws-amplify-react-native";
-import SegmentedControl from "../../components/common/SegmentControl";
-import * as queries from "../../graphql/queries";
+import SegmentedControl from "../../../components/common/SegmentControl";
+import * as queries from "../../../graphql/queries";
 import {
   StyleSheet,
   Alert,
   FlatList,
   Text,
   View,
-  TouchableWithoutFeedback,
-  Image,
+  ActivityIndicator,
 } from "react-native";
-import Screen from "../../components/common/Screen";
-import AppButton from "../../components/common/AppButton";
-import Moment from "moment";
-import { default as defaultStyle } from "../../config/styles";
-import colors from "../../config/colors";
+import AppButton from "../../../components/common/AppButton";
+import { default as defaultStyle } from "../../../config/styles";
+import colors from "../../../config/colors";
+import InProgressItem from "./InProgressItem";
+import CompletedItem from "./CompletedItem";
+import moment from "moment";
 
 export default function HistoryDonations({ navigation }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [completedDonations, setCompletedDonations] = useState([]);
   const [inProgressDonations, setInProgressDonations] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
   useEffect(() => {
@@ -33,14 +31,13 @@ export default function HistoryDonations({ navigation }) {
         setCompletedDonations(await response.completed);
         setInProgressDonations(await response.inProgress);
 
-        if (completedDonations.length == 0) {
+        if ((await response.completed.length) < 1) {
           setTabIndex(1);
         }
-
-        // console.log("This is compeleted donations: ", completedDonations);
-        // console.log("This is inprogress donations: ", inProgressDonations);
+        setIsLoading(false);
       }
     }
+    setIsLoading(true);
     getPreviousDonations();
   }, []);
 
@@ -66,7 +63,11 @@ export default function HistoryDonations({ navigation }) {
         donation.donee.profilePhotoUrl = await Storage.get(
           donation.donee.profilePhoto
         );
-
+        donation.donee.age = moment
+          .duration(
+            moment().diff(moment(donation.donee.birthDate, "YYYY-MM-DD"))
+          )
+          .years();
         if (donation.gratificationId != "NONE") {
           donation.gratificationUrl = await Storage.get(
             donation.gratification.gratificationUrl
@@ -76,8 +77,6 @@ export default function HistoryDonations({ navigation }) {
           donations.inProgress.push(donation);
         }
       }
-      console.log(donations);
-      setIsLoading(false);
       return donations;
     } catch (error) {
       console.log("ERROR: ", error);
@@ -88,104 +87,18 @@ export default function HistoryDonations({ navigation }) {
     }
   }
 
-  const Item = ({ item }) => {
+  const renderInProgressItem = ({ item }) => {
     if (isLoading) {
       return <View></View>;
-    } else {
-      return (
-        <TouchableWithoutFeedback
-          // underlayColor={colors.primary}
-          onPress={() => {
-            alert("clicked!");
-          }}
-        >
-          <View style={styles.mainCardView}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <View style={styles.subCardView}>
-                {item.gratificationUrl && (
-                  <Image
-                    source={{ uri: item.gratificationUrl }}
-                    // resizeMode="contain"
-                    style={{
-                      borderRadius: 25,
-                      height: 65,
-                      width: 65,
-                    }}
-                  />
-                )}
-                {!item.gratificationUrl && (
-                  <Image
-                    source={{ uri: item.donee.profilePhotoUrl }}
-                    // resizeMode="contain"
-                    style={{
-                      borderRadius: 25,
-                      height: 65,
-                      width: 65,
-                    }}
-                  />
-                )}
-              </View>
-              <View style={{ marginLeft: 12 }}>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: colors.black,
-                    fontWeight: "bold",
-                    textTransform: "capitalize",
-                  }}
-                >
-                  {item.donee.firstName} {item.donee.lastName}
-                </Text>
-                <View
-                  style={{
-                    marginTop: 4,
-                    borderWidth: 0,
-                    width: "85%",
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: colors.gray,
-                      fontSize: 12,
-                    }}
-                  >
-                    Donation: ${Math.round(item.amount / 100).toFixed(2)}
-                  </Text>
-                  <Text
-                    style={{
-                      color: colors.gray,
-                      fontSize: 12,
-                    }}
-                  >
-                    Date: {Moment(item.createdAt).format("MM/DD/YYYY")}
-                  </Text>
-                </View>
-              </View>
-            </View>
-            {/* <View
-            style={{
-              height: 25,
-              backgroundColor: colors.pink,
-              borderWidth: 0,
-              width: 25,
-              marginLeft: -26,
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: 50,
-            }}
-          >
-            <Text style={{ color: colors.white }}>
-              {item.unread_messages_count}
-            </Text>
-          </View> */}
-          </View>
-        </TouchableWithoutFeedback>
-      );
     }
+    return <InProgressItem item={item} />;
   };
 
-  const renderItem = ({ item }) => {
-    return <Item item={item} />;
+  const renderCompletedItem = ({ item }) => {
+    if (isLoading) {
+      return <View></View>;
+    }
+    return <CompletedItem navigation={navigation} donation={item} />;
   };
 
   const handleTabsChange = (index) => {
@@ -209,6 +122,7 @@ export default function HistoryDonations({ navigation }) {
         paddingVertical={5}
         marginTop={0}
       />
+      {isLoading && <ActivityIndicator size="large" />}
       {tabIndex == 0 && completedDonations.length == 0 && (
         <View>
           <Text>
@@ -222,7 +136,7 @@ export default function HistoryDonations({ navigation }) {
         <View style={styles.flatListContainer}>
           <FlatList
             data={completedDonations}
-            renderItem={renderItem}
+            renderItem={renderCompletedItem}
             keyExtractor={(item) => item.id}
           />
         </View>
@@ -230,8 +144,8 @@ export default function HistoryDonations({ navigation }) {
       {tabIndex == 1 && inProgressDonations.length == 0 && (
         <View>
           <Text>
-            You haven't made any donations yet! Please go ahead and help a kid
-            get a meal!
+            You don't have any donations in progress! Please go ahead and
+            donate!
           </Text>
           <AppButton title="Donate" onPress={goToDonation} />
         </View>
@@ -240,7 +154,7 @@ export default function HistoryDonations({ navigation }) {
         <View style={styles.flatListContainer}>
           <FlatList
             data={inProgressDonations}
-            renderItem={renderItem}
+            renderItem={renderInProgressItem}
             keyExtractor={(item) => item.id}
           />
         </View>

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ActivityIndicator, View } from "react-native";
 import Amplify, { Auth } from "aws-amplify";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -11,6 +10,7 @@ import SignIn from "./src/screens/login/SignIn";
 import SignUp from "./src/screens/login/SignUp";
 import ConfirmSignUp from "./src/screens/login/ConfirmSignUp";
 import ExpandedDoneeCard from "./src/screens/user/donate/ExpandedDoneeCard";
+import CompletedItemExpanded from "./src/screens/user/history/CompletedItemExpanded";
 import Admin from "./src/screens/admin/Admin";
 import colors from "./src/config/colors";
 import DoneesAtLocation from "./src/screens/admin/DoneesAtLocation";
@@ -245,6 +245,19 @@ function App() {
         <RootStack.Screen
           name="ExpandedCard"
           component={ExpandedDoneeCard}
+          options={({ route }) => ({
+            headerTitle: "",
+            headerBackTitle: "Back",
+            headerTintColor: colors.primary,
+            headerStyle: {
+              backgroundColor: colors.white,
+              shadowOpacity: 0,
+            },
+          })}
+        ></RootStack.Screen>
+        <RootStack.Screen
+          name="CompletedItemExpanded"
+          component={CompletedItemExpanded}
           options={({ route }) => ({
             headerTitle: "",
             headerBackTitle: "Back",

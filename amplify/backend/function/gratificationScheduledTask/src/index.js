@@ -30,12 +30,19 @@ const getDonationsEligibleToProcess = gql`
         userId
         doneeId
         amount
+        isGratificationSent
+        gratificationPhoto
         donee {
           id
           firstName
           lastName
           birthDate
           identifier
+          location {
+            id
+            name
+            identifier
+          }
           sponsor {
             id
             identifier
@@ -45,11 +52,6 @@ const getDonationsEligibleToProcess = gql`
           id
           name
           email
-        }
-        location {
-          id
-          name
-          identifier
         }
         createdAt
       }
@@ -64,7 +66,8 @@ const updateDonationGraph = gql`
       userId
       doneeId
       amount
-      gratificationId
+      isGratificationSent
+      gratificationPhoto
     }
   }
 `;
@@ -77,15 +80,14 @@ const getDonationByUserDoneeAndGratification = gql`
         userId
         doneeId
         amount
-        gratificationId
       }
     }
   }
 `;
 
-const getGratificatioByGratificationUrl = gql`
-  query gratificationByUrl($gratificationUrl: String) {
-    gratificationByUrl(gratificationUrl: $gratificationUrl) {
+const getGratificatioByUserDoneeAndGratification = gql`
+  query gratificationByUrl(gratificationUrl: String) {
+    gratificationByUrl(gratificationUrl: gratificationUrl) {
       items {
         id
         gratificationUrl
@@ -114,17 +116,11 @@ exports.handler = async (event) => {
         },
       },
     });
-
-    console.log("THIS IS DE DATA: ", graphqlData.data);
     var donations = graphqlData.data.data.listDonations.items;
-
-    if (donations.length == 0) {
-      return;
-    }
 
     // Loop through each donation
     for (const donation of donations) {
-      console.log("START OF PROCESSING FOR DONATION: ", donation);
+      console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
       //process donation if it has 5 days of being created
       if (moment(donation.createdAt).add(5, "days") < moment()) {
         //process each donation
@@ -139,8 +135,8 @@ exports.handler = async (event) => {
 
 async function processDonation(donation) {
   const sponsorIdentifier = donation.donee.sponsor.identifier;
-  const locationIdentifier = donation.location.identifier;
-  const locationId = donation.location.id;
+  const locationIdentifier = donation.donee.location.identifier;
+  const locationId = donation.donee.location.id;
   const doneeIdentifier = donation.donee.identifier;
   const doneeId = donation.donee.id;
   const userId = donation.user.id;
@@ -174,32 +170,25 @@ async function processDonation(donation) {
   // Check if there is a donation with the latest gratification photo
 
   //Get gratificationId usando el gratificationPath
-  const gratificationData = await axios({
+  const gratification = await axios({
     url: API_ENDPOINT,
     method: "post",
     headers: {
       "x-api-key": API_KEY,
     },
     data: {
-      query: print(getGratificatioByGratificationUrl),
+      query: print(getDonationByUserDoneeAndGratification),
       variables: {
         gratificationUrl: imageUrl,
       },
     },
   });
-  console.log("IMAGE URL: ", imageUrl);
-  console.log(
-    "GRATIFICATION: ",
-    gratificationData.data.data.gratificationByUrl
-  );
+
   // gratification.data?
-  if (
-    gratificationData.data.errors ||
-    gratificationData.data.data.gratificationByUrl.items.length == 0
-  ) {
-    return;
+  if (!gratification) {
+    throw err;
   }
-  const gratification = gratificationData.data.data.gratificationByUrl.items[0];
+
   const graphqlData2 = await axios({
     url: API_ENDPOINT,
     method: "post",
@@ -217,16 +206,16 @@ async function processDonation(donation) {
             eq: doneeId,
           },
           gratificationId: {
-            eq: gratification.gratificationId,
+            eq: gratification.data.data.gratificationByUrl.items
+              .gratificationId,
           },
         },
       },
     },
   });
 
-  console.log("PREV DONATIONS: ", graphqlData2.data.data);
   // if there are prev donations with latest gratification, then don't send
-  if (graphqlData2.data.data.listDonations != null) {
+  if (graphqlData2.data.data.listDonation.items.length != 0) {
     console.log("No mandar foto");
     return;
   }
@@ -237,7 +226,7 @@ async function processDonation(donation) {
 
   // update donation
   // if (email.sucess){}
-  var updatedDonation = await updateDonation(donation, gratification.id);
+  var updatedDonation = await updateDonation(donation, imageUrl);
   console.log("UPDATED DONATION: ", updatedDonation);
 }
 
@@ -249,8 +238,7 @@ function getImageUrl(
   doneeId,
   date
 ) {
-  //https://${BUCKET_NAME}.s3.amazonaws.com/public/
-  return `${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
 }
 
 function getGratificationDates(gratifications) {

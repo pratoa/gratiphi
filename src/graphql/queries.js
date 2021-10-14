@@ -8,6 +8,7 @@ export const listDonees = /* GraphQL */ `
   ) {
     listDonees(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
+        id
         firstName
         lastName
         birthDate

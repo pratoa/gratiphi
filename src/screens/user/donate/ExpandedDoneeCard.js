@@ -19,6 +19,7 @@ export default function ExpandedCard({ route }) {
 
   async function getCurrentUser() {
     let userInfo = await Auth.currentUserInfo();
+    console.info("SESSION: ", await Auth.currentSession());
     setCurrentUser(await userInfo.username);
   }
   const donee = route.params.item;
@@ -59,7 +60,7 @@ export default function ExpandedCard({ route }) {
             ></Image>
             <View style={styles.detailsContainer}>
               <Text style={styles.doneeName}>{donee.firstName}</Text>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <FontAwesome5
                   name={"map-marker-alt"}
                   size={defaultStyle.SCREEN_WIDTH * 0.045}
@@ -67,7 +68,7 @@ export default function ExpandedCard({ route }) {
                 />
                 <Text style={styles.infoText}>{item.location.name}</Text>
               </View>
-              <View style={{ flexDirection: "row" }}>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <FontAwesome5
                   name={"birthday-cake"}
                   size={defaultStyle.SCREEN_WIDTH * 0.045}
@@ -116,7 +117,6 @@ export default function ExpandedCard({ route }) {
 const styles = StyleSheet.create({
   doneeImage: {
     width: "90%",
-    height: 300,
     height: defaultStyle.SCREEN_HEIGHT * 0.45,
     borderRadius: 20,
     alignSelf: "center",

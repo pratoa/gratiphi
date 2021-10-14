@@ -75,13 +75,13 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
           keyExtractor={(history) => history.id}
           renderItem={({ item }) => (
             <ListItemComponent
-              title={formatDate(item.createdAt)}
+              title={formatDate(item.createdAt, "es")}
               onPress={async () => {
                 const gratificationFoto = await Storage.get(
                   item.gratificationUrl
                 );
                 setModalInfo({
-                  title: `Gratificacion ${formatDate(item.createdAt)}`,
+                  title: `Gratificacion ${formatDate(item.createdAt, "es")}`,
                   image: gratificationFoto,
                 });
                 setModalVisible(true);

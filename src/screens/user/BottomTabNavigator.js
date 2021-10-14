@@ -5,7 +5,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 
 import Home from "./Home";
 import Donate from "./donate/Donate";
-import HistoryDonations from "./HistoryDonations";
+import HistoryDonations from "./history/HistoryDonations";
 import Settings from "./Settings";
 import colors from "../../config/colors";
 import { Dimensions } from "react-native";
