@@ -16,6 +16,7 @@ import colors from "./src/config/colors";
 import DoneesAtLocation from "./src/screens/admin/DoneesAtLocation";
 import DoneeAdmin from "./src/screens/admin/DoneeAdmin";
 import PhotoUpload from "./src/screens/admin/PhotoUpload";
+import ForgotPassword from "./src/screens/login/ForgotPassword";
 
 Amplify.configure({
   ...awsconfig,
@@ -154,6 +155,20 @@ const AuthenticationStackScreen = (props) => {
         options={{
           headerShown: true,
           headerTitle: "Confirm Account",
+          headerBackTitle: "Back",
+          headerTintColor: colors.white,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            shadowOpacity: 0,
+          },
+        }}
+      ></AuthenticationStack.Screen>
+      <AuthenticationStack.Screen
+        name="ForgotPassword"
+        component={ForgotPassword}
+        options={{
+          headerShown: true,
+          headerTitle: "Forgot Password",
           headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {

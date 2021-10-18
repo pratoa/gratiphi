@@ -53,4 +53,8 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     marginVertical: 15,
   },
+  errorText: {
+    color: "red",
+    alignSelf: "center",
+  },
 });

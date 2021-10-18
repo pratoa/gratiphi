@@ -66,7 +66,12 @@ export default function SignIn({
           textContentType="password"
         />
         <TouchableOpacity>
-          <Text style={styles.forgotPasswordButtonText}>Forgot Password?</Text>
+          <Text
+            style={styles.forgotPasswordButtonText}
+            onPress={() => navigation.navigate("ForgotPassword")}
+          >
+            Forgot Password?
+          </Text>
         </TouchableOpacity>
         <View style={styles.buttonWrapper}>
           <AppButton title="Login" onPress={signIn} />
