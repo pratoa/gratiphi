@@ -1,5 +1,6 @@
 {
   "expo": {
+    "userInterfaceStyle": "automatic",
     "name": "gratiphi",
     "slug": "gratiphi",
     "version": "1.0.0",
@@ -13,9 +14,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.andresprato.gratiphi",
@@ -41,9 +40,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-image-picker",
-      "expo-camera"
-    ]
+    "plugins": ["expo-image-picker", "expo-camera"]
   }
 }

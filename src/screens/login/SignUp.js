@@ -8,6 +8,7 @@ import {
   Image,
   Dimensions,
   Pressable,
+  useColorScheme,
 } from "react-native";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import moment from "moment";
@@ -30,6 +31,7 @@ export default function SignUp({ navigation }) {
   const [error, setError] = useState("");
   const [showDatepicker, setShowDatepicker] = useToggle();
   const logo = "../../../assets/logo/gratiphi-blue-small2.png";
+  const colorScheme = useColorScheme();
 
   async function signUp() {
     setError("");
@@ -158,6 +160,7 @@ export default function SignUp({ navigation }) {
           />
         </Pressable>
         <DateTimePickerModal
+          isDarkModeEnabled={colorScheme === "dark"}
           isVisible={showDatepicker}
           mode="date"
           onConfirm={handleConfirm}
