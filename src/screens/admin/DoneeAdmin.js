@@ -10,6 +10,7 @@ import * as customQueries from "../../../graphql/customQueries";
 import { default as defaultStyle } from "../../config/styles";
 import AppButton from "../../components/common/AppButton";
 import { formatDate } from "../../utils/utils";
+import CachedImage from "react-native-expo-cached-image";
 
 export default function DoneeAdmin({ route, navigation, updateAuthState }) {
   const [gratificationHistory, setGratificationHistory] = useState([]);
@@ -105,11 +106,11 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
         <View style={styles.modalView}>
           <View style={styles.modalContainer}>
             <Text style={styles.title}>{modalInfo.title}</Text>
-            <Image
+            <CachedImage
               resizeMode="contain"
               style={styles.modalImage}
               source={{ uri: modalInfo.image }}
-            ></Image>
+            ></CachedImage>
             {/* <Text style={styles.subtitle}>{modalInfo.description}</Text> */}
             <View style={styles.modalBottom}>
               <AppButton
