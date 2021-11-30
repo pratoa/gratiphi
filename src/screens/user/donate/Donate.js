@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { API, Storage } from "aws-amplify";
+import { API, Storage, Auth } from "aws-amplify";
 import * as queries from "../../../graphql/queries";
-import { StyleSheet, Dimensions, View, Alert } from "react-native";
+import { StyleSheet, Dimensions, Linking, Alert } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import DoneeCard from "./DoneeCard";
 import Screen from "../../../components/common/Screen";
@@ -19,6 +19,7 @@ export default function Donate({ props }) {
   const [xOffset, setXoffSet] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const [donees, setDonees] = useState([]);
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
     async function getDonees() {
@@ -41,6 +42,11 @@ export default function Donate({ props }) {
         console.log(err);
       }
     }
+    async function getCurrentUser() {
+      let userInfo = await Auth.currentUserInfo();
+      setCurrentUser(await userInfo.username);
+    }
+    getCurrentUser();
     getDonees();
   }, []);
 
@@ -67,7 +73,8 @@ export default function Donate({ props }) {
   }
 
   function donate() {
-    console.log(index);
+    var donateUrl = `http://gratiphi.org/donate/${currentUser}/${donees[index].id}`;
+    Linking.openURL(donateUrl);
   }
 
   return (

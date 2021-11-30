@@ -1,5 +1,4 @@
 import React from "react";
-import { Auth } from "aws-amplify";
 import { FontAwesome5 } from "@expo/vector-icons";
 import AppButton from "./../../../components/common/AppButton";
 import { default as defaultStyle } from "../../../config/styles";
@@ -13,7 +12,7 @@ import {
   Modal,
   TouchableWithoutFeedback,
 } from "react-native";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development";
 import Moment from "moment";
 import colors from "./../../../config/colors";
 import Carousel from "react-native-snap-carousel";
@@ -22,7 +21,10 @@ import { Pagination } from "react-native-snap-carousel";
 export default function CompletedItemExpanded({ route }) {
   const [index, setIndex] = useState(0);
   const [shouldExpandImage, setShouldExpandImage] = useState(false);
-  const donation = route.params.donation;
+  const [donation, setDonations] = useState(route.params.donation);
+  const [userId, setUserId] = useState(route.params.userId);
+  console.log(donation);
+  const donateUrl = `http://gratiphi.org/donate/${userId}/${donation.donee.id}`;
   var photos = [];
   photos.push(donation.gratificationUrl);
   photos.push(donation.donee.profilePhotoUrl);

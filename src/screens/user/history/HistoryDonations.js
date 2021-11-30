@@ -22,6 +22,7 @@ export default function HistoryDonations({ navigation }) {
   const [completedDonations, setCompletedDonations] = useState([]);
   const [inProgressDonations, setInProgressDonations] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     async function getPreviousDonations() {
@@ -30,7 +31,7 @@ export default function HistoryDonations({ navigation }) {
         const response = await getDonations(currentUserId);
         setCompletedDonations(await response.completed);
         setInProgressDonations(await response.inProgress);
-
+        setUserId(currentUserId);
         if ((await response.completed.length) < 1) {
           setTabIndex(1);
         }
@@ -98,7 +99,9 @@ export default function HistoryDonations({ navigation }) {
     if (isLoading) {
       return <View></View>;
     }
-    return <CompletedItem navigation={navigation} donation={item} />;
+    return (
+      <CompletedItem navigation={navigation} donation={item} userId={userId} />
+    );
   };
 
   const handleTabsChange = (index) => {
