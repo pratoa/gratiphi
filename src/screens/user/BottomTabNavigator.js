@@ -103,7 +103,7 @@ function SettingsStackScreen({ navigation, updateAuthState }) {
 const BottomTabNavigator = (props) => {
   return (
     <BottomNavigator.Navigator
-      initialRouteName="Home"
+      initialRouteName="Donate"
       tabBarOptions={{
         showLabel: true,
         activeTintColor: colors.primary,
