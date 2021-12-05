@@ -8,7 +8,7 @@ import Screen from "../../../components/common/Screen";
 const SETTINGS_OPTIONS = [
   { title: "Account", screen: "SettingsAccount" },
   { title: "About Us", screen: "SettingsAboutUs" },
-  { title: "T&A", screen: "SettingsT&A" },
+  { title: "T&A", screen: "SettingsTandA" },
 ];
 
 export default function Settings({ navigation, updateAuthState }) {

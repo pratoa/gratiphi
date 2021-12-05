@@ -10,6 +10,8 @@ import Settings from "./settings/Settings";
 import colors from "../../config/colors";
 import { Dimensions } from "react-native";
 import SettingsAccount from "./settings/SettingsAccount";
+import SettingsTandA from "./settings/SettingsTandA";
+import SettingsAboutUs from "./settings/SettingsAboutUs";
 
 const BottomNavigator = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -107,6 +109,40 @@ function SettingsStackScreen({ navigation, updateAuthState }) {
         )}
         options={{
           headerTitle: "Account",
+          headerTintColor: colors.white,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            shadowOpacity: 0,
+          },
+        }}
+      />
+      <SettingsStack.Screen
+        name="SettingsTandA"
+        children={() => (
+          <SettingsTandA
+            navigation={navigation}
+            updateAuthState={updateAuthState}
+          />
+        )}
+        options={{
+          headerTitle: "Terms and Agreement",
+          headerTintColor: colors.white,
+          headerStyle: {
+            backgroundColor: colors.primary,
+            shadowOpacity: 0,
+          },
+        }}
+      />
+      <SettingsStack.Screen
+        name="SettingsAboutUs"
+        children={() => (
+          <SettingsAboutUs
+            navigation={navigation}
+            updateAuthState={updateAuthState}
+          />
+        )}
+        options={{
+          headerTitle: "About Us",
           headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,

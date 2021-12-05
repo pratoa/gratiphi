@@ -37,7 +37,6 @@ export default function SettingsAccount({ navigation, updateAuthState }) {
 
     if (Object.keys(attributesToUpdate).length > 0) {
       try {
-        console.log(user, attributesToUpdate);
         await Auth.updateUserAttributes(user, attributesToUpdate);
         getUser();
         alert("Successfully updated account");
