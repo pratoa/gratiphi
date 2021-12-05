@@ -19,6 +19,7 @@ export default function AppTextInput({ leftIcon, ...otherProps }) {
       <TextInput
         style={styles.input}
         placeholderTextColor={colors.grey}
+        autoCorrect={false}
         {...otherProps}
       />
     </View>
