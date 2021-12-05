@@ -2,6 +2,7 @@ import React from "react";
 
 import { Auth } from "aws-amplify";
 import { Button } from "react-native";
+import AppButton from "./AppButton";
 
 export default function SignOutButton({ updateAuthState, navigation }) {
   async function signOut() {
@@ -15,5 +16,5 @@ export default function SignOutButton({ updateAuthState, navigation }) {
     }
   }
 
-  return <Button title="Sign Out" onPress={signOut}></Button>;
+  return <AppButton title="Sign Out" onPress={signOut}></AppButton>;
 }
