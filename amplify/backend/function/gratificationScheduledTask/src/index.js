@@ -23,26 +23,18 @@ const s3 = new AWS.S3();
 const ses = new AWS.SES({ region: "us-east-1" });
 
 const getDonationsEligibleToProcess = gql`
-  query listDonations($filter: ModelDonationFilterInput) {
-    listDonations(filter: $filter) {
+  query eligibleDonations {
+    donationByGratificationId(gratificationId: "NONE") {
       items {
         id
-        userId
-        doneeId
         amount
-        isGratificationSent
-        gratificationPhoto
+        createdAt
         donee {
           id
           firstName
           lastName
           birthDate
           identifier
-          location {
-            id
-            name
-            identifier
-          }
           sponsor {
             id
             identifier
@@ -53,7 +45,16 @@ const getDonationsEligibleToProcess = gql`
           name
           email
         }
-        createdAt
+        location {
+          id
+          identifier
+        }
+        stripeTransactionId
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
+        }
       }
     }
   }
@@ -66,8 +67,9 @@ const updateDonationGraph = gql`
       userId
       doneeId
       amount
-      isGratificationSent
-      gratificationPhoto
+      gratificationId
+      stripeTransactionId
+      locationId
     }
   }
 `;
@@ -80,14 +82,17 @@ const getDonationByUserDoneeAndGratification = gql`
         userId
         doneeId
         amount
+        gratificationId
+        stripeTransactionId
+        locationId
       }
     }
   }
 `;
 
-const getGratificatioByUserDoneeAndGratification = gql`
-  query gratificationByUrl(gratificationUrl: String) {
-    gratificationByUrl(gratificationUrl: gratificationUrl) {
+const getGratificationByUrl = gql`
+  query getGratificationByUrl($url: String) {
+    gratificationByUrl(gratificationUrl: $url) {
       items {
         id
         gratificationUrl
@@ -107,25 +112,18 @@ exports.handler = async (event) => {
       },
       data: {
         query: print(getDonationsEligibleToProcess),
-        variables: {
-          filter: {
-            gratificationId: {
-              eq: "NONE",
-            },
-          },
-        },
       },
     });
-    var donations = graphqlData.data.data.listDonations.items;
+    var donations = graphqlData.data.data.donationByGratificationId.items;
 
     // Loop through each donation
     for (const donation of donations) {
       console.log("START OF PROCESSING FOR DONATIONID: ", donation.id);
-      //process donation if it has 5 days of being created
-      if (moment(donation.createdAt).add(5, "days") < moment()) {
-        //process each donation
-        await processDonation(donation);
-      }
+      //process donation if it has 3 days of being created
+      // if (moment(donation.createdAt).add(3, "days") < moment()) {
+      //process each donation
+      await processDonation(donation);
+      // }
       console.log("END OF PROCESSING FOR DONATIONID: ", donation.id);
     }
   } catch (err) {
@@ -135,8 +133,8 @@ exports.handler = async (event) => {
 
 async function processDonation(donation) {
   const sponsorIdentifier = donation.donee.sponsor.identifier;
-  const locationIdentifier = donation.donee.location.identifier;
-  const locationId = donation.donee.location.id;
+  const locationIdentifier = donation.location.identifier;
+  const locationId = donation.location.id;
   const doneeIdentifier = donation.donee.identifier;
   const doneeId = donation.donee.id;
   const userId = donation.user.id;
@@ -158,7 +156,7 @@ async function processDonation(donation) {
   var dates = getGratificationDates(gratifications);
   const lastDate = dates[0].toISOString().split("T")[0];
 
-  var imageUrl = getImageUrl(
+  var imagePath = getImagePrefix(
     sponsorIdentifier,
     locationIdentifier,
     locationId,
@@ -169,27 +167,31 @@ async function processDonation(donation) {
 
   // Check if there is a donation with the latest gratification photo
 
-  //Get gratificationId usando el gratificationPath
-  const gratification = await axios({
+  // Get gratificationId usando el gratificationPath
+  const gratificationResponse = await axios({
     url: API_ENDPOINT,
     method: "post",
     headers: {
       "x-api-key": API_KEY,
     },
     data: {
-      query: print(getDonationByUserDoneeAndGratification),
+      query: print(getGratificationByUrl),
       variables: {
-        gratificationUrl: imageUrl,
+        url: imagePath,
       },
     },
   });
+  var gratification =
+    gratificationResponse.data.data.gratificationByUrl.items[0];
+  console.log(gratification);
 
   // gratification.data?
   if (!gratification) {
-    throw err;
+    return;
   }
 
-  const graphqlData2 = await axios({
+  // get all donations for user by gratificationUrl
+  const donationsResponse = await axios({
     url: API_ENDPOINT,
     method: "post",
     headers: {
@@ -206,8 +208,7 @@ async function processDonation(donation) {
             eq: doneeId,
           },
           gratificationId: {
-            eq: gratification.data.data.gratificationByUrl.items
-              .gratificationId,
+            eq: gratification.id,
           },
         },
       },
@@ -215,19 +216,34 @@ async function processDonation(donation) {
   });
 
   // if there are prev donations with latest gratification, then don't send
-  if (graphqlData2.data.data.listDonation.items.length != 0) {
+  console.log(
+    "Donations Response: ",
+    donationsResponse.data.data.listDonations.items
+  );
+  if (donationsResponse.data.data.listDonations.items.length > 0) {
     console.log("No mandar foto");
     return;
   }
 
-  // send email
-  var email = await sendEmail(donation, imageUrl);
-  console.log("EMAIL: ", email);
+  try {
+    var listParams = {
+      Bucket: BUCKET_NAME,
+      Key: `public/${imagePath}`,
+    };
+    const presignedUrl = s3.getSignedUrl("getObject", listParams);
+    // send email
+    var email = await sendEmail(donation, presignedUrl);
+    console.log("EMAIL: ", email);
 
-  // update donation
-  // if (email.sucess){}
-  var updatedDonation = await updateDonation(donation, imageUrl);
-  console.log("UPDATED DONATION: ", updatedDonation);
+    // update donation
+    // if (email.messageId) {
+    var updatedDonation = await updateDonation(donation, gratification.id);
+    console.log("UPDATED DONATION: ", updatedDonation);
+    // }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 }
 
 function getImageUrl(
@@ -241,6 +257,16 @@ function getImageUrl(
   return `https://${BUCKET_NAME}.s3.amazonaws.com/public/${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
 }
 
+function getImagePrefix(
+  sponsorIdentifier,
+  locationIdentifier,
+  locationId,
+  doneeIdentifier,
+  doneeId,
+  date
+) {
+  return `${sponsorIdentifier}/${locationIdentifier}-${locationId}/${doneeIdentifier}-${doneeId}/${doneeIdentifier}_${date}.jpeg`;
+}
 function getGratificationDates(gratifications) {
   var dates = [];
   for (const grat of gratifications) {
@@ -267,6 +293,8 @@ async function updateDonation(donation, gratificationId) {
             userId: donation.userId,
             doneeId: donation.doneeId,
             amount: donation.amount,
+            stripeTransactionId: donation.stripeTransactionId,
+            locationId: donation.locationId,
             gratificationId: gratificationId,
           },
         },
@@ -300,7 +328,7 @@ async function sendEmail(donation, imageUrl) {
   // Create sendEmail params
   const params = {
     Destination: {
-      ToAddresses: [donation.user.email],
+      ToAddresses: ["prato.andres@gmail.com"],
     },
     Message: {
       Body: {

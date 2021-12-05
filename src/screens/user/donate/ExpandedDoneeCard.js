@@ -23,8 +23,7 @@ export default function ExpandedCard({ route }) {
     setCurrentUser(await userInfo.username);
   }
   const donee = route.params.item;
-  const donateUrl =
-    "http://gratiphi.org/donate/" + currentUser + "/" + donee.id;
+  const donateUrl = `http://gratiphi.org/donate/${currentUser}/${donee.id}`;
 
   const questions = [
     {

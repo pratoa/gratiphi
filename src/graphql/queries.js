@@ -47,6 +47,7 @@ export const listDonations = /* GraphQL */ `
         amount
         createdAt
         donee {
+          id
           firstName
           lastName
           birthDate

@@ -19,9 +19,11 @@ import moment from "moment";
 
 export default function HistoryDonations({ navigation }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingFirstTime, setIsLoadingFirstTime] = useState(false);
   const [completedDonations, setCompletedDonations] = useState([]);
   const [inProgressDonations, setInProgressDonations] = useState([]);
   const [tabIndex, setTabIndex] = useState(0);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     async function getPreviousDonations() {
@@ -30,14 +32,16 @@ export default function HistoryDonations({ navigation }) {
         const response = await getDonations(currentUserId);
         setCompletedDonations(await response.completed);
         setInProgressDonations(await response.inProgress);
-
+        setUserId(currentUserId);
         if ((await response.completed.length) < 1) {
           setTabIndex(1);
         }
         setIsLoading(false);
+        setIsLoadingFirstTime(false);
       }
     }
     setIsLoading(true);
+    setIsLoadingFirstTime(true);
     getPreviousDonations();
   }, []);
 
@@ -87,6 +91,14 @@ export default function HistoryDonations({ navigation }) {
     }
   }
 
+  async function onRefresh() {
+    setIsLoading(true);
+    var donations = await getDonations(userId);
+    setCompletedDonations(await donations.completed);
+    setInProgressDonations(await donations.inProgress);
+    setIsLoading(false);
+  }
+
   const renderInProgressItem = ({ item }) => {
     if (isLoading) {
       return <View></View>;
@@ -98,7 +110,9 @@ export default function HistoryDonations({ navigation }) {
     if (isLoading) {
       return <View></View>;
     }
-    return <CompletedItem navigation={navigation} donation={item} />;
+    return (
+      <CompletedItem navigation={navigation} donation={item} userId={userId} />
+    );
   };
 
   const handleTabsChange = (index) => {
@@ -122,7 +136,7 @@ export default function HistoryDonations({ navigation }) {
         paddingVertical={5}
         marginTop={0}
       />
-      {isLoading && <ActivityIndicator size="large" />}
+      {isLoadingFirstTime && <ActivityIndicator size="large" />}
       {tabIndex == 0 && completedDonations.length == 0 && (
         <View>
           <Text>
@@ -138,6 +152,8 @@ export default function HistoryDonations({ navigation }) {
             data={completedDonations}
             renderItem={renderCompletedItem}
             keyExtractor={(item) => item.id}
+            onRefresh={() => onRefresh()}
+            refreshing={isLoading}
           />
         </View>
       )}
@@ -156,6 +172,8 @@ export default function HistoryDonations({ navigation }) {
             data={inProgressDonations}
             renderItem={renderInProgressItem}
             keyExtractor={(item) => item.id}
+            onRefresh={() => onRefresh()}
+            refreshing={isLoading}
           />
         </View>
       )}
@@ -196,21 +214,11 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   subCardView: {
-    // height: 50,
-    // width: 50,
-    // borderRadius: 25,
-    // backgroundColor: colors.red,
-    // borderColor: colors.yellow,
-    // borderWidth: 1,
-    // borderStyle: "solid",
     alignItems: "center",
     justifyContent: "center",
   },
   item: {
     flex: 2,
-    // flex: 1,
-    // flexDirection: "row",
-    // marginTop: 5,
     backgroundColor: "red",
   },
   sectionTitle: {
@@ -223,7 +231,6 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 3,
-    // backgroundColor: "pink",
     marginLeft: 5,
   },
   itemButton: {

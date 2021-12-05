@@ -165,6 +165,10 @@ type Gratification
   createdAt: AWSDateTime!
 }
 
+type Query {
+  retrieveDonee(doneeId: String): String @function(name: "retrieveDonee-dev")
+}
+
 type Mutation {
   createPaymentIntent(email: String, userId: String, amount: Float): String
     @function(name: "createPaymentIntent-dev")

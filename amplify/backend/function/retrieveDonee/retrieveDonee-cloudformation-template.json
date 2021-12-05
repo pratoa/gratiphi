@@ -25,12 +25,6 @@
     "storagegratiproofBucketName": {
       "Type": "String",
       "Default": "storagegratiproofBucketName"
-    },
-    "deploymentBucketName": {
-      "Type": "String"
-    },
-    "s3Key": {
-      "Type": "String"
     }
   },
   "Conditions": {
@@ -55,12 +49,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "gratificationScheduledTask",
+            "retrieveDonee",
             {
               "Fn::Join": [
                 "",
                 [
-                  "gratificationScheduledTask",
+                  "retrieveDonee",
                   "-",
                   {
                     "Ref": "env"
@@ -89,32 +83,6 @@
             },
             "STORAGE_GRATIPROOF_BUCKETNAME": {
               "Ref": "storagegratiproofBucketName"
-            },
-            "API_GRATIPHIAPI_DONATIONSTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apigratiphiapiGraphQLAPIIdOutput}:GetAtt:DonationsTable:Name"
-              }
-            },
-            "API_GRATIPHIAPI_DONATIONSTABLE_ARN": {
-              "Fn::Join": [
-                "",
-                [
-                  "arn:aws:dynamodb:",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ":",
-                  {
-                    "Ref": "AWS::AccountId"
-                  },
-                  ":table/",
-                  {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apigratiphiapiGraphQLAPIIdOutput}:GetAtt:DonationsTable:Name"
-                    }
-                  }
-                ]
-              ]
             }
           }
         },
@@ -129,7 +97,7 @@
         "Timeout": "25",
         "Code": {
           "S3Bucket": "amplify-gratiphi-dev-114704-deployment",
-          "S3Key": "amplify-builds/gratificationScheduledTask-4b4f70534f4454684d7a-build.zip"
+          "S3Key": "amplify-builds/retrieveDonee-6358417837357a427836-build.zip"
         }
       }
     },
@@ -139,12 +107,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "gratiphiLambdaRoled957790c",
+            "gratiphiLambdaRoleacfe79ac",
             {
               "Fn::Join": [
                 "",
                 [
-                  "gratiphiLambdaRoled957790c",
+                  "gratiphiLambdaRoleacfe79ac",
                   "-",
                   {
                     "Ref": "env"
@@ -233,13 +201,8 @@
             {
               "Effect": "Allow",
               "Action": [
-                "appsync:Create*",
-                "appsync:StartSchemaCreation",
-                "appsync:GraphQL",
                 "appsync:Get*",
-                "appsync:List*",
-                "appsync:Update*",
-                "appsync:Delete*"
+                "appsync:List*"
               ],
               "Resource": [
                 {
@@ -267,10 +230,8 @@
             {
               "Effect": "Allow",
               "Action": [
-                "s3:PutObject",
                 "s3:GetObject",
-                "s3:ListBucket",
-                "s3:DeleteObject"
+                "s3:ListBucket"
               ],
               "Resource": [
                 {
@@ -282,68 +243,6 @@
                         "Ref": "storagegratiproofBucketName"
                       },
                       "/*"
-                    ]
-                  ]
-                }
-              ]
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:Put*",
-                "dynamodb:Create*",
-                "dynamodb:BatchWriteItem",
-                "dynamodb:Get*",
-                "dynamodb:BatchGetItem",
-                "dynamodb:List*",
-                "dynamodb:Describe*",
-                "dynamodb:Scan",
-                "dynamodb:Query",
-                "dynamodb:Update*",
-                "dynamodb:RestoreTable*",
-                "dynamodb:Delete*"
-              ],
-              "Resource": [
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apigratiphiapiGraphQLAPIIdOutput}:GetAtt:DonationsTable:Name"
-                        }
-                      }
-                    ]
-                  ]
-                },
-                {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:aws:dynamodb:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":",
-                      {
-                        "Ref": "AWS::AccountId"
-                      },
-                      ":table/",
-                      {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apigratiphiapiGraphQLAPIIdOutput}:GetAtt:DonationsTable:Name"
-                        }
-                      },
-                      "/index/*"
                     ]
                   ]
                 }

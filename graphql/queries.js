@@ -1,6 +1,11 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const retrieveDonee = /* GraphQL */ `
+  query RetrieveDonee($doneeId: String) {
+    retrieveDonee(doneeId: $doneeId)
+  }
+`;
 export const getSponsor = /* GraphQL */ `
   query GetSponsor($id: ID!) {
     getSponsor(id: $id) {

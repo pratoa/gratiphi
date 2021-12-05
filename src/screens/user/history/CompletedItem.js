@@ -11,11 +11,14 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { default as defaultStyle } from "../../../config/styles";
 import colors from "../../../config/colors";
 
-export default function CompletedItem({ navigation, donation }) {
+export default function CompletedItem({ navigation, donation, userId }) {
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        navigation.navigate("CompletedItemExpanded", { donation: donation });
+        navigation.navigate("CompletedItemExpanded", {
+          donation: donation,
+          userId: userId,
+        });
       }}
     >
       <View style={styles.mainCardView}>
