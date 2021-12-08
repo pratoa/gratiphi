@@ -19,6 +19,8 @@ export const onCreateSponsor = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
       donees {
         items {
           id
@@ -32,13 +34,12 @@ export const onCreateSponsor = /* GraphQL */ `
           gender
           sponsorId
           locationId
+          groups
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -60,6 +61,8 @@ export const onUpdateSponsor = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
       donees {
         items {
           id
@@ -73,13 +76,12 @@ export const onUpdateSponsor = /* GraphQL */ `
           gender
           sponsorId
           locationId
+          groups
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -101,6 +103,8 @@ export const onDeleteSponsor = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
       donees {
         items {
           id
@@ -114,13 +118,12 @@ export const onDeleteSponsor = /* GraphQL */ `
           gender
           sponsorId
           locationId
+          groups
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -139,29 +142,11 @@ export const onCreateLocation = /* GraphQL */ `
         locations {
           nextToken
         }
+        createdAt
+        updatedAt
         donees {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      donees {
-        items {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       donations {
         items {
@@ -191,6 +176,25 @@ export const onCreateLocation = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -209,29 +213,11 @@ export const onUpdateLocation = /* GraphQL */ `
         locations {
           nextToken
         }
+        createdAt
+        updatedAt
         donees {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      donees {
-        items {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       donations {
         items {
@@ -261,6 +247,25 @@ export const onUpdateLocation = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -279,29 +284,11 @@ export const onDeleteLocation = /* GraphQL */ `
         locations {
           nextToken
         }
+        createdAt
+        updatedAt
         donees {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      donees {
-        items {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       donations {
         items {
@@ -331,6 +318,25 @@ export const onDeleteLocation = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -418,291 +424,6 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreateDonee = /* GraphQL */ `
-  subscription OnCreateDonee {
-    onCreateDonee {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        donees {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateDonee = /* GraphQL */ `
-  subscription OnUpdateDonee {
-    onUpdateDonee {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        donees {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteDonee = /* GraphQL */ `
-  subscription OnDeleteDonee {
-    onDeleteDonee {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        donees {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateQuestion = /* GraphQL */ `
   subscription OnCreateQuestion {
     onCreateQuestion {
@@ -746,6 +467,8 @@ export const onCreateQuestionAnswer = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -783,11 +506,10 @@ export const onCreateQuestionAnswer = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -804,6 +526,8 @@ export const onUpdateQuestionAnswer = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -841,11 +565,10 @@ export const onUpdateQuestionAnswer = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -862,6 +585,8 @@ export const onDeleteQuestionAnswer = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -899,11 +624,10 @@ export const onDeleteQuestionAnswer = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -926,6 +650,73 @@ export const onCreateDonation = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      amount
+      stripeTransactionId
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      gratificationId
+      gratification {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -963,75 +754,10 @@ export const onCreateDonation = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      amount
-      stripeTransactionId
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      gratificationId
-      gratification {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1054,6 +780,73 @@ export const onUpdateDonation = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      amount
+      stripeTransactionId
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      gratificationId
+      gratification {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -1091,75 +884,10 @@ export const onUpdateDonation = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      amount
-      stripeTransactionId
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      gratificationId
-      gratification {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1182,6 +910,73 @@ export const onDeleteDonation = /* GraphQL */ `
         updatedAt
       }
       doneeId
+      amount
+      stripeTransactionId
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      gratificationId
+      gratification {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -1219,75 +1014,10 @@ export const onDeleteDonation = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      amount
-      stripeTransactionId
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      gratificationId
-      gratification {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1325,9 +1055,6 @@ export const onCreateGratification = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
         donations {
           nextToken
         }
@@ -1336,8 +1063,13 @@ export const onCreateGratification = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -1375,11 +1107,10 @@ export const onCreateGratification = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1417,9 +1148,6 @@ export const onUpdateGratification = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
         donations {
           nextToken
         }
@@ -1428,8 +1156,13 @@ export const onUpdateGratification = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -1467,11 +1200,10 @@ export const onUpdateGratification = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -1509,9 +1241,6 @@ export const onDeleteGratification = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
         donations {
           nextToken
         }
@@ -1520,8 +1249,13 @@ export const onDeleteGratification = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
       doneeId
+      createdAt
+      updatedAt
       donee {
         id
         firstName
@@ -1559,9 +1293,296 @@ export const onDeleteGratification = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
+    }
+  }
+`;
+export const onCreateDonee = /* GraphQL */ `
+  subscription OnCreateDonee {
+    onCreateDonee {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDonee = /* GraphQL */ `
+  subscription OnUpdateDonee {
+    onUpdateDonee {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDonee = /* GraphQL */ `
+  subscription OnDeleteDonee {
+    onDeleteDonee {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
       createdAt
       updatedAt
     }

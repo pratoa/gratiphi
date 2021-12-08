@@ -24,6 +24,8 @@ export const getSponsor = /* GraphQL */ `
         }
         nextToken
       }
+      createdAt
+      updatedAt
       donees {
         items {
           id
@@ -37,13 +39,12 @@ export const getSponsor = /* GraphQL */ `
           gender
           sponsorId
           locationId
+          groups
           createdAt
           updatedAt
         }
         nextToken
       }
-      createdAt
-      updatedAt
     }
   }
 `;
@@ -62,11 +63,11 @@ export const listSponsors = /* GraphQL */ `
         locations {
           nextToken
         }
+        createdAt
+        updatedAt
         donees {
           nextToken
         }
-        createdAt
-        updatedAt
       }
       nextToken
     }
@@ -87,29 +88,11 @@ export const getLocation = /* GraphQL */ `
         locations {
           nextToken
         }
+        createdAt
+        updatedAt
         donees {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      donees {
-        items {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        nextToken
       }
       donations {
         items {
@@ -139,6 +122,25 @@ export const getLocation = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      donees {
+        items {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
     }
   }
 `;
@@ -162,9 +164,6 @@ export const listLocations = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
         donations {
           nextToken
         }
@@ -173,6 +172,9 @@ export const listLocations = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
       nextToken
     }
@@ -230,32 +232,347 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getDonee = /* GraphQL */ `
-  query GetDonee($id: ID!) {
-    getDonee(id: $id) {
+export const getQuestion = /* GraphQL */ `
+  query GetQuestion($id: ID!) {
+    getQuestion(id: $id) {
       id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
+      question
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listQuestions = /* GraphQL */ `
+  query ListQuestions(
+    $filter: ModelQuestionFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
         id
-        name
-        logo
+        question
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getQuestionAnswer = /* GraphQL */ `
+  query GetQuestionAnswer($id: ID!) {
+    getQuestionAnswer(id: $id) {
+      id
+      answer
+      questionId
+      question {
+        id
+        question
+        createdAt
+        updatedAt
+      }
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
         identifier
-        locations {
+        gender
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
           nextToken
         }
-        donees {
+        questionAnswer {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        groups
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listQuestionAnswers = /* GraphQL */ `
+  query ListQuestionAnswers(
+    $filter: ModelQuestionAnswerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listQuestionAnswers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        answer
+        questionId
+        question {
+          id
+          question
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getDonation = /* GraphQL */ `
+  query GetDonation($id: ID!) {
+    getDonation(id: $id) {
+      id
+      userId
+      user {
+        id
+        name
+        lastName
+        dateOfBirth
+        email
+        stripeId
+        donations {
           nextToken
         }
         createdAt
         updatedAt
+      }
+      doneeId
+      amount
+      stripeTransactionId
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      gratificationId
+      gratification {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        groups
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listDonations = /* GraphQL */ `
+  query ListDonations(
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listDonations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        userId
+        user {
+          id
+          name
+          lastName
+          dateOfBirth
+          email
+          stripeId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        amount
+        stripeTransactionId
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getGratification = /* GraphQL */ `
+  query GetGratification($id: ID!) {
+    getGratification(id: $id) {
+      id
+      gratificationUrl
+      donationId
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       locationId
       location {
@@ -271,8 +588,139 @@ export const getDonee = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
         donees {
           nextToken
+        }
+      }
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        groups
+        createdAt
+        updatedAt
+      }
+    }
+  }
+`;
+export const listGratifications = /* GraphQL */ `
+  query ListGratifications(
+    $filter: ModelGratificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listGratifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const locationBySponsorId = /* GraphQL */ `
+  query LocationBySponsorId(
+    $sponsorId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelLocationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    locationBySponsorId(
+      sponsorId: $sponsorId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
         }
         donations {
           nextToken
@@ -282,34 +730,154 @@ export const getDonee = /* GraphQL */ `
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
-      donations {
-        items {
+      nextToken
+    }
+  }
+`;
+export const questionAnswerByQuestionId = /* GraphQL */ `
+  query QuestionAnswerByQuestionId(
+    $questionId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelQuestionAnswerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    questionAnswerByQuestionId(
+      questionId: $questionId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        answer
+        questionId
+        question {
           id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
+          question
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
           locationId
-          gratificationId
+          groups
           createdAt
           updatedAt
         }
-        nextToken
       }
-      questionAnswer {
-        items {
+      nextToken
+    }
+  }
+`;
+export const questionAnswerByDoneeId = /* GraphQL */ `
+  query QuestionAnswerByDoneeId(
+    $doneeId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelQuestionAnswerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    questionAnswerByDoneeId(
+      doneeId: $doneeId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        answer
+        questionId
+        question {
           id
-          answer
-          questionId
-          doneeId
+          question
           createdAt
           updatedAt
         }
-        nextToken
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
       }
-      gratifications {
-        items {
+      nextToken
+    }
+  }
+`;
+export const donationByUserId = /* GraphQL */ `
+  query DonationByUserId(
+    $userId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    donationByUserId(
+      userId: $userId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        user {
+          id
+          name
+          lastName
+          dateOfBirth
+          email
+          stripeId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        amount
+        stripeTransactionId
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        gratificationId
+        gratification {
           id
           gratificationUrl
           donationId
@@ -318,10 +886,412 @@ export const getDonee = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        nextToken
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
       }
-      createdAt
-      updatedAt
+      nextToken
+    }
+  }
+`;
+export const donationByDoneeId = /* GraphQL */ `
+  query DonationByDoneeId(
+    $doneeId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    donationByDoneeId(
+      doneeId: $doneeId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        user {
+          id
+          name
+          lastName
+          dateOfBirth
+          email
+          stripeId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        amount
+        stripeTransactionId
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const donationByLocationId = /* GraphQL */ `
+  query DonationByLocationId(
+    $locationId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    donationByLocationId(
+      locationId: $locationId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        user {
+          id
+          name
+          lastName
+          dateOfBirth
+          email
+          stripeId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        amount
+        stripeTransactionId
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const donationByGratificationId = /* GraphQL */ `
+  query DonationByGratificationId(
+    $gratificationId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelDonationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    donationByGratificationId(
+      gratificationId: $gratificationId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userId
+        user {
+          id
+          name
+          lastName
+          dateOfBirth
+          email
+          stripeId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        amount
+        stripeTransactionId
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        gratificationId
+        gratification {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const gratificationByLocation = /* GraphQL */ `
+  query GratificationByLocation(
+    $locationId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelGratificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gratificationByLocation(
+      locationId: $locationId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const gratificationByDoneeByDate = /* GraphQL */ `
+  query GratificationByDoneeByDate(
+    $doneeId: ID
+    $createdAt: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelGratificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gratificationByDoneeByDate(
+      doneeId: $doneeId
+      createdAt: $createdAt
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const gratificationByUrl = /* GraphQL */ `
+  query GratificationByUrl(
+    $gratificationUrl: String
+    $sortDirection: ModelSortDirection
+    $filter: ModelGratificationFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    gratificationByUrl(
+      gratificationUrl: $gratificationUrl
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        gratificationUrl
+        donationId
+        donations {
+          nextToken
+        }
+        locationId
+        location {
+          id
+          name
+          identifier
+          sponsorId
+          createdAt
+          updatedAt
+        }
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
     }
   }
 `;
@@ -369,6 +1339,7 @@ export const listDonees = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
@@ -376,192 +1347,33 @@ export const listDonees = /* GraphQL */ `
     }
   }
 `;
-export const getQuestion = /* GraphQL */ `
-  query GetQuestion($id: ID!) {
-    getQuestion(id: $id) {
+export const getDonee = /* GraphQL */ `
+  query GetDonee($id: ID!) {
+    getDonee(id: $id) {
       id
-      question
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listQuestions = /* GraphQL */ `
-  query ListQuestions(
-    $filter: ModelQuestionFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        question
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getQuestionAnswer = /* GraphQL */ `
-  query GetQuestionAnswer($id: ID!) {
-    getQuestionAnswer(id: $id) {
-      id
-      answer
-      questionId
-      question {
-        id
-        question
-        createdAt
-        updatedAt
-      }
-      doneeId
-      donee {
-        id
-        firstName
-        lastName
-        birthDate
-        smallBiography
-        fullBiography
-        profilePhoto
-        identifier
-        gender
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        questionAnswer {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listQuestionAnswers = /* GraphQL */ `
-  query ListQuestionAnswers(
-    $filter: ModelQuestionAnswerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listQuestionAnswers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        answer
-        questionId
-        question {
-          id
-          question
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getDonation = /* GraphQL */ `
-  query GetDonation($id: ID!) {
-    getDonation(id: $id) {
-      id
-      userId
-      user {
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
         id
         name
-        lastName
-        dateOfBirth
-        email
-        stripeId
-        donations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      doneeId
-      donee {
-        id
-        firstName
-        lastName
-        birthDate
-        smallBiography
-        fullBiography
-        profilePhoto
+        logo
         identifier
-        gender
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        questionAnswer {
-          nextToken
-        }
-        gratifications {
+        locations {
           nextToken
         }
         createdAt
         updatedAt
+        donees {
+          nextToken
+        }
       }
-      amount
-      stripeTransactionId
       locationId
       location {
         id
@@ -576,9 +1388,6 @@ export const getDonation = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
         donations {
           nextToken
         }
@@ -587,118 +1396,10 @@ export const getDonation = /* GraphQL */ `
         }
         createdAt
         updatedAt
-      }
-      gratificationId
-      gratification {
-        id
-        gratificationUrl
-        donationId
-        donations {
+        donees {
           nextToken
         }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
       }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listDonations = /* GraphQL */ `
-  query ListDonations(
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listDonations(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        userId
-        user {
-          id
-          name
-          lastName
-          dateOfBirth
-          email
-          stripeId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        amount
-        stripeTransactionId
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        gratificationId
-        gratification {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getGratification = /* GraphQL */ `
-  query GetGratification($id: ID!) {
-    getGratification(id: $id) {
-      id
-      gratificationUrl
-      donationId
       donations {
         items {
           id
@@ -713,165 +1414,32 @@ export const getGratification = /* GraphQL */ `
         }
         nextToken
       }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
+      questionAnswer {
+        items {
           id
-          name
-          logo
-          identifier
+          answer
+          questionId
+          doneeId
           createdAt
           updatedAt
         }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
-      doneeId
-      donee {
-        id
-        firstName
-        lastName
-        birthDate
-        smallBiography
-        fullBiography
-        profilePhoto
-        identifier
-        gender
-        sponsorId
-        sponsor {
+      gratifications {
+        items {
           id
-          name
-          logo
-          identifier
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
           createdAt
           updatedAt
         }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        questionAnswer {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
+      groups
       createdAt
       updatedAt
-    }
-  }
-`;
-export const listGratifications = /* GraphQL */ `
-  query ListGratifications(
-    $filter: ModelGratificationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listGratifications(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const locationBySponsorId = /* GraphQL */ `
-  query LocationBySponsorId(
-    $sponsorId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelLocationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    locationBySponsorId(
-      sponsorId: $sponsorId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donees {
-          nextToken
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
     }
   }
 `;
@@ -927,6 +1495,7 @@ export const doneeBySponsorId = /* GraphQL */ `
         gratifications {
           nextToken
         }
+        groups
         createdAt
         updatedAt
       }
@@ -986,554 +1555,7 @@ export const doneeByLocationId = /* GraphQL */ `
         gratifications {
           nextToken
         }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const questionAnswerByQuestionId = /* GraphQL */ `
-  query QuestionAnswerByQuestionId(
-    $questionId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelQuestionAnswerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    questionAnswerByQuestionId(
-      questionId: $questionId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        answer
-        questionId
-        question {
-          id
-          question
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const questionAnswerByDoneeId = /* GraphQL */ `
-  query QuestionAnswerByDoneeId(
-    $doneeId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelQuestionAnswerFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    questionAnswerByDoneeId(
-      doneeId: $doneeId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        answer
-        questionId
-        question {
-          id
-          question
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const donationByUserId = /* GraphQL */ `
-  query DonationByUserId(
-    $userId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    donationByUserId(
-      userId: $userId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        user {
-          id
-          name
-          lastName
-          dateOfBirth
-          email
-          stripeId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        amount
-        stripeTransactionId
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        gratificationId
-        gratification {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const donationByDoneeId = /* GraphQL */ `
-  query DonationByDoneeId(
-    $doneeId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    donationByDoneeId(
-      doneeId: $doneeId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        user {
-          id
-          name
-          lastName
-          dateOfBirth
-          email
-          stripeId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        amount
-        stripeTransactionId
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        gratificationId
-        gratification {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const donationByLocationId = /* GraphQL */ `
-  query DonationByLocationId(
-    $locationId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    donationByLocationId(
-      locationId: $locationId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        user {
-          id
-          name
-          lastName
-          dateOfBirth
-          email
-          stripeId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        amount
-        stripeTransactionId
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        gratificationId
-        gratification {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const donationByGratificationId = /* GraphQL */ `
-  query DonationByGratificationId(
-    $gratificationId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelDonationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    donationByGratificationId(
-      gratificationId: $gratificationId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        userId
-        user {
-          id
-          name
-          lastName
-          dateOfBirth
-          email
-          stripeId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        amount
-        stripeTransactionId
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        gratificationId
-        gratification {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gratificationByLocation = /* GraphQL */ `
-  query GratificationByLocation(
-    $locationId: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelGratificationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gratificationByLocation(
-      locationId: $locationId
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gratificationByDoneeByDate = /* GraphQL */ `
-  query GratificationByDoneeByDate(
-    $doneeId: ID
-    $createdAt: ModelStringKeyConditionInput
-    $sortDirection: ModelSortDirection
-    $filter: ModelGratificationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gratificationByDoneeByDate(
-      doneeId: $doneeId
-      createdAt: $createdAt
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const gratificationByUrl = /* GraphQL */ `
-  query GratificationByUrl(
-    $gratificationUrl: String
-    $sortDirection: ModelSortDirection
-    $filter: ModelGratificationFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    gratificationByUrl(
-      gratificationUrl: $gratificationUrl
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        gratificationUrl
-        donationId
-        donations {
-          nextToken
-        }
-        locationId
-        location {
-          id
-          name
-          identifier
-          sponsorId
-          createdAt
-          updatedAt
-        }
-        doneeId
-        donee {
-          id
-          firstName
-          lastName
-          birthDate
-          smallBiography
-          fullBiography
-          profilePhoto
-          identifier
-          gender
-          sponsorId
-          locationId
-          createdAt
-          updatedAt
-        }
+        groups
         createdAt
         updatedAt
       }

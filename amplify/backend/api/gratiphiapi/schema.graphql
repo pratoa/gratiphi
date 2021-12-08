@@ -50,7 +50,7 @@ type Donee
     fields: ["locationId"]
     queryField: "doneeByLocationId"
   )
-  @auth(rules: [{ allow: public }]) {
+  @auth(rules: [{ allow: groups, groupsField: "groups" }]) {
   id: ID!
   firstName: String!
   lastName: String!
@@ -70,6 +70,7 @@ type Donee
     @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
   gratifications: [Gratification]
     @connection(keyName: "gratificationByDoneeByDate", fields: ["id"])
+  groups: [String]
 }
 
 type Question @model @auth(rules: [{ allow: public }]) {
