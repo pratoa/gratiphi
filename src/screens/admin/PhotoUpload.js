@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import Screen from "../../components/common/Screen";
-import SignOutButton from "../../components/common/SignOutButton";
+import AdminSignOutButton from "../../components/common/AdminSignOutButton";
 import { default as defaultStyle } from "../../config/styles";
 import { AppImagePicker } from "../../components/common/AppImagePicker";
 
@@ -12,7 +12,7 @@ export default function PhotoUpload({ route, navigation, updateAuthState }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SignOutButton
+        <AdminSignOutButton
           updateAuthState={updateAuthState}
           navigation={navigation}
         />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList } from "react-native";
 import { API, Storage } from "aws-amplify";
 import Screen from "../../components/common/Screen";
-import SignOutButton from "../../components/common/SignOutButton";
+import AdminSignOutButton from "../../components/common/AdminSignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
 import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
@@ -31,7 +31,7 @@ export default function DoneesAtLocation({
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SignOutButton
+        <AdminSignOutButton
           updateAuthState={updateAuthState}
           navigation={navigation}
         />
