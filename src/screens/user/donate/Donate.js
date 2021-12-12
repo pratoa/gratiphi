@@ -22,11 +22,18 @@ export default function Donate({ props }) {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
+    async function getCurrentUser() {
+      let userInfo = await Auth.currentSession();
+      setCurrentUser(await userInfo.accessToken.username);
+    }
     async function getDonees() {
       //TO-DO: better handling of error when api fails
 
       try {
-        const response = await API.graphql({ query: queries.listDonees });
+        const response = await API.graphql({
+          query: queries.listDonees,
+          authMode: "AMAZON_COGNITO_USER_POOLS",
+        });
         const listOfDonees = await response.data.listDonees.items;
 
         for (const donee of listOfDonees) {
@@ -41,10 +48,6 @@ export default function Donate({ props }) {
         );
         console.log(err);
       }
-    }
-    async function getCurrentUser() {
-      let userInfo = await Auth.currentUserInfo();
-      setCurrentUser(await userInfo.username);
     }
     getCurrentUser();
     getDonees();

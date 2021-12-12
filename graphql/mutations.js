@@ -460,6 +460,303 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
+export const createDonee = /* GraphQL */ `
+  mutation CreateDonee(
+    $input: CreateDoneeInput!
+    $condition: ModelDoneeConditionInput
+  ) {
+    createDonee(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDonee = /* GraphQL */ `
+  mutation UpdateDonee(
+    $input: UpdateDoneeInput!
+    $condition: ModelDoneeConditionInput
+  ) {
+    updateDonee(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDonee = /* GraphQL */ `
+  mutation DeleteDonee(
+    $input: DeleteDoneeInput!
+    $condition: ModelDoneeConditionInput
+  ) {
+    deleteDonee(input: $input, condition: $condition) {
+      id
+      firstName
+      lastName
+      birthDate
+      smallBiography
+      fullBiography
+      profilePhoto
+      identifier
+      gender
+      sponsorId
+      sponsor {
+        id
+        name
+        logo
+        identifier
+        locations {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      locationId
+      location {
+        id
+        name
+        identifier
+        sponsorId
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+        createdAt
+        updatedAt
+        donees {
+          nextToken
+        }
+      }
+      donations {
+        items {
+          id
+          userId
+          doneeId
+          amount
+          stripeTransactionId
+          locationId
+          gratificationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      questionAnswer {
+        items {
+          id
+          answer
+          questionId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      gratifications {
+        items {
+          id
+          gratificationUrl
+          donationId
+          locationId
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      groups
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createQuestion = /* GraphQL */ `
   mutation CreateQuestion(
     $input: CreateQuestionInput!
@@ -1369,303 +1666,6 @@ export const deleteGratification = /* GraphQL */ `
         createdAt
         updatedAt
       }
-    }
-  }
-`;
-export const createDonee = /* GraphQL */ `
-  mutation CreateDonee(
-    $input: CreateDoneeInput!
-    $condition: ModelDoneeConditionInput
-  ) {
-    createDonee(input: $input, condition: $condition) {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groups
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateDonee = /* GraphQL */ `
-  mutation UpdateDonee(
-    $input: UpdateDoneeInput!
-    $condition: ModelDoneeConditionInput
-  ) {
-    updateDonee(input: $input, condition: $condition) {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groups
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteDonee = /* GraphQL */ `
-  mutation DeleteDonee(
-    $input: DeleteDoneeInput!
-    $condition: ModelDoneeConditionInput
-  ) {
-    deleteDonee(input: $input, condition: $condition) {
-      id
-      firstName
-      lastName
-      birthDate
-      smallBiography
-      fullBiography
-      profilePhoto
-      identifier
-      gender
-      sponsorId
-      sponsor {
-        id
-        name
-        logo
-        identifier
-        locations {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      locationId
-      location {
-        id
-        name
-        identifier
-        sponsorId
-        sponsor {
-          id
-          name
-          logo
-          identifier
-          createdAt
-          updatedAt
-        }
-        donations {
-          nextToken
-        }
-        gratifications {
-          nextToken
-        }
-        createdAt
-        updatedAt
-        donees {
-          nextToken
-        }
-      }
-      donations {
-        items {
-          id
-          userId
-          doneeId
-          amount
-          stripeTransactionId
-          locationId
-          gratificationId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      questionAnswer {
-        items {
-          id
-          answer
-          questionId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      gratifications {
-        items {
-          id
-          gratificationUrl
-          donationId
-          locationId
-          doneeId
-          createdAt
-          updatedAt
-        }
-        nextToken
-      }
-      groups
-      createdAt
-      updatedAt
     }
   }
 `;

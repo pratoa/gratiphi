@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList } from "react-native";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import Screen from "../../components/common/Screen";
 import SignOutButton from "../../components/common/SignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
@@ -48,6 +48,7 @@ export default function Admin({ navigation, updateAuthState }) {
   useEffect(() => {
     async function getDoneesByLocation() {
       try {
+        console.log(await Auth.currentAuthenticatedUser());
         const response = await API.graphql({
           query: customQueries.getLocationForSponsor,
           variables: {
