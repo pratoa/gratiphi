@@ -48,7 +48,6 @@ export default function Admin({ navigation, updateAuthState }) {
   useEffect(() => {
     async function getDoneesByLocation() {
       try {
-        console.log(await Auth.currentAuthenticatedUser());
         const response = await API.graphql({
           query: customQueries.getLocationForSponsor,
           variables: {

@@ -32,7 +32,7 @@
           "defaultAuthentication": {
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7,
+              "apiKeyExpirationDays": 365,
               "description": "gratiphiAPIKey"
             }
           },
@@ -75,9 +75,7 @@
         {
           "category": "auth",
           "resourceName": "gratiphi02ff5042",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         },
         {
           "category": "api",
@@ -107,9 +105,7 @@
         {
           "category": "storage",
           "resourceName": "gratiproof",
-          "attributes": [
-            "BucketName"
-          ]
+          "attributes": ["BucketName"]
         }
       ]
     },
@@ -130,9 +126,7 @@
         {
           "category": "storage",
           "resourceName": "gratiproof",
-          "attributes": [
-            "BucketName"
-          ]
+          "attributes": ["BucketName"]
         }
       ]
     }
