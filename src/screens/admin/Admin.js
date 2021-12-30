@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList } from "react-native";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import Screen from "../../components/common/Screen";
-import SignOutButton from "../../components/common/SignOutButton";
+import AdminSignOutButton from "../../components/common/AdminSignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
 import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
@@ -37,7 +37,7 @@ export default function Admin({ navigation, updateAuthState }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SignOutButton
+        <AdminSignOutButton
           updateAuthState={updateAuthState}
           navigation={navigation}
         />
@@ -53,6 +53,7 @@ export default function Admin({ navigation, updateAuthState }) {
           variables: {
             filter: { sponsorId: { eq: ALIMENTA_SPONSOR_ID } },
           },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         var listOfLocations = await response.data.listLocations.items;
         setLocations(setGratiphicationValue(listOfLocations));

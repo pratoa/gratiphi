@@ -23,7 +23,6 @@ export default function CompletedItemExpanded({ route }) {
   const [shouldExpandImage, setShouldExpandImage] = useState(false);
   const [donation, setDonations] = useState(route.params.donation);
   const [userId, setUserId] = useState(route.params.userId);
-  console.log(donation);
   const donateUrl = `http://gratiphi.org/donate/${userId}/${donation.donee.id}`;
   var photos = [];
   photos.push(donation.gratificationUrl);
@@ -31,14 +30,10 @@ export default function CompletedItemExpanded({ route }) {
 
   function renderItem({ item, index }) {
     return (
-      <TouchableWithoutFeedback onPress={() => expandImage()}>
+      <TouchableWithoutFeedback>
         <Image source={{ uri: item }} style={styles.doneeImage} />
       </TouchableWithoutFeedback>
     );
-  }
-
-  function expandImage() {
-    setShouldExpandImage(true);
   }
 
   return (

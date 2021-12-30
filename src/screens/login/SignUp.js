@@ -90,7 +90,10 @@ export default function SignUp({ navigation }) {
       });
       console.log(user);
       console.log("Sign-up Confirmed");
-      navigation.navigate("ConfirmationSignUp", { email: email });
+      navigation.navigate("ConfirmationSignUp", {
+        email: email,
+        password: password,
+      });
     } catch (err) {
       console.log("Error signing up...", err);
     }

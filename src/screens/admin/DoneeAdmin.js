@@ -3,7 +3,7 @@ import { StyleSheet, Text, FlatList, Image, Modal, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { API, graphqlOperation, Storage } from "aws-amplify";
 import Screen from "../../components/common/Screen";
-import SignOutButton from "../../components/common/SignOutButton";
+import AdminSignOutButton from "../../components/common/AdminSignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
 import ListItemComponent from "../../components/common/ListItemComponent";
 import * as customQueries from "../../../graphql/customQueries";
@@ -23,7 +23,7 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <SignOutButton
+        <AdminSignOutButton
           updateAuthState={updateAuthState}
           navigation={navigation}
         />
@@ -39,6 +39,7 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
             graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
               doneeId: donee.id,
               sortDirection: "DESC",
+              authMode: "AMAZON_COGNITO_USER_POOLS",
             })
           );
           var gratificationHistory = await response.data

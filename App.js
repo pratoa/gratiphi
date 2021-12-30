@@ -151,18 +151,25 @@ const AuthenticationStackScreen = (props) => {
       ></AuthenticationStack.Screen>
       <AuthenticationStack.Screen
         name="ConfirmationSignUp"
-        component={ConfirmSignUp}
         options={{
           headerShown: true,
           headerTitle: "Confirm Account",
-          headerBackTitle: "Back",
           headerTintColor: colors.white,
           headerStyle: {
             backgroundColor: colors.primary,
             shadowOpacity: 0,
           },
+          headerLeft: null,
         }}
-      ></AuthenticationStack.Screen>
+      >
+        {(screenProps) => (
+          <ConfirmSignUp
+            {...screenProps}
+            updateAuthState={props.updateAuthState}
+            updateUserGroup={props.updateUserGroup}
+          />
+        )}
+      </AuthenticationStack.Screen>
       <AuthenticationStack.Screen
         name="ForgotPassword"
         component={ForgotPassword}

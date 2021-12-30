@@ -33,12 +33,15 @@
             "authenticationType": "API_KEY",
             "apiKeyConfig": {
               "apiKeyExpirationDays": 365,
-              "description": ""
+              "description": "gratiphiAPIKey"
             }
           },
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AWS_IAM"
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authgratiphi02ff5042"
+              }
             }
           ]
         }
@@ -72,9 +75,7 @@
         {
           "category": "auth",
           "resourceName": "gratiphi02ff5042",
-          "attributes": [
-            "UserPoolId"
-          ]
+          "attributes": ["UserPoolId"]
         },
         {
           "category": "api",
@@ -104,9 +105,7 @@
         {
           "category": "storage",
           "resourceName": "gratiproof",
-          "attributes": [
-            "BucketName"
-          ]
+          "attributes": ["BucketName"]
         }
       ]
     },
@@ -127,9 +126,7 @@
         {
           "category": "storage",
           "resourceName": "gratiproof",
-          "attributes": [
-            "BucketName"
-          ]
+          "attributes": ["BucketName"]
         }
       ]
     }
