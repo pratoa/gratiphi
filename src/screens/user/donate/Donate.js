@@ -32,7 +32,6 @@ export default function Donate({ props }) {
       try {
         const response = await API.graphql({
           query: queries.listDonees,
-          authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         const listOfDonees = await response.data.listDonees.items;
 

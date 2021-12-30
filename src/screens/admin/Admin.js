@@ -54,6 +54,7 @@ export default function Admin({ navigation, updateAuthState }) {
           variables: {
             filter: { sponsorId: { eq: ALIMENTA_SPONSOR_ID } },
           },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         var listOfLocations = await response.data.listLocations.items;
         setLocations(setGratiphicationValue(listOfLocations));

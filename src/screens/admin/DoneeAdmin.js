@@ -39,6 +39,7 @@ export default function DoneeAdmin({ route, navigation, updateAuthState }) {
             graphqlOperation(customQueries.getGratificationHistoryByDoneeId, {
               doneeId: donee.id,
               sortDirection: "DESC",
+              authMode: "AMAZON_COGNITO_USER_POOLS",
             })
           );
           var gratificationHistory = await response.data
