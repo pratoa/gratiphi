@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, FlatList } from "react-native";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import Screen from "../../components/common/Screen";
 import AdminSignOutButton from "../../components/common/AdminSignOutButton";
 import ListItemSeparator from "../../components/common/ListItemSeparator";
@@ -53,6 +53,7 @@ export default function Admin({ navigation, updateAuthState }) {
           variables: {
             filter: { sponsorId: { eq: ALIMENTA_SPONSOR_ID } },
           },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         var listOfLocations = await response.data.listLocations.items;
         setLocations(setGratiphicationValue(listOfLocations));

@@ -45,6 +45,7 @@ export default function DoneesAtLocation({
         const response = await API.graphql({
           query: customQueries.getDoneesAtLocation,
           variables: { id: locationId },
+          authMode: "AMAZON_COGNITO_USER_POOLS",
         });
         var listOfDonees = await response.data.getLocation.donees.items;
         for (const donee of listOfDonees) {

@@ -1,4 +1,15 @@
-type Sponsor @model @auth(rules: [{ allow: public }]) {
+type Sponsor
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   logo: String
@@ -15,7 +26,21 @@ type Location
     fields: ["sponsorId"]
     queryField: "locationBySponsorId"
   )
-  @auth(rules: [{ allow: public }]) {
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiUser"]
+        operations: [read, create, update]
+      }
+      {
+        allow: groups
+        groupsField: "groups"
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   identifier: String!
@@ -26,9 +51,21 @@ type Location
     @connection(keyName: "donationByLocationId", fields: ["id"])
   gratifications: [Gratification]
     @connection(keyName: "gratificationByLocation", fields: ["id"])
+  groups: [String]!
 }
 
-type User @model @auth(rules: [{ allow: public }]) {
+type User
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   lastName: String!
@@ -50,7 +87,16 @@ type Donee
     fields: ["locationId"]
     queryField: "doneeByLocationId"
   )
-  @auth(rules: [{ allow: public }]) {
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groupsField: "groups"
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   firstName: String!
   lastName: String!
@@ -70,9 +116,21 @@ type Donee
     @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
   gratifications: [Gratification]
     @connection(keyName: "gratificationByDoneeByDate", fields: ["id"])
+  groups: [String]!
 }
 
-type Question @model @auth(rules: [{ allow: public }]) {
+type Question
+  @model
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   question: String!
 }
@@ -89,7 +147,16 @@ type QuestionAnswer
     fields: ["doneeId"]
     queryField: "questionAnswerByDoneeId"
   )
-  @auth(rules: [{ allow: public }]) {
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   answer: String!
   questionId: ID!
@@ -121,7 +188,16 @@ type Donation
     queryField: "donationByGratificationId"
   )
   # @key(fields: ["locationId", "gratification"])
-  @auth(rules: [{ allow: public }]) {
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   userId: ID!
   user: User @connection(fields: ["userId"])
@@ -152,7 +228,16 @@ type Gratification
     fields: ["gratificationUrl"]
     queryField: "gratificationByUrl"
   )
-  @auth(rules: [{ allow: public }]) {
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
   id: ID!
   gratificationUrl: String
   donationId: ID

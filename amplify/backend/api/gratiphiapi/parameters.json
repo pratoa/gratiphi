@@ -1,5 +1,11 @@
 {
     "AppSyncApiName": "gratiphiapi",
     "DynamoDBBillingMode": "PAY_PER_REQUEST",
-    "DynamoDBEnableServerSideEncryption": false
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authgratiphi02ff5042",
+            "Outputs.UserPoolId"
+        ]
+    }
 }
