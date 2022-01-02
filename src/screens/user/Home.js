@@ -135,22 +135,6 @@ export default function Home() {
         </ImageBackground>
       </View>
     );
-
-    // if (item.image) {
-    //   return (
-    //     <View style={styles.itemContainer}>
-    //       <Image source={item.image} style={styles.image} />
-    //       <Text style={styles.itemTitle}>{item.title}</Text>
-    //     </View>
-    //   );
-    // }
-
-    // return (
-    //   <View style={styles.itemContainer}>
-    //     <Text style={styles.itemLabel}>{item.title}</Text>
-    //     <Text style={styles.itemLabel}>{item.message}</Text>
-    //   </View>
-    // );
   }
 
   return (
