@@ -65,7 +65,7 @@ export default function ExpandedCard({ route }) {
                   size={defaultStyle.SCREEN_WIDTH * 0.045}
                   color={colors.grey}
                 />
-                <Text style={styles.infoText}>{item.location.name}</Text>
+                <Text style={styles.infoText}>{item.location.country}</Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <FontAwesome5

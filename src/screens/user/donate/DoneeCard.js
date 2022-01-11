@@ -50,7 +50,7 @@ function DoneeCard({ navigation, item }) {
                 size={Math.round(SCREEN_WIDTH * 0.03)}
                 color={colors.white}
               />
-              <Text style={styles.doneeLocation}>{item.location.name}</Text>
+              <Text style={styles.doneeLocation}>{item.location.country}</Text>
             </View>
             <Text style={styles.doneeSmallBiography}>
               {item.smallBiography}

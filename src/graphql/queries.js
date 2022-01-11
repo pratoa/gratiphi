@@ -19,6 +19,7 @@ export const listDonees = /* GraphQL */ `
         location {
           id
           name
+          country
         }
         questionAnswer {
           items {

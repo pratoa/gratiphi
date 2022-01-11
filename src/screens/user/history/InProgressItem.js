@@ -42,7 +42,7 @@ export default function InProgressItem(donation) {
                 textTransform: "capitalize",
               }}
             >
-              {donation.item.donee.firstName} {donation.item.donee.lastName}
+              {donation.item.donee.firstName}
             </Text>
             <View
               style={{

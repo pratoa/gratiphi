@@ -96,9 +96,7 @@ export default function CompletedItemExpanded({ route }) {
             </Text>
           </View>
 
-          <Text style={styles.doneeName}>
-            {donation.donee.firstName} {donation.donee.lastName}
-          </Text>
+          <Text style={styles.doneeName}>{donation.donee.firstName}</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <FontAwesome5
               name={"map-marker-alt"}

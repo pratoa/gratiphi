@@ -54,7 +54,7 @@ export default function CompletedItem({ navigation, donation, userId }) {
                 textTransform: "capitalize",
               }}
             >
-              {donation.donee.firstName} {donation.donee.lastName}
+              {donation.donee.firstName}
             </Text>
             <View
               style={{

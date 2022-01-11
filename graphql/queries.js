@@ -45,6 +45,7 @@ export const getSponsor = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -85,6 +86,7 @@ export const listLocations = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -117,6 +119,7 @@ export const getLocation = /* GraphQL */ `
       id
       name
       identifier
+      country
       sponsorId
       groups
       createdAt
@@ -202,6 +205,7 @@ export const locationBySponsorId = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -314,6 +318,7 @@ export const listDonees = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -368,6 +373,7 @@ export const getDonee = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -472,6 +478,7 @@ export const doneeBySponsorId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -533,6 +540,7 @@ export const doneeByLocationId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -615,6 +623,7 @@ export const getQuestionAnswer = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -794,6 +803,7 @@ export const getDonation = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -856,6 +866,7 @@ export const getDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -883,6 +894,7 @@ export const getDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -932,6 +944,7 @@ export const listDonations = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1006,6 +1019,7 @@ export const donationByUserId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1080,6 +1094,7 @@ export const donationByDoneeId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1154,6 +1169,7 @@ export const donationByLocationId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1228,6 +1244,7 @@ export const donationByGratificationId = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1292,6 +1309,7 @@ export const listGratifications = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1335,6 +1353,7 @@ export const getGratification = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1384,6 +1403,7 @@ export const getGratification = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1443,6 +1463,7 @@ export const gratificationByLocation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1501,6 +1522,7 @@ export const gratificationByDoneeByDate = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1557,6 +1579,7 @@ export const gratificationByUrl = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt

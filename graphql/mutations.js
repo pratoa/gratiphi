@@ -27,6 +27,7 @@ export const deleteSponsor = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -65,6 +66,7 @@ export const deleteLocation = /* GraphQL */ `
       id
       name
       identifier
+      country
       sponsorId
       groups
       createdAt
@@ -200,6 +202,7 @@ export const deleteDonee = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -314,6 +317,7 @@ export const deleteQuestionAnswer = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -357,6 +361,7 @@ export const deleteDonation = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -419,6 +424,7 @@ export const deleteDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -446,6 +452,7 @@ export const deleteDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -491,6 +498,7 @@ export const deleteGratification = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -540,6 +548,7 @@ export const deleteGratification = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -589,6 +598,7 @@ export const createSponsor = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -635,6 +645,7 @@ export const updateSponsor = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -673,6 +684,7 @@ export const createLocation = /* GraphQL */ `
       id
       name
       identifier
+      country
       sponsorId
       groups
       createdAt
@@ -748,6 +760,7 @@ export const updateLocation = /* GraphQL */ `
       id
       name
       identifier
+      country
       sponsorId
       groups
       createdAt
@@ -914,6 +927,7 @@ export const createDonee = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1014,6 +1028,7 @@ export const updateDonee = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1141,6 +1156,7 @@ export const createQuestionAnswer = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1204,6 +1220,7 @@ export const updateQuestionAnswer = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1247,6 +1264,7 @@ export const createDonation = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1309,6 +1327,7 @@ export const createDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1336,6 +1355,7 @@ export const createDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1383,6 +1403,7 @@ export const updateDonation = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1445,6 +1466,7 @@ export const updateDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1472,6 +1494,7 @@ export const updateDonation = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1517,6 +1540,7 @@ export const createGratification = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1566,6 +1590,7 @@ export const createGratification = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt
@@ -1615,6 +1640,7 @@ export const updateGratification = /* GraphQL */ `
         id
         name
         identifier
+        country
         sponsorId
         groups
         createdAt
@@ -1664,6 +1690,7 @@ export const updateGratification = /* GraphQL */ `
           id
           name
           identifier
+          country
           sponsorId
           groups
           createdAt

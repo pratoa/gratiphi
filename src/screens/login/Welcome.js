@@ -18,7 +18,7 @@ export default function Welcome({
       if (userGroup === "gratiphiUser") {
         navigation.replace("Main");
       }
-      if (userGroup === "gratiphiAdmin") {
+      if (userGroup === "gratiphiAdmin" || userGroup === "alimentaSuperAdmin") {
         navigation.replace("Admin");
       }
     }
