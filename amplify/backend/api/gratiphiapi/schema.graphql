@@ -91,6 +91,7 @@ type Donee
   @auth(
     rules: [
       { allow: public }
+      { allow: groups, groups: ["gratiphiUser"], operations: [read] }
       {
         allow: groups
         groupsField: "groups"

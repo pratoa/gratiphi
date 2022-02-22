@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Constants from "expo-constants";
 
 import {
   StatusBar,
@@ -12,51 +11,21 @@ import {
   TouchableWithoutFeedback,
   Modal,
   Platform,
-  ScrollView,
+  TouchableOpacity,
   ImageBackground,
   SafeAreaView,
+  Button,
 } from "react-native";
-import Carousel from "react-native-snap-carousel";
 import colors from "../../config/colors";
 import AppButton from "../../components/common/AppButton";
+import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
-const ITEM_WIDTH = Math.round(SCREEN_WIDTH * 0.8);
-const DATA = [];
+const COST_PER_MEAL = 0.6;
 const testImage = require("../../../assets/images/delta2.jpeg");
-class InformationItem {
-  constructor(title, message, image, type) {
-    this.title = title;
-    this.message = message;
-    this.image = image;
-    this.type = type;
-  }
-}
 const alimentaLogo = require("../../../assets/images/alimentaLogo.png");
-const comida = require("../../../assets/images/comida_logo.png");
-const item1 = new InformationItem(
-  "1 plate of food = 0.6 USD",
-  "Feed a child for 1 month: 12 USD",
-  comida,
-  "image"
-);
-var item2 = {
-  title: "+ 907",
-  message: "Volunteer mothers",
-};
-var item3 = {
-  title: "+ 907",
-  message: "Volunteer mothers",
-};
-var item4 = {
-  title: "+ 907",
-  message: "Volunteer mothers",
-};
-DATA.push(item1);
-DATA.push(item2);
-DATA.push(item3);
-DATA.push(item4);
+const alimentaRaya = require("../../../assets/images/Alimenta-Raya.jpg");
 
 const programs = [
   {
@@ -114,27 +83,21 @@ const ourWork = {
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
-  const [index, setIndex] = useState(0);
   const [modalInfo, setModalInfo] = useState({
     title: "",
     description: "",
     image: null,
   });
-  function renderItem({ item, index }) {
-    return (
-      <View style={styles.itemContainer}>
-        <ImageBackground
-          source={testImage}
-          style={styles.backgroundImage}
-          imageStyle={{ borderRadius: 20, opacity: 0.5 }}
-        >
-          <View style={styles.itemWrapper}>
-            <Text style={styles.itemLabel}>+936</Text>
-          </View>
-          <Text style={styles.itemTitle}>Volunteer Mothers</Text>
-        </ImageBackground>
-      </View>
-    );
+  const [numberOfMeals, setNumberOfMeals] = useState(1);
+
+  function subtractNumerOfMeals() {
+    if (numberOfMeals > 1) {
+      setNumberOfMeals(numberOfMeals - 1);
+    }
+  }
+
+  function addNumerOfMeals() {
+    setNumberOfMeals(numberOfMeals + 1);
   }
 
   return (
@@ -147,14 +110,36 @@ export default function Home() {
       >
         <FlatList
           ListHeaderComponent={
-            <>
-              <Text style={styles.sectionTitle}>{ourMission.title}</Text>
-              <View style={styles.firstContainer}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ImageBackground
+                source={alimentaRaya}
+                style={styles.rayaStyle}
+                imageStyle={{
+                  resizeMode: "cover",
+                }}
+              >
+                <Text style={styles.sectionTitle}>{ourMission.title}</Text>
+              </ImageBackground>
+              <View>
                 <Text style={styles.missionText}>{ourMission.description}</Text>
               </View>
 
-              <Text style={styles.sectionTitle}>Our Programs</Text>
-            </>
+              <ImageBackground
+                source={alimentaRaya}
+                style={styles.rayaStyle}
+                imageStyle={{
+                  resizeMode: "cover",
+                }}
+              >
+                <Text style={styles.sectionTitle}>Our Programs</Text>
+              </ImageBackground>
+            </View>
           }
           scrollEnabled={true}
           data={programs}
@@ -183,28 +168,64 @@ export default function Home() {
             </TouchableWithoutFeedback>
           )}
           ListFooterComponent={
-            <>
-              <Text style={styles.sectionTitle}>Statistics</Text>
-              <View style={styles.thirdContainer}>
-                <Carousel
-                  data={DATA}
-                  renderItem={renderItem}
-                  sliderWidth={SCREEN_WIDTH}
-                  itemWidth={ITEM_WIDTH}
-                  layout={"default"}
-                  contentContainerCustomStyle={styles.carouselContainer}
-                  onSnapToItem={(index) => setIndex(index)}
-                  loop={true}
-                  autoplay={true}
-                  autoplayDelay={1000}
-                  autoplayInterval={3000}
-                />
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ImageBackground
+                source={alimentaRaya}
+                style={styles.rayaStyle}
+                imageStyle={{
+                  resizeMode: "cover",
+                }}
+              >
+                <Text style={styles.sectionTitle}>Meal Calculator</Text>
+              </ImageBackground>
+              <View style={styles.mealCalculator}>
+                <View style={styles.mealStats}>
+                  <View style={styles.mealStat}>
+                    <Text style={styles.mealNumber}>{numberOfMeals}</Text>
+                    {numberOfMeals == 1 ? (
+                      <Text style={styles.mealText}>plate of food = </Text>
+                    ) : (
+                      <Text style={styles.mealText}>plates of food = </Text>
+                    )}
+                    <Text style={styles.mealPrice}>
+                      ${(numberOfMeals * COST_PER_MEAL).toFixed(2)}
+                    </Text>
+                  </View>
+                  <View style={styles.mealStat}>
+                    <Text style={styles.mealText}>Feed a child for</Text>
+                    <Text style={styles.mealNumber}>{numberOfMeals}</Text>
+                    {numberOfMeals == 1 ? (
+                      <Text style={styles.mealText}>month: </Text>
+                    ) : (
+                      <Text style={styles.mealText}>months: </Text>
+                    )}
+                    <Text style={styles.mealPrice}>
+                      ${(numberOfMeals * COST_PER_MEAL * 20).toFixed(2)}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles.mealButtons}>
+                  <TouchableOpacity
+                    style={styles.mealButton}
+                    onPress={subtractNumerOfMeals}
+                  >
+                    <Text style={styles.buttonText}>-</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.mealButton}
+                    onPress={addNumerOfMeals}
+                  >
+                    <Text style={styles.buttonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <Text style={styles.sectionTitle}>{ourWork.title}</Text>
-              <View style={styles.firstContainer}>
-                <Text style={styles.missionText}>{ourWork.description}</Text>
-              </View>
-            </>
+            </View>
           }
         />
       </SafeAreaView>
@@ -234,35 +255,24 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: StatusBar.currentHeight,
   },
-  scrollViewContainer: {
-    backgroundColor: colors.white,
+  image: {
+    flex: 1,
+    justifyContent: "center",
+    height: "100%",
+    width: "100%",
+  },
+  rayaStyle: {
+    marginTop: 10,
+    marginBottom: 10,
+    width: 0.6 * SCREEN_WIDTH,
+    height: 0.03 * SCREEN_HEIGHT,
+    justifyContent: "center",
+    alignItems: "center",
   },
   sectionTitle: {
-    marginTop: 10,
-    marginLeft: 15,
     fontSize: 0.05 * SCREEN_WIDTH,
     fontWeight: "700",
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
-  },
-  firstContainer: {
-    // flexDirection: "row",
-    // flex: 1,
-  },
-  secondContainer: {
-    backgroundColor: colors.white,
-    width: "100%",
-    padding: 10,
-  },
-  thirdContainer: {
-    flex: 1,
-    height: SCREEN_HEIGHT * 0.22,
-    alignItems: "center",
-    alignContent: "center",
-    justifyContent: "center",
-  },
-  thirdViewContent: {
-    alignItems: "center",
-    justifyContent: "center",
   },
   missionText: {
     marginLeft: 15,
@@ -271,9 +281,70 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
     textAlign: "justify",
   },
-  sponsorLogo: {
-    width: SCREEN_WIDTH * 0.4,
-    height: 200,
+  mealCalculator: {
+    width: "100%",
+    height: "100%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    // backgroundColor: colors.lightBlue,
+  },
+  mealStats: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mealStat: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  mealNumber: {
+    marginHorizontal: 5,
+    fontSize: 0.08 * SCREEN_WIDTH,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    textAlign: "justify",
+  },
+  mealPrice: {
+    fontSize: 0.06 * SCREEN_WIDTH,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    textAlign: "justify",
+  },
+  mealText: {
+    fontSize: 0.04 * SCREEN_WIDTH,
+    fontFamily: Platform.OS === "android" ? "Roboto" : "Avenir",
+    textAlign: "justify",
+  },
+  mealButtons: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  mealButton: {
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    width: 50,
+    height: 50,
+    lineHeight: 50,
+    color: colors.yellow,
+    fontWeight: "bold",
+    textAlign: "center",
+    backgroundColor: colors.transparent,
+    borderRadius: 50,
+    fontSize: 30,
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderStyle: "solid",
+    marginHorizontal: 20,
+  },
+  buttonText: {
+    color: colors.black,
+    fontSize: 0.034 * SCREEN_WIDTH,
+    fontWeight: "bold",
+    textTransform: "uppercase",
   },
   //programs
   programItem: {
@@ -294,51 +365,6 @@ const styles = StyleSheet.create({
     fontSize: 0.035 * SCREEN_WIDTH,
     flex: 1,
     flexWrap: "wrap",
-  },
-  //carousel
-  carouselContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  itemContainer: {
-    width: ITEM_WIDTH,
-    height: "90%",
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.black,
-    borderRadius: 20,
-  },
-  backgroundImage: {
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 20,
-  },
-  itemWrapper: {
-    backgroundColor: colors.mustardYellow,
-    borderRadius: 10,
-    width: "50%",
-    height: "30%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  itemLabel: {
-    color: colors.white,
-    fontSize: 0.07 * SCREEN_WIDTH,
-  },
-  itemTitle: {
-    paddingTop: 5,
-    color: colors.white,
-    fontSize: 0.045 * SCREEN_WIDTH,
-    fontWeight: "bold",
-  },
-  image: {
-    marginTop: 15,
-    flex: 1,
-    width: 30,
-    height: 30,
-    resizeMode: "contain",
   },
   //modal
   modalView: {
