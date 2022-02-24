@@ -1,0 +1,12 @@
+{
+  "lambdaLayers": [],
+  "permissions": {
+    "api": {
+      "gratiphiapi": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  }
+}

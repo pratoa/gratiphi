@@ -19,11 +19,15 @@
       "function": {
         "postSignUpUserCreation": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/postSignUpUserCreation-6e51334a2b5275593133-build.zip"
+          "s3Key": "amplify-builds/postSignUpUserCreation-675141574a596752314b-build.zip"
         },
         "gratificationScheduledTask": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/gratificationScheduledTask-68797359525146725870-build.zip"
+          "s3Key": "amplify-builds/gratificationScheduledTask-626e6439594c6b4a3536-build.zip"
+        },
+        "processDonation": {
+          "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
+          "s3Key": "amplify-builds/processDonation-3869776237577a734e37-build.zip"
         }
       }
     }

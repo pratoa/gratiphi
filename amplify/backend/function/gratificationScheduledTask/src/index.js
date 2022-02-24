@@ -185,7 +185,7 @@ async function processDonation(donation) {
     gratificationResponse.data.data.gratificationByUrl.items[0];
   console.log(gratification);
 
-  // gratification.data?
+  // gratification.data? if
   if (!gratification) {
     return;
   }

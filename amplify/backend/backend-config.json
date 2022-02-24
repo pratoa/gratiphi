@@ -49,12 +49,6 @@
     }
   },
   "function": {
-    "processPayment": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": []
-    },
     "createPaymentIntent": {
       "build": true,
       "providerPlugin": "awscloudformation",
@@ -126,6 +120,22 @@
           "resourceName": "gratiproof",
           "attributes": [
             "BucketName"
+          ]
+        }
+      ]
+    },
+    "processDonation": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "gratiphiapi",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput",
+            "GraphQLAPIKeyOutput"
           ]
         }
       ]
