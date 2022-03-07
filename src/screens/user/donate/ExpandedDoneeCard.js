@@ -8,6 +8,7 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 import colors from "./../../../config/colors";
 import { FlatList } from "react-native-gesture-handler";
+import { color } from "react-native-reanimated";
 
 export default function ExpandedCard({ route }) {
   const item = route.params.item;
@@ -76,6 +77,13 @@ export default function ExpandedCard({ route }) {
                 <Text style={styles.infoText}>{item.age} years old</Text>
               </View>
               <Text style={styles.doneeSection}>Interests</Text>
+              <View style={styles.interestContainer}>
+                <Text style={styles.interest}>Soccer</Text>
+                <Text style={styles.interest}>Futbolacho</Text>
+                <Text style={styles.interest}>Cook</Text>
+                <Text style={styles.interest}>Football</Text>
+                <Text style={styles.interest}>Computer Science</Text>
+              </View>
               <Text style={styles.doneeSection}>Q&A</Text>
             </View>
           </>
@@ -166,5 +174,22 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
+  },
+  interestContainer: {
+    flexDirection: "row",
+    flex: 1,
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    width: "90%",
+  },
+  interest: {
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    color: colors.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginRight: 10,
+    marginVertical: 5,
   },
 });
