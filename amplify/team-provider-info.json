@@ -27,7 +27,11 @@
         },
         "processDonation": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/processDonation-3869776237577a734e37-build.zip"
+          "s3Key": "amplify-builds/processDonation-4b482f66786c507a6e5a-build.zip"
+        },
+        "createPaymentIntent": {
+          "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
+          "s3Key": "amplify-builds/createPaymentIntent-644f59364a5679474434-build.zip"
         }
       }
     }

@@ -259,4 +259,6 @@ type Query {
 type Mutation {
   createPaymentIntent(email: String, userId: String, amount: Float): String
     @function(name: "createPaymentIntent-dev")
+  processDonation(donationId: String): String
+    @function(name: "processDonation-dev")
 }

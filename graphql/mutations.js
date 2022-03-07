@@ -10,6 +10,11 @@ export const createPaymentIntent = /* GraphQL */ `
     createPaymentIntent(email: $email, userId: $userId, amount: $amount)
   }
 `;
+export const processDonation = /* GraphQL */ `
+  mutation ProcessDonation($donationId: String) {
+    processDonation(donationId: $donationId)
+  }
+`;
 export const deleteSponsor = /* GraphQL */ `
   mutation DeleteSponsor(
     $input: DeleteSponsorInput!
