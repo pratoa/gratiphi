@@ -308,11 +308,35 @@ async function updateDonation(donation, gratificationId) {
 
 async function sendEmail(donation, imageUrl) {
   const htmlBody = `
-    <!DOCTYPE html>
-    <html>
-      <head>
-      </head>
-      <body>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <style>
+        .header {
+          top: 0px;
+          height: 75px;
+          width: 100%;
+          background-color: rgb(40, 79, 150);
+        }
+  
+        .logo {
+          object-fit: contain;
+          height: 100%;
+        }
+  
+        p {
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <img
+          src="https://gratification-proof114704-dev.s3.amazonaws.com/public/resources/gratiphi-logo.png"
+          class="logo"
+          alt="logo"
+        />
+      </div>
         <p>Hi ${donation.user.name},</p>
         <p>Thank you for your donation! You helped ${donation.donee.firstName} have a few meals, and for that we want you to feel good and send you this!</p>
         <img src="${imageUrl}" alt="gratificationPhoto" width="500" height="600">
