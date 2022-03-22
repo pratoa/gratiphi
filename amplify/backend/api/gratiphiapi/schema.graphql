@@ -116,9 +116,33 @@ type Donee
     @connection(keyName: "donationByDoneeId", fields: ["id"])
   questionAnswer: [QuestionAnswer]
     @connection(keyName: "questionAnswerByDoneeId", fields: ["id"])
+  interest: [Interest] @connection(keyName: "interestByDoneeId", fields: ["id"])
   gratifications: [Gratification]
     @connection(keyName: "gratificationByDoneeByDate", fields: ["id"])
   groups: [String]!
+}
+
+type Interest
+  @model
+  @key(
+    name: "interestByDoneeId"
+    fields: ["doneeId"]
+    queryField: "interestByDoneeId"
+  )
+  @auth(
+    rules: [
+      { allow: public }
+      {
+        allow: groups
+        groups: ["gratiphiAdmin", "gratiphiUser"]
+        operations: [read, create, update]
+      }
+    ]
+  ) {
+  id: ID!
+  interest: String!
+  doneeId: ID!
+  donee: Donee! @connection(fields: ["doneeId"])
 }
 
 type Question

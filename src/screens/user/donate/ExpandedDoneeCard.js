@@ -16,11 +16,11 @@ export default function ExpandedCard({ route }) {
 
   useEffect(() => {
     getCurrentUser();
+    console.log(donee);
   });
 
   async function getCurrentUser() {
     let userInfo = await Auth.currentUserInfo();
-    console.info("SESSION: ", await Auth.currentSession());
     setCurrentUser(await userInfo.username);
   }
   const donee = route.params.item;
@@ -78,18 +78,18 @@ export default function ExpandedCard({ route }) {
               </View>
               <Text style={styles.doneeSection}>Interests</Text>
               <View style={styles.interestContainer}>
-                <Text style={styles.interest}>Soccer</Text>
-                <Text style={styles.interest}>Futbolacho</Text>
-                <Text style={styles.interest}>Cook</Text>
-                <Text style={styles.interest}>Football</Text>
-                <Text style={styles.interest}>Computer Science</Text>
+                {donee.interest.items.map((item) => (
+                  <Text key={item.interest} style={styles.interest}>
+                    {item.interest}
+                  </Text>
+                ))}
               </View>
               <Text style={styles.doneeSection}>Q&A</Text>
             </View>
           </>
         }
         scrollEnabled={true}
-        data={questions}
+        data={donee.questionAnswer.items}
         numColumns={1}
         backgroundColor={colors.white}
         keyExtractor={(item) => item.id.toString()}
@@ -97,7 +97,7 @@ export default function ExpandedCard({ route }) {
           <View style={styles.questionsContainer}>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.questionNumber}>{index + 1}.</Text>
-              <Text style={styles.question}> {item.question}</Text>
+              <Text style={styles.question}> {item.question.question}</Text>
             </View>
             <Text style={styles.answer}>{item.answer}</Text>
           </View>
@@ -153,6 +153,7 @@ const styles = StyleSheet.create({
   questionsContainer: {
     paddingLeft: 20,
     marginTop: 5,
+    paddingRight: 15,
   },
   questionNumber: {
     fontWeight: "500",

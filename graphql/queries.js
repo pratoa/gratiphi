@@ -342,6 +342,16 @@ export const getDonee = /* GraphQL */ `
           nextToken
         }
       }
+      interest {
+        items {
+          id
+          interest
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       questionAnswer {
         items {
           id
@@ -422,6 +432,9 @@ export const listDonees = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -483,6 +496,9 @@ export const doneeBySponsorId = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
@@ -546,6 +562,9 @@ export const doneeByLocationId = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -554,6 +573,139 @@ export const doneeByLocationId = /* GraphQL */ `
         }
         gratifications {
           nextToken
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const getInterest = /* GraphQL */ `
+  query GetInterest($id: ID!) {
+    getInterest(id: $id) {
+      id
+      interest
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        locationId
+        groups
+        createdAt
+        updatedAt
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          name
+          identifier
+          country
+          sponsorId
+          groups
+          createdAt
+          updatedAt
+        }
+        interest {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const listInterests = /* GraphQL */ `
+  query ListInterests(
+    $filter: ModelInterestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listInterests(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        interest
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
+        }
+      }
+      nextToken
+    }
+  }
+`;
+export const interestByDoneeId = /* GraphQL */ `
+  query InterestByDoneeId(
+    $doneeId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelInterestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    interestByDoneeId(
+      doneeId: $doneeId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        interest
+        doneeId
+        createdAt
+        updatedAt
+        donee {
+          id
+          firstName
+          lastName
+          birthDate
+          smallBiography
+          fullBiography
+          profilePhoto
+          identifier
+          gender
+          sponsorId
+          locationId
+          groups
+          createdAt
+          updatedAt
         }
       }
       nextToken
@@ -628,6 +780,9 @@ export const getQuestionAnswer = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
@@ -871,6 +1026,9 @@ export const getDonation = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
@@ -1359,6 +1517,9 @@ export const getGratification = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken

@@ -494,6 +494,16 @@ export const onCreateDonee = /* GraphQL */ `
           nextToken
         }
       }
+      interest {
+        items {
+          id
+          interest
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       questionAnswer {
         items {
           id
@@ -591,6 +601,16 @@ export const onUpdateDonee = /* GraphQL */ `
         gratifications {
           nextToken
         }
+      }
+      interest {
+        items {
+          id
+          interest
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
       }
       questionAnswer {
         items {
@@ -690,6 +710,16 @@ export const onDeleteDonee = /* GraphQL */ `
           nextToken
         }
       }
+      interest {
+        items {
+          id
+          interest
+          doneeId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       questionAnswer {
         items {
           id
@@ -726,6 +756,177 @@ export const onDeleteDonee = /* GraphQL */ `
           updatedAt
         }
         nextToken
+      }
+    }
+  }
+`;
+export const onCreateInterest = /* GraphQL */ `
+  subscription OnCreateInterest {
+    onCreateInterest {
+      id
+      interest
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        locationId
+        groups
+        createdAt
+        updatedAt
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          name
+          identifier
+          country
+          sponsorId
+          groups
+          createdAt
+          updatedAt
+        }
+        interest {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onUpdateInterest = /* GraphQL */ `
+  subscription OnUpdateInterest {
+    onUpdateInterest {
+      id
+      interest
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        locationId
+        groups
+        createdAt
+        updatedAt
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          name
+          identifier
+          country
+          sponsorId
+          groups
+          createdAt
+          updatedAt
+        }
+        interest {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
+      }
+    }
+  }
+`;
+export const onDeleteInterest = /* GraphQL */ `
+  subscription OnDeleteInterest {
+    onDeleteInterest {
+      id
+      interest
+      doneeId
+      createdAt
+      updatedAt
+      donee {
+        id
+        firstName
+        lastName
+        birthDate
+        smallBiography
+        fullBiography
+        profilePhoto
+        identifier
+        gender
+        sponsorId
+        locationId
+        groups
+        createdAt
+        updatedAt
+        sponsor {
+          id
+          name
+          logo
+          identifier
+          createdAt
+          updatedAt
+        }
+        location {
+          id
+          name
+          identifier
+          country
+          sponsorId
+          groups
+          createdAt
+          updatedAt
+        }
+        interest {
+          nextToken
+        }
+        questionAnswer {
+          nextToken
+        }
+        donations {
+          nextToken
+        }
+        gratifications {
+          nextToken
+        }
       }
     }
   }
@@ -802,6 +1003,9 @@ export const onCreateQuestionAnswer = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -863,6 +1067,9 @@ export const onUpdateQuestionAnswer = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -923,6 +1130,9 @@ export const onDeleteQuestionAnswer = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
@@ -1027,6 +1237,9 @@ export const onCreateDonation = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
@@ -1164,6 +1377,9 @@ export const onUpdateDonation = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -1300,6 +1516,9 @@ export const onDeleteDonation = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -1421,6 +1640,9 @@ export const onCreateGratification = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -1518,6 +1740,9 @@ export const onUpdateGratification = /* GraphQL */ `
           createdAt
           updatedAt
         }
+        interest {
+          nextToken
+        }
         questionAnswer {
           nextToken
         }
@@ -1614,6 +1839,9 @@ export const onDeleteGratification = /* GraphQL */ `
           groups
           createdAt
           updatedAt
+        }
+        interest {
+          nextToken
         }
         questionAnswer {
           nextToken
