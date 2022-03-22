@@ -23,11 +23,15 @@
         },
         "gratificationScheduledTask": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/gratificationScheduledTask-626e6439594c6b4a3536-build.zip"
+          "s3Key": "amplify-builds/gratificationScheduledTask-557647776e57754a4647-build.zip"
         },
         "processDonation": {
           "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
-          "s3Key": "amplify-builds/processDonation-3869776237577a734e37-build.zip"
+          "s3Key": "amplify-builds/processDonation-66364242596b6b505849-build.zip"
+        },
+        "createPaymentIntent": {
+          "deploymentBucketName": "amplify-gratiphi-dev-114704-deployment",
+          "s3Key": "amplify-builds/createPaymentIntent-6e43744b5776667a7073-build.zip"
         }
       }
     }

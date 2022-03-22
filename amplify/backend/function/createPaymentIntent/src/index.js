@@ -1,3 +1,11 @@
+/* Amplify Params - DO NOT EDIT
+	API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT
+	API_GRATIPHIAPI_GRAPHQLAPIIDOUTPUT
+	API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT
+	AUTH_GRATIPHI02FF5042_USERPOOLID
+	ENV
+	REGION
+Amplify Params - DO NOT EDIT */
 const axios = require("axios");
 const gql = require("graphql-tag");
 const graphql = require("graphql");
@@ -35,10 +43,10 @@ async function createStripeUser(email) {
 async function getUserStripeId(userId) {
   try {
     const graphqlData = await axios({
-      url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
+      url: process.env.API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT,
       method: "post",
       headers: {
-        "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
+        "x-api-key": process.env.API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT,
       },
       data: {
         query: print(getUser),
@@ -56,10 +64,10 @@ async function getUserStripeId(userId) {
 
 async function addStripeIdToUser(userId, stripeId) {
   const graphqlData = await axios({
-    url: "https://3zuvupzfcnbhdmg5zuyv2cqb5m.appsync-api.us-east-1.amazonaws.com/graphql",
+    url: process.env.API_GRATIPHIAPI_GRAPHQLAPIENDPOINTOUTPUT,
     method: "post",
     headers: {
-      "x-api-key": "da2-wiksudagavbgveax5bupgn7o7a",
+      "x-api-key": process.env.API_GRATIPHIAPI_GRAPHQLAPIKEYOUTPUT,
     },
     data: {
       query: print(updateUser),

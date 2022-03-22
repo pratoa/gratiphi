@@ -1,3 +1,11 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "auth": {
+      "gratiphi02ff5042": ["read", "update"]
+    },
+    "api": {
+      "gratiphiapi": ["read", "update"]
+    }
+  }
 }

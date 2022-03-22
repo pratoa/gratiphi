@@ -24,7 +24,7 @@ export default function Donate({ props }) {
   useEffect(() => {
     async function getCurrentUser() {
       let userInfo = await Auth.currentSession();
-      setCurrentUser(await userInfo.accessToken.username);
+      setCurrentUser(await userInfo.accessToken.payload.username);
     }
     async function getDonees() {
       //TO-DO: better handling of error when api fails
