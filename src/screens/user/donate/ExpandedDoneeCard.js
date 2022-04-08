@@ -8,6 +8,7 @@ import { useEffect, useState } from "react/cjs/react.development";
 
 import colors from "./../../../config/colors";
 import { FlatList } from "react-native-gesture-handler";
+import { color } from "react-native-reanimated";
 
 export default function ExpandedCard({ route }) {
   const item = route.params.item;
@@ -15,11 +16,11 @@ export default function ExpandedCard({ route }) {
 
   useEffect(() => {
     getCurrentUser();
+    console.log(donee);
   });
 
   async function getCurrentUser() {
     let userInfo = await Auth.currentUserInfo();
-    console.info("SESSION: ", await Auth.currentSession());
     setCurrentUser(await userInfo.username);
   }
   const donee = route.params.item;
@@ -76,12 +77,19 @@ export default function ExpandedCard({ route }) {
                 <Text style={styles.infoText}>{item.age} years old</Text>
               </View>
               <Text style={styles.doneeSection}>Interests</Text>
+              <View style={styles.interestContainer}>
+                {donee.interest.items.map((item) => (
+                  <Text key={item.interest} style={styles.interest}>
+                    {item.interest}
+                  </Text>
+                ))}
+              </View>
               <Text style={styles.doneeSection}>Q&A</Text>
             </View>
           </>
         }
         scrollEnabled={true}
-        data={questions}
+        data={donee.questionAnswer.items}
         numColumns={1}
         backgroundColor={colors.white}
         keyExtractor={(item) => item.id.toString()}
@@ -89,7 +97,7 @@ export default function ExpandedCard({ route }) {
           <View style={styles.questionsContainer}>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.questionNumber}>{index + 1}.</Text>
-              <Text style={styles.question}> {item.question}</Text>
+              <Text style={styles.question}> {item.question.question}</Text>
             </View>
             <Text style={styles.answer}>{item.answer}</Text>
           </View>
@@ -145,6 +153,7 @@ const styles = StyleSheet.create({
   questionsContainer: {
     paddingLeft: 20,
     marginTop: 5,
+    paddingRight: 15,
   },
   questionNumber: {
     fontWeight: "500",
@@ -166,5 +175,22 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     alignItems: "center",
+  },
+  interestContainer: {
+    flexDirection: "row",
+    flex: 1,
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    width: "90%",
+  },
+  interest: {
+    borderWidth: 2,
+    borderColor: colors.primary,
+    borderRadius: 10,
+    color: colors.primary,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginRight: 10,
+    marginVertical: 5,
   },
 });

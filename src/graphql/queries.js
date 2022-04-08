@@ -30,6 +30,11 @@ export const listDonees = /* GraphQL */ `
             answer
           }
         }
+        interest {
+          items {
+            interest
+          }
+        }
       }
       nextToken
     }
