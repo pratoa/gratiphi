@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import Screen from "../../../components/common/Screen";
 import { default as defaultStyle } from "../../../config/styles";
-
 const logo = "./../../../../assets/logo/gratiphi-blue.png";
 const OUR_HISTORY =
-  "There’s XX amount of people that are skeptical about making donations because they don’t know if their donation is being used appropriately. Gratiphi Inc was born to help decrease that number and show donors gratification and proof of their support to an organization.";
+  "Gratiphi Inc was born to help decrease skepticism on the donation process and show donors gratification and proof of their support to an organization after a donation is made.";
 const OUR_MISSION =
   "Work very closely with nonprofits to obtain evidence of the donation, showcase the great work and therefore improve the donation experience and engagement.";
 const OUR_WORK =

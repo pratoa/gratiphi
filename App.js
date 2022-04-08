@@ -18,6 +18,15 @@ import DoneeAdmin from "./src/screens/admin/DoneeAdmin";
 import PhotoUpload from "./src/screens/admin/PhotoUpload";
 import ForgotPassword from "./src/screens/login/ForgotPassword";
 
+import { Platform } from "react-native";
+
+if (Platform.OS === "android") {
+  require("intl");
+  require("intl/locale-data/jsonp/es");
+  require("date-time-format-timezone");
+  Intl.__disableRegExpRestore(); /*For syntaxerror invalid regular expression unmatched parentheses*/
+}
+
 Amplify.configure({
   ...awsconfig,
   Analytics: {
